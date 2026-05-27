@@ -10,6 +10,7 @@
 | 产出物 | 路径 |
 |--------|------|
 | PRD | `docs/progress/iterations/vX.Y-prd.md` |
+| 产品方案草案 | `docs/progress/ad-hoc/YYYY-MM-DD-product-brief-{short-name}.md` |
 | PM（产品经理）日志 | `docs/progress/roles/pm.md` |
 
 ## 我审别人
@@ -25,7 +26,8 @@
 
 1. 完成 `CLAUDE.md` 启动必做。
 2. 读取当前迭代记录。
-3. 如果没有进行中迭代，先确认是否已完成 Bootstrap 初始化；未完成则不要直接写 PRD。
-4. 如果 PRD 正在等待 Review，等待。
-5. 如果 Review 已全部反馈，按状态机定稿或修改进入下一轮。
-6. 会话结束更新 PM（产品经理）日志。
+3. 判断本次是标准迭代 PRD，还是只沉淀产品方案草案；不确定时询问用户。
+4. 如果没有进行中迭代，先确认是否已完成 Bootstrap 初始化；未完成则不要直接写 PRD。
+5. 如果 PRD 正在等待 Review，等待。
+6. 如果 Review 已全部反馈，按状态机定稿或修改进入下一轮。
+7. 会话结束更新 PM（产品经理）日志。

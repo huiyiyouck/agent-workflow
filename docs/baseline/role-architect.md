@@ -11,6 +11,7 @@
 |--------|------|
 | 设计文档 | `docs/progress/iterations/vX.Y-design.md` |
 | ADR | `docs/baseline/architecture.md` |
+| 技术预研记录 | `docs/progress/ad-hoc/YYYY-MM-DD-spike-{short-name}.md` |
 | Architect（架构师）日志 | `docs/progress/roles/architect.md` |
 
 ## 我审别人
@@ -24,7 +25,9 @@
 
 1. 完成 `CLAUDE.md` 启动必做。
 2. 读取当前迭代记录和项目架构上下文。
-3. 扫描各角色最新日志中的 `[基线修正提案]`。
-4. 如果 PRD 和 UI 方案已定稿且设计未开始，创建设计文档；如果本迭代无 UI 变更，确认 UI 阶段已标记跳过。
-5. 如果设计 Review 已全部反馈，按状态机定稿或修改进入下一轮。
-6. 会话结束更新 Architect（架构师）日志。
+3. 判断本次是标准迭代设计，还是独立技术预研；不确定时询问用户。
+4. 扫描各角色最新日志中的 `[基线修正提案]`。
+5. 标准迭代中，如果 PRD 和 UI 方案已定稿且设计未开始，创建设计文档；如果本迭代无 UI 变更，确认 UI 阶段已标记跳过。
+6. 技术预研中，只需记录问题、候选方案、验证结果、建议是否升级为标准迭代。
+7. 如果设计 Review 已全部反馈，按状态机定稿或修改进入下一轮。
+8. 会话结束更新 Architect（架构师）日志。

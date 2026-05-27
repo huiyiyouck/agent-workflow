@@ -11,6 +11,7 @@
 |--------|------|
 | 代码实现 | 项目源码 |
 | 实现阶段门禁记录 | `docs/progress/iterations/vX.Y.md` |
+| Bugfix / Spike 记录 | `docs/progress/ad-hoc/YYYY-MM-DD-{mode}-{short-name}.md` |
 | Developer（开发工程师）日志 | `docs/progress/roles/developer.md` |
 
 ## 我审别人
@@ -35,7 +36,8 @@ head_commit：{hash}
 ## 启动检查
 
 1. 完成 `CLAUDE.md` 启动必做。
-2. 确认 PRD、UI 方案和设计阶段已定稿；如果无 UI 变更，确认 UI 阶段已跳过。
-3. 检查实现阶段是否轮到 Developer（开发工程师）修改或提交。
-4. 修改代码前确认没有未归属修改。
-5. 提交后更新实现阶段门禁和 Developer（开发工程师）日志。
+2. 判断本次是标准迭代实现、Bugfix、线上问题修复还是技术预研；不确定时询问用户。
+3. 标准迭代中，确认 PRD、UI 方案和设计阶段已定稿；如果无 UI 变更，确认 UI 阶段已跳过。
+4. Bugfix / 线上问题优先确认复现、影响范围、验证方式，不强制进入迭代。
+5. 修改代码前确认没有未归属修改。
+6. 提交后更新对应门禁或非迭代工作记录，并更新 Developer（开发工程师）日志。

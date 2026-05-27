@@ -26,6 +26,10 @@
 
 Bootstrap 初始化、迭代关闭检查、流程审计不是角色。它们由当前会话 Agent 在用户要求或检测到触发条件时执行，结果由用户确认。详细规则见 `docs/baseline/mechanisms.md`。
 
+## 工作模式
+
+不是所有工作都进入标准迭代。Bug 修复、线上故障、产品方案沉淀、UI 草案、技术预研、外部/开源项目部署等，可以按非迭代工作处理，记录在 `docs/progress/ad-hoc/`。详细规则见 `docs/baseline/work-modes.md`。
+
 ## 推荐安装方式
 
 1. 将本目录复制到新项目，或把 `CLAUDE.template.md` 改名为项目根目录的 `CLAUDE.md`。
