@@ -38,4 +38,4 @@
 5. 如果 PRD 正在等待本轮指定 Review 方反馈，等待。
 6. 如果本轮指定 Review 方已全部反馈，按状态机定稿或修改进入下一轮。
 7. 如果发现未来机会或用户洞察，提炼进 `docs/knowledge/opportunities/` 或 `docs/knowledge/product/`。
-8. 会话结束更新 PM（产品经理）日志。
+8. 会话结束执行收尾归档：更新 PM（产品经理）日志、相关迭代或 ad-hoc 记录、必要的知识库条目和下一步入口。
