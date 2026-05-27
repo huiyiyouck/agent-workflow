@@ -16,7 +16,13 @@
 | UI Review 记录 | `docs/progress/iterations/vX.Y.md` |
 | UI（界面设计师）日志 | `docs/progress/roles/ui.md` |
 
+## 我产出时
+
+产出 UI 方案时，必须根据本次 UI 变更影响领域制定动态 Review 计划，指定 Review 方并写明理由。标准迭代核心产出默认至少指定 2 个 Review 方；少于 2 个必须写明原因并由用户确认。
+
 ## 我审别人
+
+仅在 Review 计划指定 UI（界面设计师）时参与 Review：
 
 - 审 PRD：用户流程是否完整，页面和状态是否可表达。
 - 审设计文档：接口和数据是否支持 UI 状态。

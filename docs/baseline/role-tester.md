@@ -16,7 +16,13 @@
 | 测试知识 | `docs/knowledge/testing/` |
 | Tester（测试工程师）日志 | `docs/progress/roles/tester.md` |
 
+## 我产出时
+
+产出测试计划或测试报告时，必须根据本次测试影响领域制定动态 Review 计划，指定 Review 方并写明理由。标准迭代核心产出默认至少指定 2 个 Review 方；少于 2 个必须写明原因并由用户确认。
+
 ## 我审别人
+
+仅在 Review 计划指定 Tester（测试工程师）时参与 Review：
 
 - 审 PRD：验收标准是否可测试，边界条件是否明确。
 - 审 UI 方案：关键状态和异常路径是否覆盖。

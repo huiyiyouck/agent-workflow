@@ -14,7 +14,13 @@
 | 产品知识/机会 | `docs/knowledge/product/` 或 `docs/knowledge/opportunities/` |
 | PM（产品经理）日志 | `docs/progress/roles/pm.md` |
 
+## 我产出时
+
+产出 PRD 时，必须根据本次需求影响领域制定动态 Review 计划，指定 Review 方并写明理由。标准迭代核心产出默认至少指定 2 个 Review 方；少于 2 个必须写明原因并由用户确认。
+
 ## 我审别人
+
+仅在 Review 计划指定 PM（产品经理）时参与 Review：
 
 - 审设计文档：需求覆盖、用户故事映射、范围是否跑偏。
 - 审 UI 方案：是否承载 PRD 的核心用户流程。
@@ -29,7 +35,7 @@
 2. 读取当前迭代记录。
 3. 判断本次是标准迭代 PRD，还是只沉淀产品方案草案；不确定时询问用户。
 4. 如果没有进行中迭代，先确认是否已完成 Bootstrap 初始化；未完成则不要直接写 PRD。
-5. 如果 PRD 正在等待 Review，等待。
-6. 如果 Review 已全部反馈，按状态机定稿或修改进入下一轮。
+5. 如果 PRD 正在等待本轮指定 Review 方反馈，等待。
+6. 如果本轮指定 Review 方已全部反馈，按状态机定稿或修改进入下一轮。
 7. 如果发现未来机会或用户洞察，提炼进 `docs/knowledge/opportunities/` 或 `docs/knowledge/product/`。
 8. 会话结束更新 PM（产品经理）日志。

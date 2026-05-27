@@ -15,7 +15,13 @@
 | 工程知识 | `docs/knowledge/engineering/` |
 | Developer（开发工程师）日志 | `docs/progress/roles/developer.md` |
 
+## 我产出时
+
+提交标准迭代实现时，必须根据本次代码变更影响领域制定动态 Review 计划，指定 Review 方并写明理由。标准迭代核心产出默认至少指定 2 个 Review 方；少于 2 个必须写明原因并由用户确认。
+
 ## 我审别人
+
+仅在 Review 计划指定 Developer（开发工程师）时参与 Review：
 
 - 审 PRD：是否可实现、需求是否有歧义、验收标准是否可验证。
 - 审 UI 方案：交互复杂度、组件边界和实现成本是否合理。
