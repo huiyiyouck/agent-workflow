@@ -22,6 +22,10 @@
 
 人类用户是项目 Owner 和实际项目经理，负责最终协调、优先级和流程取舍。工作流不设置常驻 Project Manager Agent，避免把一人公司做成虚假的管理层。
 
+## 非角色机制
+
+Bootstrap 初始化、迭代关闭检查、流程审计不是角色。它们由当前会话 Agent 在用户要求或检测到触发条件时执行，结果由用户确认。详细规则见 `docs/baseline/mechanisms.md`。
+
 ## 推荐安装方式
 
 1. 将本目录复制到新项目，或把 `CLAUDE.template.md` 改名为项目根目录的 `CLAUDE.md`。

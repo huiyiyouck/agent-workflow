@@ -12,13 +12,14 @@
 3. 执行 `git log --oneline -10`，查看最近的角色协作信号。
 4. 读取 `docs/baseline/project-context.md`，了解项目事实。
 5. 读取 `docs/baseline/multi-agent-workflow.md`，确认协作规则。
-6. 读取 `docs/baseline/role-{{ROLE_ID}}.md`，确认本角色职责。
-7. 读取 `docs/progress/INDEX.md` 和本角色纠错记录。
+6. 如用户要求 Bootstrap、迭代关闭或流程审计，读取 `docs/baseline/mechanisms.md`。
+7. 读取 `docs/baseline/role-{{ROLE_ID}}.md`，确认本角色职责。
+8. 读取 `docs/progress/INDEX.md` 和本角色纠错记录。
 
 ## 空项目第一次启动
 如果这是一个空项目，或 `docs/baseline/project-context.md`、`docs/progress/INDEX.md` 尚不存在：
 1. 不要选择常规开发角色直接开工。
-2. 先执行 `docs/baseline/bootstrap.md` 中的 Bootstrap 初始化流程。
+2. 先执行 `docs/baseline/mechanisms.md` 和 `docs/baseline/bootstrap.md` 中的 Bootstrap 初始化流程。
 3. 初始化项目上下文、目录结构、角色日志、纠错记录和初始迭代记录。
 4. 初始化完成并由用户确认后，再进入 PM 的 PRD 阶段。
 
@@ -30,6 +31,7 @@
 - 默认且必须使用中文与用户对话；除非用户明确要求翻译、生成外文内容、保留代码标识符或引用原文，不要切换成英文。
 - PRD、设计文档、Review 结论、角色日志、纠错记录和基线提案默认全部使用中文。
 - 人类用户是项目 Owner 和实际项目经理；Agent 不虚拟常驻项目经理角色。
+- Bootstrap、迭代关闭检查、流程审计是非角色机制，由当前会话 Agent 按清单执行，并由用户确认结果。
 - 只做当前角色允许做的事。
 - 当前阶段未定稿前，不启动下一阶段。
 - Review 只追加结论，不改产出方正文。

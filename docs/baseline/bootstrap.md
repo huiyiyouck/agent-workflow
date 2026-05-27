@@ -6,6 +6,8 @@
 
 这不是一个常驻项目经理角色。人类用户是项目 Owner 和实际项目经理；Bootstrap 只是一次性初始化机制。
 
+Bootstrap 的触发规则、执行者和结束条件由 `docs/baseline/mechanisms.md` 统一定义。本文件只描述 Bootstrap 的具体执行步骤。
+
 ## 启动口令
 
 用户可以这样启动：
