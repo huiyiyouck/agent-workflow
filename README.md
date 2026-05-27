@@ -12,7 +12,6 @@
 
 | 角色 | 主要职责 | 是否进入标准门禁 |
 |------|----------|------------------|
-| Project Manager | 项目启动、节奏协调、状态推进、迭代关闭 | 流程门禁 |
 | PM | 需求、范围、验收标准、迭代规划 | 是 |
 | UI | 用户流程、界面结构、交互规范、视觉约束 | 是 |
 | Architect | 架构设计、技术边界、ADR、接口/数据流 | 是 |
@@ -21,12 +20,14 @@
 | DevOps | 部署、环境、健康检查、发布就绪 | 独立部署门禁 |
 | Role Creator | 新角色设计、职责边界、接入模板 | 元流程，不参与普通迭代 |
 
+人类用户是项目 Owner 和实际项目经理，负责最终协调、优先级和流程取舍。工作流不设置常驻 Project Manager Agent，避免把一人公司做成虚假的管理层。
+
 ## 推荐安装方式
 
 1. 将本目录复制到新项目，或把 `CLAUDE.template.md` 改名为项目根目录的 `CLAUDE.md`。
 2. 将 `docs/baseline/project-context.template.md` 复制为 `docs/baseline/project-context.md` 并填写项目事实。
 3. 初始化 `docs/progress/INDEX.md`、`docs/progress/iterations/`、`docs/progress/roles/`。
-4. 空项目第一次启动时，先指定：`这次以 Project Manager 角色启动空项目`，并按 `docs/baseline/bootstrap.md` 初始化。
+4. 空项目第一次启动时，先说：`执行 Bootstrap 初始化流程`，并按 `docs/baseline/bootstrap.md` 初始化。
 5. 后续每次启动 Claude Code 时指定角色，例如：`这次以 Architect 角色工作`。
 
 ## 基本原则

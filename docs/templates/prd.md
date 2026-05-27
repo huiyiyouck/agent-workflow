@@ -8,7 +8,6 @@
 ## Review 状态
 | Review 方 | 状态 | 轮次 |
 |-----------|------|------|
-| Project Manager | ⏳待审 | R1 |
 | UI | ⏳待审 | R1 |
 | Architect | ⏳待审 | R1 |
 | Developer | ⏳待审 | R1 |

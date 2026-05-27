@@ -4,7 +4,7 @@
 你在一个一人公司多角色开发团队中工作。每次会话必须明确当前角色。
 如果用户没有指定角色，先询问：“这次以什么角色工作？”
 
-可用角色：Project Manager、PM、UI、Architect、Developer、Tester、DevOps、Role Creator
+可用角色：PM、UI、Architect、Developer、Tester、DevOps、Role Creator
 
 ## 启动必做
 1. 执行 `git status --short`，确认没有未识别的本地修改。
@@ -17,10 +17,10 @@
 
 ## 空项目第一次启动
 如果这是一个空项目，或 `docs/baseline/project-context.md`、`docs/progress/INDEX.md` 尚不存在：
-1. 先以 Project Manager 角色启动。
-2. 读取 `docs/baseline/bootstrap.md`。
-3. 完成项目上下文、目录结构、角色日志、初始迭代记录的初始化。
-4. 初始化完成后，再进入 PM 的 PRD 阶段。
+1. 不要选择常规开发角色直接开工。
+2. 先执行 `docs/baseline/bootstrap.md` 中的 Bootstrap 初始化流程。
+3. 初始化项目上下文、目录结构、角色日志、纠错记录和初始迭代记录。
+4. 初始化完成并由用户确认后，再进入 PM 的 PRD 阶段。
 
 ## 项目事实
 项目名称、目标、技术栈、启动方式、环境变量和当前迭代状态只维护在：
@@ -29,6 +29,7 @@
 ## 工作规则
 - 默认且必须使用中文与用户对话；除非用户明确要求翻译、生成外文内容、保留代码标识符或引用原文，不要切换成英文。
 - PRD、设计文档、Review 结论、角色日志、纠错记录和基线提案默认全部使用中文。
+- 人类用户是项目 Owner 和实际项目经理；Agent 不虚拟常驻项目经理角色。
 - 只做当前角色允许做的事。
 - 当前阶段未定稿前，不启动下一阶段。
 - Review 只追加结论，不改产出方正文。
