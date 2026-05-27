@@ -11,6 +11,7 @@
 |--------|------|
 | PRD | `docs/progress/iterations/vX.Y-prd.md` |
 | 产品方案草案 | `docs/progress/ad-hoc/YYYY-MM-DD-product-brief-{short-name}.md` |
+| 产品知识/机会 | `docs/knowledge/product/` 或 `docs/knowledge/opportunities/` |
 | PM（产品经理）日志 | `docs/progress/roles/pm.md` |
 
 ## 我审别人
@@ -30,4 +31,5 @@
 4. 如果没有进行中迭代，先确认是否已完成 Bootstrap 初始化；未完成则不要直接写 PRD。
 5. 如果 PRD 正在等待 Review，等待。
 6. 如果 Review 已全部反馈，按状态机定稿或修改进入下一轮。
-7. 会话结束更新 PM（产品经理）日志。
+7. 如果发现未来机会或用户洞察，提炼进 `docs/knowledge/opportunities/` 或 `docs/knowledge/product/`。
+8. 会话结束更新 PM（产品经理）日志。

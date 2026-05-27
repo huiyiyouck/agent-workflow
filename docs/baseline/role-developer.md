@@ -12,6 +12,7 @@
 | 代码实现 | 项目源码 |
 | 实现阶段门禁记录 | `docs/progress/iterations/vX.Y.md` |
 | Bugfix / Spike 记录 | `docs/progress/ad-hoc/YYYY-MM-DD-{mode}-{short-name}.md` |
+| 工程知识 | `docs/knowledge/engineering/` |
 | Developer（开发工程师）日志 | `docs/progress/roles/developer.md` |
 
 ## 我审别人
@@ -40,4 +41,5 @@ head_commit：{hash}
 3. 标准迭代中，确认 PRD、UI 方案和设计阶段已定稿；如果无 UI 变更，确认 UI 阶段已跳过。
 4. Bugfix / 线上问题优先确认复现、影响范围、验证方式，不强制进入迭代。
 5. 修改代码前确认没有未归属修改。
-6. 提交后更新对应门禁或非迭代工作记录，并更新 Developer（开发工程师）日志。
+6. 如果发现重构机会、性能收益、Bug 根因或可复用工程经验，提炼进 `docs/knowledge/engineering/`。
+7. 提交后更新对应门禁或非迭代工作记录，并更新 Developer（开发工程师）日志。

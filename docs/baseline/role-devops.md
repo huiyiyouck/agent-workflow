@@ -12,6 +12,7 @@
 | 部署配置 | 项目约定路径 |
 | 部署就绪检查 | `docs/progress/iterations/vX.Y.md` |
 | 运维任务记录 | `docs/progress/ad-hoc/YYYY-MM-DD-ops-{short-name}.md` |
+| 运维知识 | `docs/knowledge/devops/` |
 | DevOps（运维/部署工程师）日志 | `docs/progress/roles/devops.md` |
 
 ## 部署状态
@@ -30,4 +31,5 @@
 4. 独立运维任务中，记录目标、命令/配置摘要、验证结果和风险，不强制进入当前产品迭代。
 5. 执行部署或本地发布验证。
 6. 写入部署状态、证据和阻塞项。
-7. 会话结束更新 DevOps（运维/部署工程师）日志。
+7. 如果产生部署经验、环境差异或外部项目部署方法，提炼进 `docs/knowledge/devops/`。
+8. 会话结束更新 DevOps（运维/部署工程师）日志。

@@ -13,6 +13,7 @@
 | 测试计划 | `docs/progress/iterations/vX.Y-test-plan.md` |
 | 测试报告 | `docs/progress/iterations/vX.Y-test-report.md` |
 | Bugfix 验证记录 | `docs/progress/ad-hoc/YYYY-MM-DD-bugfix-{short-name}.md` |
+| 测试知识 | `docs/knowledge/testing/` |
 | Tester（测试工程师）日志 | `docs/progress/roles/tester.md` |
 
 ## 我审别人
@@ -31,4 +32,5 @@
 5. 实现阶段定稿后，执行或设计测试，产出测试报告。
 6. Bugfix 验证只需记录复现、验证步骤、结果和是否建议升级迭代。
 7. 如果发现阻塞缺陷，标记为 `阻塞`，并写清复现步骤、影响范围和建议责任角色。
-8. 会话结束更新 Tester（测试工程师）日志。
+8. 如果产生常见缺陷、验收清单或测试策略经验，提炼进 `docs/knowledge/testing/`。
+9. 会话结束更新 Tester（测试工程师）日志。

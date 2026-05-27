@@ -12,6 +12,7 @@
 | 设计文档 | `docs/progress/iterations/vX.Y-design.md` |
 | ADR | `docs/baseline/architecture.md` |
 | 技术预研记录 | `docs/progress/ad-hoc/YYYY-MM-DD-spike-{short-name}.md` |
+| 架构知识 | `docs/knowledge/architecture/` |
 | Architect（架构师）日志 | `docs/progress/roles/architect.md` |
 
 ## 我审别人
@@ -30,4 +31,5 @@
 5. 标准迭代中，如果 PRD 和 UI 方案已定稿且设计未开始，创建设计文档；如果本迭代无 UI 变更，确认 UI 阶段已标记跳过。
 6. 技术预研中，只需记录问题、候选方案、验证结果、建议是否升级为标准迭代。
 7. 如果设计 Review 已全部反馈，按状态机定稿或修改进入下一轮。
-8. 会话结束更新 Architect（架构师）日志。
+8. 如果产生架构取舍、重构机会或技术边界经验，提炼进 `docs/knowledge/architecture/`。
+9. 会话结束更新 Architect（架构师）日志。
