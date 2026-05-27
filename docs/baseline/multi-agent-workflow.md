@@ -21,6 +21,7 @@ CLAUDE.md
 └── docs/
     ├── baseline/
     │   ├── project-context.md
+    │   ├── runtime.md
     │   ├── multi-agent-workflow.md
     │   ├── work-modes.md
     │   ├── knowledge-base.md

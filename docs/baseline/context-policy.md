@@ -15,20 +15,37 @@
 每次启动只默认读取：
 
 1. `CLAUDE.md`
-2. `docs/baseline/project-context.md`
-3. `docs/baseline/multi-agent-workflow.md`
-4. `docs/baseline/work-modes.md`
+2. `docs/baseline/runtime.md`
+3. `docs/baseline/project-context.md`，如存在
+4. `docs/progress/INDEX.md`，如存在
 5. 当前角色手册
-6. `docs/progress/INDEX.md`
-7. 本角色的 `*-current.md` 或最近摘要
-8. 本角色纠错记录
+6. 本角色的 `*-current.md` 或最近摘要
+7. 本角色纠错记录
 
 不要默认读取：
 
+- `docs/baseline/multi-agent-workflow.md`
+- `docs/baseline/work-modes.md`
+- `docs/baseline/mechanisms.md`
+- `docs/baseline/knowledge-base.md`
+- 所有模板文件
 - 所有历史迭代全文
 - 所有角色日志全文
 - 所有 Review 记录全文
 - 整个知识库全文
+
+启动后按 `docs/baseline/runtime.md` 判断工作模式，再读取对应规则文件。不要为了“保险”把所有 baseline 文件一次性读入上下文。
+
+## 按需加载层级
+
+| 场景 | 加载文件 |
+|------|----------|
+| 标准迭代 | `multi-agent-workflow.md`、当前迭代记录、本阶段产出物 |
+| 非迭代工作 | `work-modes.md`、当前 ad-hoc 记录 |
+| 收尾归档 | `mechanisms.md`；达到归档阈值时再读 `context-policy.md` |
+| Bootstrap 初始化 | `mechanisms.md`、`bootstrap.md` |
+| 知识库沉淀 | `knowledge-base.md`、`docs/knowledge/INDEX.md`、具体知识条目 |
+| 创建文档 | 对应 `docs/templates/` 模板 |
 
 ## 角色日志分层
 
