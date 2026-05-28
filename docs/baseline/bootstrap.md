@@ -1,8 +1,8 @@
-# 空项目第一次启动流程
+# 空项目第一次进入团队模式流程
 
 ## 目标
 
-空项目第一次启动时，不应该直接让 Developer 写代码，也不应该直接让 PM 写完整 PRD。第一步应该执行 Bootstrap 初始化流程，让后续角色有共同入口、共同状态和共同文件结构。
+空项目第一次进入一人公司开发团队模式时，不应该直接让 Developer 写代码，也不应该直接让 PM 写完整 PRD。第一步应该执行 Bootstrap 初始化流程，让后续角色有共同入口、共同状态和共同文件结构。
 
 Bootstrap 只代表“团队工作台已安装”，不代表已经启动标准迭代。
 
@@ -18,7 +18,7 @@ Bootstrap 的触发规则、执行者和结束条件由 `docs/baseline/mechanism
 执行 Bootstrap 初始化流程。
 ```
 
-如果 Agent 发现当前项目缺少 `CLAUDE.md`、`docs/baseline/project-context.md` 或 `docs/progress/INDEX.md`，应建议用户先执行 Bootstrap 初始化流程，不要直接进入 PM（产品经理）、UI（界面设计师）、Architect（架构师）、Developer（开发工程师）、Tester（测试工程师）或 DevOps（运维/部署工程师）的常规工作。
+在一人公司开发团队模式下，如果 Agent 发现当前项目缺少 `CLAUDE.md`、`docs/baseline/project-context.md` 或 `docs/progress/INDEX.md`，应建议用户先执行 Bootstrap 初始化流程，不要直接进入 PM（产品经理）、UI（界面设计师）、Architect（架构师）、Developer（开发工程师）、Tester（测试工程师）或 DevOps（运维/部署工程师）的常规工作。
 
 检测到缺失文件时，Agent 只能建议 Bootstrap，不能自动执行。只有用户明确说“执行 Bootstrap 初始化流程”或确认现在执行，才可以开始创建或修改文件。
 
