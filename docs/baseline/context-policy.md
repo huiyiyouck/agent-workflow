@@ -47,6 +47,24 @@
 | 知识库沉淀 | `knowledge-base.md`、`docs/knowledge/INDEX.md`、具体知识条目 |
 | 创建文档 | 对应 `docs/templates/` 模板 |
 
+## 状态真源
+
+动态状态只能放在 `docs/progress/` 下：
+
+| 状态类型 | 真源文件 | 说明 |
+|----------|----------|------|
+| 项目级当前状态 | `docs/progress/INDEX.md` | 当前迭代、当前模式、当前下一步入口 |
+| 迭代阶段细节 | `docs/progress/iterations/vX.Y.md` | 阶段门禁、Review 轮次、Change Note、关闭归档 |
+| 角色最近动作 | `docs/progress/roles/{role}.md` 或 `{role}-current.md` | 角色做了什么、遗留什么 |
+| 项目事实 | `docs/baseline/project-context.md` | 项目目标、技术栈、边界、约束；不写当前阶段 |
+
+状态变化时，先更新最具体的真源，再同步上层索引：
+
+1. 阶段或 Review 状态变化，先更新 `docs/progress/iterations/vX.Y.md`。
+2. 如果影响当前项目入口，再更新 `docs/progress/INDEX.md`。
+3. `project-context.md` 不记录当前阶段，除非项目事实本身发生变化。
+4. PRD、设计文档、测试报告头部可以保留状态摘要，但不能替代迭代记录和 INDEX。
+
 ## 角色日志分层
 
 角色日志建议拆成三层：

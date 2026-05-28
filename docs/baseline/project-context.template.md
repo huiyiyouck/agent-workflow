@@ -5,11 +5,6 @@
 ## 项目一句话
 {{PROJECT_ONE_LINER}}
 
-## 当前状态
-- 最新版本：{{LATEST_VERSION}}
-- 当前迭代：{{CURRENT_ITERATION}}
-- 当前阶段：{{CURRENT_STAGE}}
-
 ## 技术栈
 {{TECH_STACK}}
 
@@ -26,3 +21,9 @@
 ## 项目特有约束
 - {{PROJECT_CONSTRAINT}}
 
+## 状态说明
+
+本文件只记录项目事实，不记录当前阶段、当前迭代状态或 Review 状态。
+
+- 项目级当前状态维护在 `docs/progress/INDEX.md`。
+- 迭代阶段细节维护在 `docs/progress/iterations/vX.Y.md`。

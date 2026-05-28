@@ -45,11 +45,15 @@
 
 如果缺少 `CLAUDE.md`、`docs/baseline/project-context.md` 或 `docs/progress/INDEX.md`：
 
-1. 读取 `docs/baseline/mechanisms.md`
-2. 读取 `docs/baseline/bootstrap.md`
-3. 执行 Bootstrap 初始化流程
+1. 不要自动创建文件。
+2. 向用户说明缺少哪些初始化文件。
+3. 建议用户执行 Bootstrap 初始化流程。
+4. 只有当用户明确说“执行 Bootstrap 初始化流程”或确认现在执行时，才读取 `docs/baseline/mechanisms.md` 和 `docs/baseline/bootstrap.md`。
+5. 再按 Bootstrap 流程创建文件。
 
 不要直接进入 PM（产品经理）、Developer（开发工程师）等常规角色工作。
+
+如果用户只是问候、闲聊或询问状态，只能提示初始化建议，不能替用户启动 Bootstrap。
 
 ### 2. 判断工作模式
 
@@ -90,6 +94,7 @@
 - 创建 Change Note：`docs/templates/change-note.md`
 - 会话收尾记录：`docs/templates/session-closeout.md`
 - 迭代归档摘要：`docs/templates/iteration-summary.md`
+- Bootstrap 创建进度索引：`docs/templates/progress-index.md`
 
 不创建文档时，不读取模板。
 
@@ -97,8 +102,10 @@
 
 - 中文对话和中文记录是默认规则。
 - 人类用户是项目 Owner（负责人）和实际项目经理，Agent 不虚拟常驻项目经理角色。
+- 未初始化项目必须先得到用户确认，才能执行 Bootstrap 并写入文件。
 - 当前阶段未定稿前，不进入下一阶段；非迭代工作除外。
 - 标准迭代产出采用动态 Review，默认至少 2 个相关 Review 方；少于 2 个需用户确认。
 - 已定稿内容不能静默修改；轻量变更走 Change Note，重大变更回到对应阶段。
+- 动态状态真源：项目级当前状态写在 `docs/progress/INDEX.md`；迭代阶段细节写在 `docs/progress/iterations/vX.Y.md`；`project-context.md` 只写项目事实。
 - 每次会话结束必须至少更新角色日志；状态变化影响项目入口时，同步更新 `docs/progress/INDEX.md`。
 - 发现需要新增或修改基线规则时，先提案，经用户确认后再改。

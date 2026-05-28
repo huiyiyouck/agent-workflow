@@ -18,24 +18,29 @@ Bootstrap 的触发规则、执行者和结束条件由 `docs/baseline/mechanism
 
 如果 Agent 发现当前项目缺少 `CLAUDE.md`、`docs/baseline/project-context.md` 或 `docs/progress/INDEX.md`，应建议用户先执行 Bootstrap 初始化流程，不要直接进入 PM（产品经理）、UI（界面设计师）、Architect（架构师）、Developer（开发工程师）、Tester（测试工程师）或 DevOps（运维/部署工程师）的常规工作。
 
+检测到缺失文件时，Agent 只能建议 Bootstrap，不能自动执行。只有用户明确说“执行 Bootstrap 初始化流程”或确认现在执行，才可以开始创建或修改文件。
+
 ## Bootstrap 步骤
 
 1. 确认项目目录和 Git 状态。
-   - 如果还不是 Git 仓库，询问用户是否初始化 Git。
+   - 先执行 `git rev-parse --is-inside-work-tree` 判断是否为 Git 仓库。
+   - 如果不是 Git 仓库，不执行 `git status`、`git pull` 或 `git log`，只询问用户是否初始化 Git。
+   - 如果是 Git 仓库，执行 `git status --short`；如有远端，再执行 `git pull --rebase`；最后执行 `git log --oneline -10`。
    - 如果已有未归属文件，不覆盖、不删除，先记录现状。
-2. 从模板生成或确认 `CLAUDE.md`。
-3. 从 `project-context.template.md` 生成 `docs/baseline/project-context.md`。
-4. 创建或确认 `docs/progress/INDEX.md`。
-5. 创建角色日志和纠错记录：
+2. 从 `CLAUDE.template.md` 生成或确认 `CLAUDE.md`，并替换项目名称占位符；不要留下无法执行的模板变量。
+3. 从 `docs/baseline/project-context.template.md` 生成 `docs/baseline/project-context.md`，只填写项目事实，不写当前阶段等动态状态。
+4. 基于 `docs/templates/progress-index.md` 创建或确认 `docs/progress/INDEX.md`，作为项目级当前状态入口。
+5. 基于 `docs/templates/iteration.md` 创建初始迭代记录 `docs/progress/iterations/v0.1.md`，状态为 `PRD 阶段待启动`。
+6. 基于 `docs/templates/role-log.md` 和 `docs/templates/role-corrections.md` 创建角色日志和纠错记录：
    - `pm.md` / `pm-corrections.md`
    - `ui.md` / `ui-corrections.md`
    - `architect.md` / `architect-corrections.md`
    - `developer.md` / `developer-corrections.md`
    - `tester.md` / `tester-corrections.md`
    - `devops.md` / `devops-corrections.md`
-6. 创建初始迭代记录 `docs/progress/iterations/v0.1.md`，状态为 `PRD 阶段待启动`。
-7. 在 `docs/progress/INDEX.md` 记录 Bootstrap 结果和下一步建议。
-8. 提交初始 Bootstrap commit。
+7. 不要向所有角色日志写重复的 Bootstrap 初始化记录；角色日志只创建初始模板，等该角色真正工作时再写日志。
+8. 在 `docs/progress/INDEX.md` 记录 Bootstrap 结果和下一步建议。
+9. 如果当前是 Git 仓库，提交初始 Bootstrap commit；如果用户选择暂不初始化 Git，记录“未提交：非 Git 仓库”。
 
 ## Bootstrap 完成后的推荐顺序
 
@@ -55,6 +60,10 @@ Bootstrap 初始化
 ## 不允许做的事
 
 - 不允许空项目第一步直接进入实现阶段。
+- 不允许用户只是问候或闲聊时自动执行 Bootstrap。
 - 不允许在没有项目上下文时编造技术栈。
 - 不允许跳过 `project-context.md`。
+- 不允许手写简化版迭代记录，必须基于 `docs/templates/iteration.md`。
+- 不允许把当前阶段等动态状态写入 `project-context.md`。
+- 不允许给所有角色日志追加重复 Bootstrap 流水账。
 - 不允许把 Bootstrap 写成当前项目专属内容；它必须保持可复用。
