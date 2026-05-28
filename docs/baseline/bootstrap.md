@@ -27,8 +27,14 @@ Bootstrap 的触发规则、执行者和结束条件由 `docs/baseline/mechanism
    - 如果不是 Git 仓库，不执行 `git status`、`git pull` 或 `git log`，只询问用户是否初始化 Git。
    - 如果是 Git 仓库，执行 `git status --short`；如有远端，再执行 `git pull --rebase`；最后执行 `git log --oneline -10`。
    - 如果已有未归属文件，不覆盖、不删除，先记录现状。
-2. 从 `CLAUDE.template.md` 生成或确认 `CLAUDE.md`，并替换项目名称占位符；不要留下无法执行的模板变量。
+2. 生成或确认 `CLAUDE.md`。
+   - 如果 `CLAUDE.md` 已存在且内容完整，直接使用，不要求存在 `CLAUDE.template.md`。
+   - 如果缺少 `CLAUDE.md` 且存在 `CLAUDE.template.md`，从模板生成并替换项目名称占位符；不要留下无法执行的模板变量。
+   - 如果 `CLAUDE.md` 和 `CLAUDE.template.md` 都不存在，停止 Bootstrap，并提示用户先安装通用工作流。
 3. 从 `docs/baseline/project-context.template.md` 生成 `docs/baseline/project-context.md`，只填写项目事实，不写当前阶段等动态状态。
+   - 如果用户已经提供项目事实，写入对应字段。
+   - 如果用户暂时没有想好项目，允许保留 `待填写` 占位，不阻塞目录结构初始化。
+   - 项目事实未确认时，不进入 PRD 正式产出；Bootstrap 完成后的下一步是“补充或确认项目上下文”。
 4. 基于 `docs/templates/progress-index.md` 创建或确认 `docs/progress/INDEX.md`，作为项目级当前状态入口。
 5. 基于 `docs/templates/iteration.md` 创建初始迭代记录 `docs/progress/iterations/v0.1.md`，状态为 `PRD 阶段待启动`。
 6. 基于 `docs/templates/role-log.md` 和 `docs/templates/role-corrections.md` 创建角色日志和纠错记录：
@@ -61,8 +67,9 @@ Bootstrap 初始化
 
 - 不允许空项目第一步直接进入实现阶段。
 - 不允许用户只是问候或闲聊时自动执行 Bootstrap。
-- 不允许在没有项目上下文时编造技术栈。
+- 不允许在没有项目上下文时编造技术栈；未知内容写 `待填写`。
 - 不允许跳过 `project-context.md`。
+- 不允许因为项目事实暂时未知就拒绝创建项目骨架。
 - 不允许手写简化版迭代记录，必须基于 `docs/templates/iteration.md`。
 - 不允许把当前阶段等动态状态写入 `project-context.md`。
 - 不允许给所有角色日志追加重复 Bootstrap 流水账。
