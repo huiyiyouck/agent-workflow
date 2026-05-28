@@ -38,6 +38,8 @@ Bootstrap 的触发规则、执行者和结束条件由 `docs/baseline/mechanism
    - 如果用户暂时没有想好项目，允许保留 `待填写` 占位，不阻塞目录结构初始化。
    - 项目事实未确认时，不进入 PRD 正式产出；Bootstrap 完成后的下一步是询问用户是否需要以某个角色或工作模式继续。
 4. 基于 `docs/templates/progress-index.md` 创建或确认 `docs/progress/INDEX.md`，作为项目级当前状态入口。
+   - Bootstrap 完成后的 `当前迭代` 必须是 `无`，`当前模式` 必须是 `未选择`。
+   - 不允许把 Bootstrap 后的下一步写成“进入 PM 创建 PRD”，除非用户已经明确选择启动标准迭代。
 5. 创建 `docs/progress/iterations/`、`docs/progress/ad-hoc/`、`docs/progress/archive/` 等进度目录，但不要默认创建 `v0.1` 迭代。
 6. 基于 `docs/templates/role-log.md` 和 `docs/templates/role-corrections.md` 创建角色日志和纠错记录：
    - `pm.md` / `pm-corrections.md`
@@ -76,6 +78,7 @@ Bootstrap 完成后，Agent 不自动启动迭代，而是询问用户：
 - 不允许跳过 `project-context.md`。
 - 不允许因为项目事实暂时未知就拒绝创建项目骨架。
 - 不允许 Bootstrap 默认创建 `v0.1` 迭代；只有用户选择标准迭代时，才基于 `docs/templates/iteration.md` 创建迭代记录。
+- 不允许 Bootstrap 后把 `docs/progress/INDEX.md` 写成 `当前模式：标准迭代` 或 `当前阶段：PRD 阶段待启动`。
 - 不允许非 PM（产品经理）角色在 Bootstrap 后直接创建标准迭代；其他角色只能提出迭代建议或执行非迭代自主任务。
 - 不允许把当前阶段等动态状态写入 `project-context.md`。
 - 不允许给所有角色日志追加重复 Bootstrap 流水账。
