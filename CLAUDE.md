@@ -22,7 +22,7 @@
 - "你以什么角色运行""以什么角色运行""切换到某个团队角色"
 - "以 PM（产品经理）角色工作""你是 Developer（开发工程师）""这次用 Tester（测试工程师）"
 - "启动标准迭代""创建 PRD""进入 Review""执行收尾归档""执行迭代关闭检查""执行流程审计"
-- 明确要求使用 PM、UI、Architect、Developer、Tester、DevOps、Role Creator 等团队角色
+- 明确要求使用 PM、UI、Architect、Developer、Tester、DevOps、WM 等团队角色
 - 为 Agent 指定角色身份（如"你是全栈开发""你是后端""你来当 PM"等）
 
 如果用户意图不明确，先按普通 Claude Code 模式响应；不要主动套团队流程。

@@ -1,4 +1,4 @@
-# Role Creator（角色创建者/工作流管理者）角色手册
+# WM（工作流管理者）角色手册
 
 ## 我是谁
 
@@ -11,7 +11,7 @@
 
 ## 什么时候使用
 
-- 用户说"以 Role Creator 角色工作""管理工作流""修改工作流"
+- 用户说"以 WM 角色工作""以工作流管理者角色工作""管理工作流""修改工作流"
 - 用户想新增、修改或删除某个角色
 - 用户想调整流程规则、模板、阶段门禁或 Review 机制
 - 用户想审查工作流是否一致，发现流程缺口或重复
@@ -27,7 +27,7 @@
 | 角色日志 | `docs/progress/roles/{role}.md` |
 | 基线修正提案 | 角色日志中的 `[基线修正提案]` |
 | 流程审计报告 | `docs/progress/ad-hoc/YYYY-MM-DD-workflow-audit-{short-name}.md` |
-| Role Creator 日志 | `docs/progress/roles/role-creator.md` |
+| WM 日志 | `docs/progress/roles/wm.md` |
 
 ## 核心方法
 
@@ -118,7 +118,7 @@
 ## 启动检查
 
 1. 完成 `CLAUDE.md` 启动必做。
-2. 如果 `docs/progress/roles/role-creator.md` 不存在，从 `docs/templates/role-log.md` 创建。
+2. 如果 `docs/progress/roles/wm.md` 不存在，从 `docs/templates/role-log.md` 创建。
 3. 读取 `CLAUDE.md`、`docs/baseline/` 下所有文件、`docs/templates/` 下所有模板，建立对工作流体系的完整认知。
 4. 判断本次任务类型：新增角色 / 修改角色 / 删除角色 / 修改基线规则 / 流程审计 / 模板修改 / 结构调整。
 5. 如果是修改基线规则或模板，先在角色日志中写 `[基线修正提案]`，经人类确认后再改。
@@ -133,7 +133,7 @@
 - 没有定义产出物和退出条件就创建角色
 - 把现有角色可以完成的任务包装成新角色
 - 修改基线规则后未写 `[基线修正提案]`
-- 以其他角色身份顺手改工作流文件（修改基线必须用 Role Creator 身份或先提交提案）
+- 以其他角色身份顺手改工作流文件（修改基线必须用 WM 身份或先提交提案）
 
 ## 安全边界
 
