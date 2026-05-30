@@ -69,21 +69,29 @@
 
 ## 角色日志分层
 
-角色日志建议拆成三层：
+角色日志默认使用单文件：
 
 ```text
-docs/progress/roles/{role}-current.md
-docs/progress/roles/{role}-archive.md
-docs/progress/roles/{role}-summary.md
+docs/progress/roles/{role}.md
+docs/progress/roles/{role}-corrections.md
+```
+
+当角色日志超过 30 条或 300 行（见下方归档触发时机），再拆为三层：
+
+```text
+docs/progress/roles/{role}-current.md    ← 最近 10 条，启动默认读
+docs/progress/roles/{role}-summary.md    ← 长期摘要，启动默认读
+docs/progress/roles/{role}-archive.md    ← 旧日志，按需搜索
 ```
 
 | 文件 | 用途 | 启动是否默认读 |
 |------|------|----------------|
-| `{role}-current.md` | 最近工作日志，最多保留 10 条 | 是 |
-| `{role}-summary.md` | 长期摘要、当前关注点、常见风险 | 是 |
-| `{role}-archive.md` | 旧日志归档 | 否，按需搜索 |
+| `{role}.md`（默认） | 单文件日志，最新在上 | 是 |
+| `{role}-current.md`（分层后） | 最近工作日志，最多保留 10 条 | 是 |
+| `{role}-summary.md`（分层后） | 长期摘要、当前关注点、常见风险 | 是 |
+| `{role}-archive.md`（分层后） | 旧日志归档 | 否，按需搜索 |
 
-如果项目仍使用单文件 `{role}.md`，也必须保持“最新在上”，并在超过 30 条后进行摘要归档。
+单文件阶段也必须保持”最新在上”，并在超过 30 条后按下方通用归档流程拆分。
 
 ## 归档触发时机
 
@@ -102,14 +110,14 @@ docs/progress/roles/{role}-summary.md
 每次会话结束，不管是否完成一个迭代，都必须做最小收尾：
 
 1. 更新当前角色日志：本次动作、涉及文件、结论、遗留问题、下一步入口。
-2. 更新当前工作记录：迭代记录、ad-hoc 记录或 Change Note。
-3. 如果状态变化影响项目入口，更新 `docs/progress/INDEX.md`。
+2. 如果本次会话完成了一个阶段定稿（如设计阶段 Review 通过并改为已定稿），同时更新迭代记录（`vX.Y.md`）中对应阶段状态和 `INDEX.md`。
+3. 如果只是阶段性工作（如 Review 进行中、修改中），只更新角色日志，不更新迭代记录。
 4. 记录验证证据；如果没有验证，写明原因。
 5. 判断是否需要知识库沉淀。
 6. 判断是否达到上下文归档阈值。
 7. 如果本次有文件变更，提交 Git；如果暂不提交，写明原因和风险。
 
-会话收尾不等于迭代关闭。它只是保证“今天到这里”之后，下次 Agent 能接得上。
+会话收尾不等于迭代关闭。会话收尾保证”今天到这里”之后下次 Agent 能接得上；迭代关闭是整个迭代完成后的归档操作（见 `mechanisms.md`）。
 
 ## 通用归档流程
 

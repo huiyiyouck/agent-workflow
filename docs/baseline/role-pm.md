@@ -32,11 +32,13 @@
 ## 启动检查
 
 1. 完成 `CLAUDE.md` 启动必做。
-2. 读取当前迭代记录。
-3. 判断本次是标准迭代 PRD，还是只沉淀产品方案草案；不确定时询问用户。
-4. 如果没有进行中迭代，先确认是否已完成 Bootstrap 初始化；未完成则不要直接写 PRD。
-5. 如果已完成 Bootstrap 但用户尚未选择标准迭代，先询问：是启动标准迭代创建 PRD，还是只做 Product Brief / 产品方案沉淀，或继续闲聊。
-6. 如果 PRD 正在等待本轮指定 Review 方反馈，等待。
-7. 如果本轮指定 Review 方已全部反馈，按状态机定稿或修改进入下一轮。
-8. 如果发现未来机会或用户洞察，提炼进 `docs/knowledge/opportunities/` 或 `docs/knowledge/product/`。
-9. 会话结束执行收尾归档：更新 PM（产品经理）日志、相关迭代或 ad-hoc 记录、必要的知识库条目和下一步入口。
+2. 如果 `docs/progress/roles/pm.md` 不存在，从 `docs/templates/role-log.md` 创建。
+3. 读取当前迭代记录。
+4. 判断本次是标准迭代 PRD，还是只沉淀产品方案草案；不确定时询问用户。
+5. 如果没有进行中迭代，先确认是否已完成 Bootstrap 初始化；未完成则不要直接写 PRD。
+6. 如果 `docs/baseline/project-context.md` 不存在且本次是首次 PRD，先创建 `project-context.md`（从 `docs/baseline/project-context.template.md` 生成并填写项目事实）。非迭代方案沉淀不需要此步骤。
+7. 如果已完成 Bootstrap 但用户尚未选择标准迭代，先询问：是启动标准迭代创建 PRD，还是只做 Product Brief / 产品方案沉淀，或继续闲聊。
+8. 如果 PRD 正在等待本轮指定 Review 方反馈，等待。
+9. 如果本轮指定 Review 方已全部反馈，按状态机定稿或修改进入下一轮。定稿后必须更新 `vX.Y.md` 中 PRD 阶段状态，再同步 `INDEX.md`。
+10. 如果发现未来机会或用户洞察，提炼进 `docs/knowledge/opportunities/` 或 `docs/knowledge/product/`。
+11. 会话结束执行收尾归档：更新 PM（产品经理）日志、相关迭代或 ad-hoc 记录、必要的知识库条目和下一步入口。

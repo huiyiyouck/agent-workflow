@@ -18,10 +18,10 @@
 
 1. `CLAUDE.md`
 2. `docs/baseline/runtime.md`
-3. `docs/baseline/project-context.md`，如存在
+3. `docs/baseline/project-context.md`，如存在（由 PM 在首次 PRD 时创建）
 4. `docs/progress/INDEX.md`，如存在
 5. 当前角色手册：`docs/baseline/role-{role}.md`，仅当用户已指定角色
-6. 当前角色摘要、最近日志和纠错记录
+6. 当前角色日志和纠错记录：`docs/progress/roles/{role}.md` 和 `{role}-corrections.md`（如已分层归档，则读 `{role}-current.md` 和 `{role}-summary.md`）
 
 如果用户已进入团队模式但没有指定角色，先问用户要以哪个角色或工作模式继续，不要为了猜角色去加载所有角色手册。
 
@@ -29,7 +29,7 @@
 
 进入团队模式后，必须按以下顺序分流：
 
-1. 初始化：如果缺少项目上下文或进度索引，先建议 Bootstrap；Bootstrap 不启动标准迭代。
+1. 初始化：如果缺少 `INDEX.md`，先建议 Bootstrap；Bootstrap 不启动标准迭代。
 2. 工作类型：判断是非迭代自主任务，还是标准迭代。
 3. 角色运行：非迭代任务可以由相关角色直接处理；标准迭代只能由 PM（产品经理）创建 PRD 后正式启动。
 
@@ -55,29 +55,23 @@
 
 ### 1. 判断项目是否初始化
 
-如果缺少 `CLAUDE.md`、`docs/baseline/project-context.md` 或 `docs/progress/INDEX.md`：
+如果缺少 `docs/progress/INDEX.md`：
 
 1. 不要自动创建文件。
-2. 向用户说明缺少哪些初始化文件。
-3. 建议用户执行 Bootstrap 初始化流程。
-4. 只有当用户明确说“执行 Bootstrap 初始化流程”或确认现在执行时，才读取 `docs/baseline/mechanisms.md` 和 `docs/baseline/bootstrap.md`。
-5. 再按 Bootstrap 流程创建文件。
-
-不要直接进入 PM（产品经理）、Developer（开发工程师）等常规角色工作。
+2. 向用户说明缺少进度索引，建议执行 Bootstrap 初始化流程。
+3. 只有当用户明确说”执行 Bootstrap 初始化流程”或确认现在执行时，才读取 `docs/baseline/mechanisms.md` 和 `docs/baseline/bootstrap.md`。
+4. 再按 Bootstrap 流程创建目录和索引。
 
 如果已经进入团队模式但项目尚未初始化，而用户只是问候、闲聊或询问状态，只能提示初始化建议，不能替用户启动 Bootstrap。
 
-Bootstrap 可以在项目事实暂时未知时先创建项目骨架。未知事实写 `待填写`，并把下一步入口设为“询问用户是否需要以某个角色或工作模式继续”。不要为了等待完整项目事实而卡住目录初始化。
-
-Bootstrap 只初始化团队工作台，不自动启动标准迭代。Bootstrap 完成后，如果用户没有选择角色或工作模式，Agent 保持普通聊天，不创建迭代记录、不创建 ad-hoc 记录。
+Bootstrap 只初始化团队工作台（目录结构 + 进度索引），不自动启动标准迭代，不创建项目上下文和角色日志。Bootstrap 完成后，如果用户没有选择角色或工作模式，Agent 保持普通聊天，不创建迭代记录、不创建 ad-hoc 记录。
 
 未初始化项目时，只能给用户以下选项：
 
 1. 执行 Bootstrap 初始化流程。
-2. 先补充项目信息，再执行 Bootstrap 初始化流程。
-3. 暂不初始化，继续闲聊或结束本次会话。
+2. 暂不初始化，继续闲聊或结束本次会话。
 
-不允许把“直接进入 PM（产品经理）、Developer（开发工程师）或任一常规角色工作”作为可选项。未初始化项目没有可靠的项目事实、进度索引和角色日志，常规角色工作会污染状态。
+不允许把”直接进入 PM（产品经理）、Developer（开发工程师）或任一常规角色工作”作为可选项。
 
 ### 2. 判断工作模式
 
@@ -136,4 +130,7 @@ Bootstrap 只初始化团队工作台，不自动启动标准迭代。Bootstrap 
 - 已定稿内容不能静默修改；轻量变更走 Change Note，重大变更回到对应阶段。
 - 动态状态真源：项目级当前状态写在 `docs/progress/INDEX.md`；迭代阶段细节写在 `docs/progress/iterations/vX.Y.md`；`project-context.md` 只写项目事实。
 - 每次会话结束必须至少更新角色日志；状态变化影响项目入口时，同步更新 `docs/progress/INDEX.md`。
+- 团队知识沉淀到 `docs/knowledge/`，但启动时只读索引和相关条目，不全文加载知识库。
+- 只做当前角色允许做的事。
+- 禁止 force push；禁止跳过 hooks；禁止覆盖未归属修改。
 - 发现需要新增或修改基线规则时，先提案，经用户确认后再改。
