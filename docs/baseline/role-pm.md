@@ -75,7 +75,7 @@
 4. 工作模式由 runtime.md 路由判断。PM 在标准迭代中创建 PRD，在非迭代中沉淀 Product Brief。
 5. 如果没有进行中迭代，先确认是否已完成 Bootstrap 初始化；未完成则不要直接写 PRD。
 6. 首次 PRD 时如果 `project-context.md` 不存在，从模板创建并填写项目事实。非迭代方案沉淀不需要此步骤。
-8. 如果 PRD 正在等待本轮指定 Review 方反馈，等待。
-9. 如果本轮指定 Review 方已全部反馈，按状态机定稿或修改进入下一轮。定稿后必须更新 `vX.Y.md` 中 PRD 阶段状态，再同步 `INDEX.md`。
-10. 如果发现未来机会或用户洞察，提炼进 `docs/knowledge/opportunities/` 或 `docs/knowledge/product/`。
-11. 会话结束时按 runtime.md 执行收尾归档。
+7. 如果 PRD 正在等待本轮指定 Review 方反馈，等待。
+8. 如果本轮指定 Review 方已全部反馈，按状态机定稿或修改进入下一轮。定稿后必须更新 `vX.Y.md` 中 PRD 阶段状态，再同步 `INDEX.md`。
+9. 如果发现未来机会或用户洞察，提炼进 `docs/knowledge/opportunities/` 或 `docs/knowledge/product/`。
+10. 会话结束时按 runtime.md 执行收尾归档。
