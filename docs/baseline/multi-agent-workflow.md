@@ -34,7 +34,10 @@ CLAUDE.md
     │   ├── role-developer.md
     │   ├── role-tester.md
     │   ├── role-devops.md
-    │   └── role-wm.md
+    │   ├── role-wm.md
+    │   └── subagents/
+    │       ├── sub-frontend.md
+    │       └── sub-backend.md
     └── progress/
         ├── INDEX.md
         ├── iterations/

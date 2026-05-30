@@ -44,6 +44,7 @@
 - `docs/baseline/context-policy.md`
 - `docs/baseline/mechanisms.md`
 - `docs/baseline/knowledge-base.md`
+- `docs/baseline/subagents/`
 - 所有模板文件
 - 所有历史迭代全文
 - 所有角色日志全文

@@ -66,8 +66,8 @@
 4. 按子 Agent 定义中的输入格式模板，分别为两个子 Agent 准备（将定义中的 `vX.Y` 等占位符替换为实际版本号）：
    - 前端：sub-frontend.md 完整内容 + 任务描述 + 接口契约 + 关键约束
    - 后端：sub-backend.md 完整内容 + 任务描述 + 接口契约 + 数据模型 + 关键约束
-5. 用 Agent 工具并行启动两个子 Agent（`run_in_background: true`）
-6. 等待两个子 Agent 完成
+5. 用 Agent 工具并行启动两个子 Agent（`run_in_background: true`，建议使用 `isolation: "worktree"` 避免文件冲突）
+6. 等待两个子 Agent 完成。如果子 Agent 长时间无响应（建议上限 10 分钟），终止该子 Agent 并由 Developer 自己接手
 
 #### 验证和失败处理
 
