@@ -62,7 +62,7 @@
 
 1. 确认 UI 方案（或已跳过）和设计文档均已定稿
 2. 将实现任务拆解为前端任务和后端任务
-3. 读取 `docs/baseline/subagents/sub-frontend.md` 和 `sub-backend.md`
+3. 读取 `docs/baseline/subagents/sub-frontend.md` 和 `docs/baseline/subagents/sub-backend.md`
 4. 按子 Agent 定义中的输入格式模板，分别为两个子 Agent 准备（将定义中的 `vX.Y` 等占位符替换为实际版本号）：
    - 前端：sub-frontend.md 完整内容 + 任务描述 + 接口契约 + 关键约束
    - 后端：sub-backend.md 完整内容 + 任务描述 + 接口契约 + 数据模型 + 关键约束
