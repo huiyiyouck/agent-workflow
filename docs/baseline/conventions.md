@@ -14,7 +14,7 @@
 结束：
   1. git add 修改的文件（只 add 本任务归属的文件）
   2. git commit -m "[角色] 动作摘要"
-  3. git pull --rebase（再次确认无冲突）
+  3. 按入口 Git 安全规则同步：工作区干净且无未推送 commit 才 git pull --rebase；否则 git fetch 并提示本地未推送或未提交变更
   4. git push
 ```
 
@@ -62,19 +62,19 @@
 
 ### 受保护路径名单
 
-每个项目首次启用本框架时，应由 Architect 在 ADR 中明确本项目的受保护路径名单。建议至少覆盖以下三类：
+每个项目首次启用本框架时，应由 Architect 在 ADR 中明确本项目的受保护路径名单。默认写入 `docs/baseline/architecture.md`；如果项目已有 ADR 目录，沿用项目约定路径，并在 `docs/knowledge/INDEX.md` 中登记。建议至少覆盖以下三类：
 
 | 类别 | 示例路径 |
 |------|----------|
 | 业务源码根目录 | `src/`、`server/`、`frontend/`、`app/`、`packages/` |
 | 部署与基础设施配置 | `deploy/`、`infra/`、`docker/`、`k8s/`、`.github/workflows/` |
-| 工作流框架本身 | `docs/baseline/`、`docs/templates/`、`CLAUDE.md`、`.claude/` |
+| 工作流框架本身 | `docs/baseline/`、`docs/templates/`、助手入口文件（如 `AGENTS.md`、`CLAUDE.md`）、工具配置目录（如 `.claude/`、`.codex/`） |
 
 如未明确定义，缺省以"工作流框架本身"三个路径作为最小受保护集合。
 
 ### 主门禁流程
 
-1. **停止删除**：Agent 不得直接执行 `git rm`、`rm`、`Edit` 删除文件内容、或在 commit 中产生删除变更。
+1. **停止文件级删除**：Agent 不得直接执行 `git rm`、`rm`、清空文件、删除整个文件内容，或在 commit 中产生文件级删除 diff。普通段落删改不触发本门禁，但修改 `docs/baseline/` 仍受人工审核规则约束。
 2. **列出清单**：在会话中给出
    - 待删文件完整路径列表
    - 每个文件的删除原因（一行）
@@ -98,7 +98,7 @@
 受保护路径的删除 commit，标题第一行必须包含「删除」「移除」「清理」等明示字样；禁止用「同步」「对齐」「整理」等模糊动词遮蔽删除事实。
 
 #### 协作 commit 二次核对
-标注 `Co-Authored-By: Claude` 的 commit（无论是否涉及删除），push 前 Agent 必须把 `git diff --stat` 输出贴进会话；如果 stat 与 commit message 描述范围不一致，停下等 Owner 决策。
+标注 AI 助手协作信息（如 `Co-Authored-By`）的 commit（无论是否涉及删除），push 前 Agent 必须把 `git diff --stat` 输出贴进会话；如果 stat 与 commit message 描述范围不一致，停下等 Owner 决策。
 
 ### 例外情况
 

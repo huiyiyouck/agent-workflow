@@ -30,6 +30,8 @@ docs/knowledge/
 └── retrospectives/
 ```
 
+这些目录按需创建；仓库只保留 `docs/knowledge/INDEX.md` 也有效。首次写入某类知识时，由当前角色创建对应目录，并同步更新 `docs/knowledge/INDEX.md`。
+
 ## 知识类型
 
 | 类型 | 路径 | 适合沉淀什么 |

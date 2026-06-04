@@ -59,14 +59,15 @@
 
 ## 启动检查
 
-1. 完成 `CLAUDE.md` 启动必做。
+1. 确认当前助手入口文件的启动必做已完成；若本会话尚未执行，再补做。
 2. 如果 `docs/progress/roles/ui.md` 不存在，从 `docs/templates/role-log.md` 创建。
-3. 判断本次出场场景：
+3. 先读 `docs/progress/INDEX.md` 的当前状态和下一步入口；如进入标准迭代，再只读当前 `vX.Y.md` 中 UI 阶段、PRD 阶段状态和当前阶段摘要。
+4. 判断本次出场场景：
    - 被指定为其他阶段的 Review 方 → 读被 Review 的文档，只审自己职责边界内的问题。Review 完成后在文档 Review 记录区域追加结论，并更新 `vX.Y.md` 中对应 Review 结果。
-   - UI 草案（非迭代）→ 按 `work-modes.md` UI Concept 模式执行，跳转到步骤 7
-   - 标准迭代 UI 方案 → 继续步骤 4
-4. 标准迭代中，先读 `vX.Y.md` 确认 PRD 已定稿。
-5. 有 UI 变更时创建 `vX.Y-ui.md`；无 UI 变更时在迭代记录中写明原因并标记跳过。
-6. Review 实现时只评价 UI/交互相关问题。
-7. 如果产生可复用交互模式，提炼进 `docs/knowledge/ui/`。
-8. 会话结束时按 runtime.md 执行收尾归档。
+   - UI 草案（非迭代）→ 按 `work-modes.md` UI Concept 模式执行，跳转到步骤 8
+   - 标准迭代 UI 方案 → 继续步骤 5
+5. 标准迭代中，确认 PRD 已定稿后再读取 PRD 中与用户流程、页面和验收标准相关的部分，不全文读取无关章节。
+6. 有 UI 变更时创建 `vX.Y-ui.md`；无 UI 变更时在迭代记录中写明原因并标记跳过。
+7. Review 实现时只评价 UI/交互相关问题。
+8. 如果产生可复用交互模式，提炼进 `docs/knowledge/ui/`。
+9. 会话结束时按 runtime.md 执行收尾归档。
