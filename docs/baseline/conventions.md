@@ -31,7 +31,7 @@
 ### 多 Agent 协作标记
 `[角色] 动作 — 详情`（用于 Agent 之间传递协作信号）
 
-**角色标识**：PM、Architect、Developer、Tester、DevOps、UI、WM
+**角色标识**：PM、Architect、Developer、Tester、DevOps、UI
 
 **动作关键词**：待Review、Reviewed、已定稿、会话记录、基线修正
 
@@ -41,7 +41,6 @@
 [Architect] Reviewed v0.2 PRD R1     ← Review 完成，注明轮次
 [PM] v0.2 PRD R2 待Review           ← 修改后重新提交，新轮次
 [PM] v0.2 PRD 已定稿                 ← 阶段定稿
-[WM] 基线修正 — 删除门禁              ← 基线修正
 ```
 
 ## 禁止事项
