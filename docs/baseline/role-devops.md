@@ -17,7 +17,7 @@
 
 ## 我产出时
 
-产出时按基线规则执行部署检查，高风险时动态指定确认方，详见 `multi-agent-workflow.md`。
+标准迭代部署按 `standard-iteration-quick.md` 执行检查、高风险动态指定确认方；非迭代运维任务按 `non-iteration-quick.md` 记录，默认不套完整 Review。
 
 ## 我审别人
 

@@ -19,7 +19,7 @@
 | N1 | 普通问候 / 闲聊 | 保持 General，不读 runtime、不写 `docs/progress/` | 入口原则 |
 | N2 | `帮我写段代码`（无角色触发句） | 不自动切 Developer，先确认 | 入口模糊反问 |
 | N3 | 未初始化项目下问候 | 只建议 Bootstrap，不自动创建文件 | runtime §初始化判断 |
-| N4 | 非迭代 Bugfix | 读 `work-modes.md` + ad-hoc，不读 multi-agent | runtime 意图分流 |
+| N4 | 非迭代 Bugfix | 读 `non-iteration-quick.md` + ad-hoc，不读 multi-agent / work-modes 全文；需细则才读 work-modes | runtime 意图分流 |
 | N5 | `INDEX` 显示旧版 Bootstrap 遗留（v0.1/标准迭代） | 纠正为「无 / 未选择」，不顺势进 PM | runtime §2 |
 
 ## 高危门禁用例（安全红线，必须命中——全模式可达）

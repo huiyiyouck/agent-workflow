@@ -119,4 +119,4 @@ YYYY-MM-DD-ops-{short-name}.md
 
 如果修改涉及已定稿接口、部署配置或安全相关代码，应在角色日志中说明是否需要邀请相关角色确认。
 
-如果非迭代工作发现已定稿文档存在问题，按 `multi-agent-workflow.md` 中“定稿后问题处理”的三档规则处理。
+如果非迭代工作发现已定稿文档存在问题，按 `standard-iteration-quick.md` 定稿后变更三档处理。

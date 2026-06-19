@@ -9,10 +9,10 @@
 
 - **更新于**：2026-06-19
 - **正在做**：agent-workflow 自身演进，按本文档 P0→P4 推进。
-- **当前阶段**：P1 前置全部就位（架构方向、回归清单、度量脚本、ROADMAP 一致性历经四轮审查补强），等待绿灯进入 P1 baseline 改造。
-- **已完成**：演进路线 + P0 工具（`scripts/measure-context.sh`、`docs/regression-cases.md`）+ P1 前置验证草案（分类表 + 速查表信息架构）；基线口径已修正为字符数。commit 至 `360137b`。
-- **下一步**：进入 P1 改造，**固定顺序**——① 跑旧基线存档；② 建 `standard-iteration-quick.md` + 改 runtime（全模式红线与触发索引）；③ 按 rg 扫描更新引用；④ **更新 `measure-context.sh` 链路口径（标准迭代必读切到 quick，完整规范单列）**；⑤ 用新口径复测字数 + 跑回归清单。
-- **待用户拍板**：给绿灯进入 P1 baseline 改造。
+- **当前阶段**：P1 完成（六轮 diff 复审通过、含非迭代对称拆分），已提交推送，进入 P2 准备。
+- **已完成**：演进路线 + P0 工具（`measure-context.sh`、`regression-cases.md`）+ **P1 改造**：新建 `standard-iteration-quick.md`(1225) 与 `non-iteration-quick.md`、瘦身 `runtime.md`(4357→2606)、更新 9 处引用、脚本切新链路口径、回归走查通过、修复第五轮 diff 复审 4 项。
+- **下一步**：P2 强化项目理解层——重设计 `project-context.md` / `INDEX.md` 为高密度项目快照，承接 P1 末尾读取契约，并给度量脚本加真实启动链路 fixture（转硬验）。
+- **待用户拍板**：是否开始 P2。
 
 ## 演进定位
 
@@ -39,6 +39,8 @@
 
 - **固定层（入口+runtime）= 7,056 字符**
 - **标准迭代最重链路（+role-dev+multi）= 18,501 字符**，尚未算 `project-context`、`INDEX`、迭代摘要、模板片段。
+
+**P1 改造后（2026-06-19，含第五轮 diff 复审修复）**：`runtime.md` 4357→**2606**（承载非迭代对称分流 + 双速查触发索引 + 模板可达性，职责较原计划扩展，硬上限相应放宽至 ≤2700，可达性优先于字数）；新增 `standard-iteration-quick.md` 1225 / `non-iteration-quick.md`（非迭代对称拆分，P1 范围扩展）；标准迭代启动链路 18501→**约 9900（≈-46%）**；固定规则链路 < 13000 硬指标。`multi-agent-workflow.md` 7941 与 `work-modes.md` 降为完整规范、按需读取。已修 4 项 diff 复审问题：Review 正文保护、PRD 模板可达、N4 口径、角色手册区分迭代/非迭代 Review。
 
 ## 衡量指标
 

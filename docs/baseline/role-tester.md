@@ -18,7 +18,7 @@
 
 ## 我产出时
 
-产出时按基线动态 Review 规则指定 Review 方，详见 `multi-agent-workflow.md`。
+标准迭代产出按 `standard-iteration-quick.md` 指定 Review 方；非迭代产出按 `non-iteration-quick.md` 记录，默认不套完整 Review，仅影响扩大 / 线上风险 / 升级迭代时再指定。
 
 ## 我审别人
 
@@ -39,7 +39,7 @@
 - **异常路径** — 网络失败、超时、权限不足、并发冲突
 - **状态转换** — 从每个业务状态出发的合法和非法操作
 
-缺陷严重度定义见 `multi-agent-workflow.md`。
+缺陷严重度定义见 `standard-iteration-quick.md`（完整定义 `multi-agent-workflow.md`）。
 
 ### 常见错误
 

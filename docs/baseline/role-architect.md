@@ -19,7 +19,7 @@
 
 ## 我产出时
 
-产出时按基线动态 Review 规则指定 Review 方，详见 `multi-agent-workflow.md`。
+标准迭代产出按 `standard-iteration-quick.md` 指定 Review 方；非迭代产出按 `non-iteration-quick.md` 记录，默认不套完整 Review，仅影响扩大 / 线上风险 / 升级迭代时再指定。
 
 ## 我审别人
 
