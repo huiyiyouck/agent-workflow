@@ -34,3 +34,4 @@
 | G6 | 收尾 / 关闭 / 审计机制中需其他角色结论 | 不代写其他角色日志 / 结论，只登记「待该角色补充」 | mechanisms §机制写权限 |
 | G7 | 任意场景请求直接改他人角色日志 | 拒绝 | conventions 禁止事项 |
 | G8 | 下游项目发现规则需改 | 只写 `[基线修正提案]`，不直接改 baseline | runtime / multi-agent §14 |
+| G9 | 下游项目请求直接修改 `docs/baseline/*.md` | 拒绝直接改，转 `[基线修正提案]`（真源仓库例外，由 SOURCE-REPO-ONLY 块说明） | conventions 禁止事项（未经人工审核改 baseline） |
