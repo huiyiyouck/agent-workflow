@@ -11,8 +11,8 @@
 - **正在做**：agent-workflow 自身演进，按本文档 P0→P4 推进。
 - **当前阶段**：P1 前置验证草案已按二次审查补强（跨模式 P0 红线从标准迭代速查表解耦到 runtime），等待审定。
 - **已完成**：① 演进路线文档（本文件）；② README 修复 Bootstrap 目录清单（commit `7e6a467`）；③ P0 度量脚本 `scripts/measure-context.sh`（字数 + 双入口一致性）；④ 修正基线口径错误（CLAUDE.md 此前误用字节数 5033，实为 2699 字符）；⑤ P1 前置验证草案（分类表 + 速查表信息架构）；⑥ 据二次审查补 5 点（Git/Review 正文/机制写权限纳入分类表、跨模式 P0 归 runtime、引用更新改 rg 全仓扫描）。
-- **下一步**：审定补强后的 P1 前置验证草案；确认后进入 P1 改造（先建 `standard-iteration-quick.md` 标准迭代协议 + runtime 承载全模式 P0 红线与触发索引，再瘦身 runtime 并按 rg 扫描更新引用）。
-- **待用户拍板**：是否接受补强后方向（runtime = 全模式 P0 红线 + 触发索引；standard-iteration-quick = 仅标准迭代协议）进入 P1 改造。
+- **下一步**：① 本轮已补回归用例清单 `docs/regression-cases.md` + 修 ROADMAP 内部不一致；② **之后**再进入 P1 改造（建 `standard-iteration-quick.md` + runtime 承载全模式红线与触发索引 + 按 rg 扫描更新引用 + 脚本/回归复测）。动安全门禁前回归清单必须先就位。
+- **待用户拍板**：是否接受补强后方向（runtime = 全模式红线与默认原则 + 触发索引；standard-iteration-quick = 仅标准迭代协议）进入 P1 改造。
 
 ## 演进定位
 
@@ -56,10 +56,7 @@
 
 - `scripts/measure-context.sh`：输出单文件体量、链路合计、双入口一致性（已完成）。
   - ⚠️ 局限：只测「文件体量上界」，不等于实际加载量（实际链路取决于 runtime 按需读取决策）。体量看脚本，**行为看回归用例**，二者互补。
-- **回归用例集**（待补成清单文件，P1 前完成）：
-  - 正向：`启动标准迭代`→只能 PM 创建 PRD；`进入 Review`→动态 Review 默认≥2 方；创建 PRD 命中模板。
-  - 负向：闲聊不读 runtime；`写代码`不自动切 Developer（需确认）；未初始化不创建文件、只建议 Bootstrap；非迭代 Bugfix 不读 multi-agent；旧版 Bootstrap 遗留状态被纠正。
-  - 高危门禁：`force push` 被拒；删除受保护路径走架构师 Review 门禁；非 PM 角色要求启动迭代必须转 PM。
+- **回归用例集**：清单见 `docs/regression-cases.md`（正向 / 负向 / 高危门禁，含补强后新增门禁：AI commit 核对 diff stat、Review 不得改正文、机制不代写他人角色结论/日志、禁止直接改他人角色日志、基线修正只能提案）。P1 改 baseline 前后各走一遍。
 
 ### P1 瘦身固定加载层（首攻）
 
@@ -106,6 +103,7 @@
 | AI 协作 commit push 前核对 diff stat 与 commit message（全模式，含非迭代） | 中 | P0 | runtime 红线短句 + 触发索引，不依赖标准迭代速查表 |
 | Review 阶段不得改产出正文，只能追加 Review 记录 | 中 | P0 | runtime 红线短句（全模式）+ `conventions.md` |
 | 机制不得代写角色专业结论 / 角色日志 / 改他人待办归属字段 | 中 | P1 | runtime 红线 + 触发索引指向 `mechanisms.md` |
+| 禁止直接修改他人角色日志（普通角色工作时，非机制场景） | 低 | P1 | runtime 红线 / 默认原则 + 触发索引指向 `conventions.md` |
 
 **前置验证结论**：
 
@@ -114,7 +112,7 @@
 - 13-15 节是长尾治理规则，除“基线修正只能提案”属 P0 外，适合放完整规范，通过触发索引读取。
 - `runtime.md` 质量底线不是都同权：P0 红线必须保留；P1 路由/阶段/Review 规则保留短句；P2 说明性规则压缩或下放。
 - `conventions.md` 的删除门禁低频但 P0，高危流程不能从可达路径移除；**runtime 全模式红线**必须包含“不得直接删除 + 触发 Architect Review + commit 留痕”，完整细节继续留在 `conventions.md`。
-- **跨模式 P0 规则归 runtime，不归标准迭代速查表**：Git 门禁、受保护路径删除、Review 正文保护、AI 协作 commit 核对、基线修正提案、机制写权限等在非迭代 / Bootstrap / 收尾 / 审计同样触发；若只进标准迭代速查表，这些模式会绕过门禁。故 runtime 承载“全模式 P0 红线 + 触发索引”，`standard-iteration-quick.md` 只承载标准迭代协议。
+- **跨模式红线规则（含 P0/P1，按各自风险标级）归 runtime，不归标准迭代速查表**：Git 门禁、受保护路径删除、Review 正文保护、AI 协作 commit 核对、基线修正提案、机制写权限、禁止改他人角色日志等在非迭代 / Bootstrap / 收尾 / 审计同样触发；若只进标准迭代速查表，这些模式会绕过门禁。故 runtime 承载“全模式红线与默认原则 + 触发索引”，`standard-iteration-quick.md` 只承载标准迭代协议。
 - 因此 P1 建议走**拆分**，不是整体精简重写。长尾假设成立，但 P0 低频规则必须以红线短句 + 触发索引形式保留在 runtime 默认可达路径。
 
 **P1 速查表信息架构草案**：
@@ -123,7 +121,7 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 
 **`runtime.md`（全模式必读，每次进工作流都读）**：
 1. `工作流后路由`：默认读取清单、意图分流表、标准迭代速查入口。
-2. `全模式 P0 红线短句`：force push / hooks / 未归属修改、Bootstrap 写入需确认、受保护路径删除、Review 阶段不得改正文、AI 协作 commit push 前核对 diff stat、基线修正只能提案、机制不得代写角色结论、中文默认、不虚拟常驻 PM。
+2. `全模式红线与默认原则（每条标 P0/P1/P2）`：**[P0]** force push / hooks / 未归属修改、受保护路径删除、AI 协作 commit push 前核对 diff stat、Review 阶段不得改正文、Bootstrap 写入需确认；**[P1]** 基线修正只能提案、机制不得代写角色结论 / 日志、禁止直接改他人角色日志、不虚拟常驻 PM；**[P2]** 中文默认。
 3. `跨模式触发索引`：遇删除 → `conventions.md §受保护路径删除`；遇收尾 / 关闭 / 审计 → `mechanisms.md`；遇基线修正 → `multi-agent-workflow.md §14`。
 
 **`standard-iteration-quick.md`（仅标准迭代必读，不放跨模式安全规则）**：
@@ -140,14 +138,14 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
   `触发：删除文件 / 必守红线：不得直接删 / 详读：conventions.md §受保护路径删除 Review 门禁`。
 
 **改造（视前置验证二选一）**：
-- `runtime.md` → ≤2.0k 字符：剥离程序性细节与低频内容，保留路由表 + P0 红线短句。
-- `multi-agent-workflow.md` → 必读速查 ≤1.5k 字符 + 完整规范按需，或整体精简重写。
+- `runtime.md` → 目标 ≤2.0k 字符，**硬上限 ≤2.5k；P0/P1 可达性优先于字数**：保留路由表 + 全模式红线与默认原则 + 跨模式触发索引。
+- `standard-iteration-quick.md`（新建）→ 必读 ≤1.5k 字符，只放标准迭代协议；`multi-agent-workflow.md` 保留完整规范，按需读取。
 - **压缩原则**：压缩背景叙述、例子、重复解释；**保留协议本体**（状态机表格、Review 轮次、变更三档、红线短句）——这些是执行协议不是说明。
 
 **完成条件**：
 1. 双指标达标：固定规则链路 <1.3 万字符；真实启动链路样例 <1.5 万字符。
 2. 回归用例集全过（含负向 + 高危门禁）。
-3. 更新所有失效引用：以 `rg 'multi-agent-workflow|conventions|mechanisms|standard-iteration-quick'` 全仓扫描（实测 multi-agent-workflow 共 13 处，含 `runtime.md:86` 迭代入口、6 个 `role-*.md`、`work-modes.md`、`README`），逐处改指准确位置，不手写固定文件清单。
+3. 更新所有失效引用：以 `rg 'multi-agent-workflow|conventions|mechanisms|standard-iteration-quick'` 全仓扫描，**以当前输出为准**（覆盖 `runtime.md` 迭代入口、各 `role-*.md`、`work-modes.md`、`README` 等），逐处改指准确位置，不手写固定文件清单与数量。
 4. 脚本复测 + 双入口一致性 OK。
 5. **最小读取契约**（为 P2 铺垫，非重构）：明确 `INDEX` / `project-context` 中哪些字段是 Agent 启动必须能看懂的。
 
