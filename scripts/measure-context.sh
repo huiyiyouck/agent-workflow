@@ -21,10 +21,12 @@ echo "# 链路合计（字符数）"
 entry=$(count CLAUDE.md); rt=$(count docs/baseline/runtime.md)
 roledev=$(count docs/baseline/role-developer.md)
 iq=$(count docs/baseline/standard-iteration-quick.md); nq=$(count docs/baseline/non-iteration-quick.md)
+pc=$(count docs/baseline/project-context.template.md); pi=$(count docs/templates/progress-index.md)
 printf "  %-46s %6s\n"               "固定层(入口+runtime)"                "$(( entry + rt ))"
 printf "  %-46s %6s  [P1硬指标 <13000]\n" "固定规则链路(入口+runtime+迭代必读)" "$(( entry + rt + iq ))"
 printf "  %-46s %6s  [观测 <15000]\n"    "标准迭代启动链路(+role-dev)"          "$(( entry + rt + roledev + iq ))"
 printf "  %-46s %6s\n"               "非迭代启动链路(+role-dev)"            "$(( entry + rt + roledev + nq ))"
+printf "  %-46s %6s  [P2硬验 <15000]\n" "真实启动链路fixture(+pc模板+index模板)" "$(( entry + rt + roledev + iq + pc + pi ))"
 printf "  %-46s %6s  [完整规范, 按需]\n" "multi-agent-workflow(单列)"          "$(count docs/baseline/multi-agent-workflow.md)"
 
 echo
