@@ -9,10 +9,10 @@
 
 - **更新于**：2026-06-20
 - **正在做**：agent-workflow 自身演进，按本文档 P0→P4 推进。
-- **当前阶段**：P3 已完成并推送（`79116bd`）。实证后只拆 role-developer（唯一含低频大块），3508→2788，子 Agent 调度细节挪 `role-developer-detail.md`；其它 6 角色实证认为不必拆。Codex diff 复审通过。
+- **当前阶段**：P4 方案定稿（经二次复审补强：决策 4 复制范围与目标目录安全 + 端到端验证；对 Codex「排除 docs/knowledge/」建议作了修正，改为保留空骨架 + 自检，理由：Bootstrap 不建 knowledge 目录、排除会留工作台洞）。方案待提交，下一步进入实现。
 - **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）。
-- **下一步**：进入 P4 安装与复用体验——复制后删 SOURCE-REPO-ONLY 引导、project-context 填写引导、双入口一致性正式校验。
-- **待用户拍板**：P4 起手是否照旧先出方案再 diff 复审。
+- **下一步**：实现 P4 产物（`scripts/install-downstream.sh` + README 收敛 + measure 注释修正 + 安装类回归用例），再临时目录实跑 + 端到端验证 + diff 复审。
+- **待用户拍板**：是否现在开始实现（方案已定稿）。
 
 ## 演进定位
 
@@ -170,7 +170,56 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 
 ### P4 安装与复用体验
 
-**目标**：降低复制到 Claude/Codex 项目的落地摩擦：复制后删 SOURCE-REPO-ONLY 引导、`project-context` 填写引导、双入口一致性正式校验（检查项已在 P0 脚本提前可用，此处做成安装流程一环）。
+**目标**：降低复制到 Claude/Codex 项目的落地摩擦——复制后删 SOURCE-REPO-ONLY 引导、`project-context` 填写引导、双入口一致性正式校验做成安装流程一环。
+
+**前置盘点（现状 / 缺口，2026-06-20）**：
+
+| 子项 | 现状已有 | 真正缺口 |
+|------|----------|----------|
+| 删 SOURCE-REPO-ONLY | 入口文件该块已有 HTML 注释锚点（`<!-- ↓↓↓ SOURCE-REPO-ONLY … ↓↓↓ -->` / 结束锚点），可机械整块识别；README「推荐安装方式」步骤 1 已有手动删除文字引导 | 纯手动必漏。漏删后下游首个会话会读到「本仓库正在自我演进 → 先读 `docs/ROADMAP.md` 游标」，而下游无 ROADMAP（或误读真源 ROADMAP），直接走错启动路由 |
+| 双入口一致性 | `measure-context.sh` 已有 `diff -q CLAUDE.md AGENTS.md` 检查 | ① 脚本注释写「块外正文应一致」，实现却是**完整文件** diff——注释与实现矛盾；② 仅 echo WARN、`exit 0`，不构成关卡 |
+| project-context 填写 | 模板已是 8 问题契约（P2）；README 步骤 3 + `role-pm.md` 步骤 6 已有创建引导 | 缺口最小。唯一割裂：README 步骤 4 让空项目「等 Bootstrap」，但 project-context 属项目事实层、不归 Bootstrap（其只装 `progress/` 工作台），二者职责边界未说清 |
+
+**设计决策**：
+
+1. **删 SOURCE-REPO-ONLY → 安装脚本机械剥离（推荐）**
+   新建 `scripts/install-downstream.sh <目标目录>`，在真源仓库运行，产出一份干净的下游副本：
+   - 复制入口文件时按注释锚点 `sed`/`awk` 剥离整块 SOURCE-REPO-ONLY；
+   - **不复制**真源专属文件（完整复制范围见决策 4）：`docs/ROADMAP.md`、`docs/regression-cases.md`、`scripts/measure-context.sh`、`scripts/install-downstream.sh` 自身；
+   - 产出后自检：目标入口已无 SOURCE-REPO-ONLY 锚点，否则 `exit` 非零拒绝产出。
+   - 备选 A1 纯文档引导（现状）：否决——机械删除靠人记必漏，违背「重复确认性工作交给自动化」。
+   - 备选 A2 运行时自检（入口加常驻检测残留块）：否决——给每次启动加常驻字数，与 P1 瘦身冲突。
+
+2. **双入口一致性 → 完整 diff + 修正注释 + 安装期作硬关卡（推荐）**
+   - 维持**完整文件** `diff`（两入口本应逐字一致，Claude/Codex 读同一份产品内容）；
+   - 修正 `measure-context.sh` 注释，删去「块外正文」措辞，与「完整 diff」实现对齐；
+   - 关卡职责交给安装脚本：产出前校验双入口一致，不一致则 `exit` 非零；`measure-context.sh` 维持 WARN（度量用途，不阻断）。
+   - 备选 B2 剥离块后再 diff：否决——更宽松且无必要，两入口本就该逐字一致。
+
+3. **project-context 填写引导（最小增强，推荐）**
+   - 安装脚本在目标处将 `project-context.template.md` 复制为 `project-context.md`（占位待填），使 8 问题契约从首个会话即完整可读（即便占位）；
+   - README「推荐安装方式」首选「跑脚本」，保留手动步骤作 fallback。
+   - ✅ **已定（用户拍板 2026-06-20）**：采纳自动铺占位。随之需改 README 步骤 4「空项目等 Bootstrap 再处理上下文」语义，澄清 project-context（项目事实层）≠ Bootstrap（progress 工作台），二者可在不同时机各自就位。实现时一并更新 README，确保不与 Bootstrap 流程冲突。
+
+4. **复制范围与目标目录安全（第二轮复审补强）**
+   核实 Bootstrap 实际只建 `docs/progress/`（bootstrap.md 步骤 2-3），**不建 `docs/knowledge/`**，据此分类处置：
+   - **排除（真源专属，下游不带）**：`docs/ROADMAP.md`、`docs/regression-cases.md`、`scripts/measure-context.sh`、`scripts/install-downstream.sh` 自身，以及整个 `docs/progress/`——其中 `INDEX.md` 是真源状态实例（含「Bootstrap 状态：已完成」），复制会让下游误判已初始化；下游 progress 工作台 + INDEX 由 Bootstrap 从 `templates/progress-index.md` 生成。
+   - **保留骨架 + 自检（`docs/knowledge/`）**：复制空目录骨架（`.gitkeep`）与空 `knowledge/INDEX.md`。**对 Codex「直接排除 docs/knowledge/」建议的修正**：Bootstrap 不建 knowledge 目录、无任何机制为下游补建，排除会留工作台洞；改为随安装复制空骨架，并由脚本自检 `knowledge/INDEX.md` 各分类下无条目、除 INDEX 外无 `.md`，若发现真源已沉淀知识则 `exit` 非零要求人工处理（防真源知识泄漏）。
+   - **目标目录安全（采纳 finding 3）**：默认只接受目标目录不存在或为空；非空则 `exit` 非零拒绝并提示（本版不实现 `--merge`/`--force`），避免覆盖用户已有文件。
+
+**产物**：
+- `scripts/install-downstream.sh`（真源专属，不进下游）；
+- README「推荐安装方式」改为首选脚本、保留手动 fallback；
+- `measure-context.sh` 注释修正（与完整 diff 实现对齐）；
+- 回归用例补安装类：如「下游入口不应残留 SOURCE-REPO-ONLY 块」「下游副本不应含 ROADMAP / measure / regression 等真源专属文件」「下游会话不因残留块去读 ROADMAP 游标」。
+
+**完成条件**：
+1. `install-downstream.sh` 在临时目录实跑一次，产出的副本：入口无 SOURCE-REPO-ONLY 锚点、双入口一致、`project-context.md` 占位存在（脚本自检全通过）；
+2. 产出副本**不含**真源专属实例：`docs/ROADMAP.md`、`docs/regression-cases.md`、`scripts/`、`docs/progress/`；`docs/knowledge/` 仅含空骨架（自检无真源条目）；
+3. 在**非空**目标目录运行安装脚本必须失败、不覆盖现有文件；
+4. **端到端验证**（采纳复审点 4）：产出副本能被一次干净的工作流启动加载——入口无 SOURCE 块、不去读 ROADMAP 游标、`project-context.md` 存在、`docs/progress/INDEX.md` 不存在时工作流应**建议 Bootstrap** 而非读真源游标；
+5. 新增安装类回归用例全过；
+6. README 与脚本口径一致，`measure-context.sh` 注释与实现一致。
 
 ## 执行原则
 
