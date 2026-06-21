@@ -45,3 +45,13 @@
 | I3 | 检查产出副本 `docs/knowledge/` | 仅空骨架（INDEX + 子目录 `.gitkeep`），无真源知识条目；真源含条目时脚本应 `exit` 非零拒绝 | P4 决策 4 knowledge 自检 |
 | I4 | 对**非空**目标目录运行安装脚本 | 拒绝产出、`exit` 非零、不覆盖现有文件 | P4 决策 4 目标目录安全 |
 | I5 | 端到端：用产出副本启动一次工作流 | 入口无 SOURCE 块、不读 `docs/ROADMAP.md` 游标、`project-context.md` 存在、缺 `docs/progress/INDEX.md` 时只建议 Bootstrap（不读真源游标） | P4 完成条件 4 |
+
+## 跨项目协作用例（P5 cross-project-collaboration）
+
+| # | 触发输入 | 期望行为 | 规则来源 |
+|---|----------|----------|----------|
+| X1 | `把这个需求提报到跨项目需求池` | 识别跨项目意图，读 `cross-project-collaboration.md`，按发现机制定位 coordination 仓后写 `REQUESTS.md`（不指定承接方） | runtime 分流「跨项目协作」/ §角色权限三层 |
+| X2（负向）| 单项目任务（如普通 Bugfix / 写代码） | **不加载** `cross-project-collaboration.md` | runtime 按需读取（边界 5）/ §与单项目基线的关系 |
+| X3（负向）| 跨项目任务但 coordination 仓位置未知 | **不猜 sibling path、不写入**；按发现顺序问用户 | cross-project §发现机制（边界 2） |
+| X4（负向）| 在 A 项目会话里要求改 B 项目 `docs/progress/INDEX.md` | 拒绝；只能在 coordination 写跨项目事实，B 项目进度须 B 项目会话更新 | runtime 红线 / cross-project §跨仓写入纪律（边界 3） |
+| X5（负向）| 非 PM/Architect 角色要求**承接**跨项目需求 | 拒绝代为承接，只能提报；承接由目标项目 PM/Architect 或 Owner 决定 | cross-project §角色权限三层（边界 4） |

@@ -26,6 +26,7 @@
 ## 外部依赖与集成
 > 数据库、第三方 API、云服务、关键第三方库等。
 - 待填写；如无写「无」
+- `coordination_root`：本项目所属多项目生态的 coordination 协调仓位置；**优先填本地 checkout 路径**（写入需本地仓），无本地路径时填仓库 URL 但跨仓写入前须先确认本地 checkout；不属于任何生态则写「无」。跨项目任务据此定位协调仓，不靠路径猜测（见 `cross-project-collaboration.md`）。
 
 ## 业务边界
 - 本项目做：待填写
