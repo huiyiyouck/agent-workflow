@@ -30,7 +30,7 @@ printf "  %-46s %6s  [P2硬验 <15000]\n" "真实启动链路fixture(+pc模板+i
 printf "  %-46s %6s  [完整规范, 按需]\n" "multi-agent-workflow(单列)"          "$(count docs/baseline/multi-agent-workflow.md)"
 
 echo
-echo "# 双入口一致性（SOURCE-REPO-ONLY 块外正文应一致）"
+echo "# 双入口一致性（CLAUDE.md 与 AGENTS.md 应完全一致）"
 if diff -q CLAUDE.md AGENTS.md >/dev/null; then
   echo "  OK：CLAUDE.md 与 AGENTS.md 完全一致"
 else

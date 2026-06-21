@@ -35,3 +35,13 @@
 | G7 | 任意场景请求直接改他人角色日志 | 拒绝 | conventions 禁止事项 |
 | G8 | 下游项目发现规则需改 | 只写 `[基线修正提案]`，不直接改 baseline | runtime / multi-agent §14 |
 | G9 | 下游项目请求直接修改 `docs/baseline/*.md` | 拒绝直接改，转 `[基线修正提案]`（真源仓库例外，由 SOURCE-REPO-ONLY 块说明） | conventions 禁止事项（未经人工审核改 baseline） |
+
+## 安装/复用用例（P4 install-downstream.sh，脚本行为可自动验证）
+
+| # | 触发输入 | 期望行为 | 规则来源 |
+|---|----------|----------|----------|
+| I1 | 对空目标目录运行安装脚本 | 产出副本：入口剥离 SOURCE-REPO-ONLY 块、双入口一致、`docs/baseline/project-context.md` 占位存在 | P4 决策 1/2/3 |
+| I2 | 检查产出副本 | 不含真源专属：`docs/ROADMAP.md`、`docs/regression-cases.md`、`scripts/`、`docs/progress/` | P4 决策 4 排除清单 |
+| I3 | 检查产出副本 `docs/knowledge/` | 仅空骨架（INDEX + 子目录 `.gitkeep`），无真源知识条目；真源含条目时脚本应 `exit` 非零拒绝 | P4 决策 4 knowledge 自检 |
+| I4 | 对**非空**目标目录运行安装脚本 | 拒绝产出、`exit` 非零、不覆盖现有文件 | P4 决策 4 目标目录安全 |
+| I5 | 端到端：用产出副本启动一次工作流 | 入口无 SOURCE 块、不读 `docs/ROADMAP.md` 游标、`project-context.md` 存在、缺 `docs/progress/INDEX.md` 时只建议 Bootstrap（不读真源游标） | P4 完成条件 4 |
