@@ -19,6 +19,10 @@
 
 标准迭代产出按 `standard-iteration-quick.md` 指定 Review 方；非迭代产出按 `non-iteration-quick.md` 记录，默认不套完整 Review，仅影响扩大 / 线上风险 / 升级迭代时再指定。
 
+## 跨项目协作
+
+涉及跨项目时读 `cross-project-collaboration.md`。作为 Developer：可向 `REQUESTS.md` 提报跨项目需求（不指定承接方，承接由目标项目 PM/Architect 决定）；承接后的联调与证据更新由我执行。遵守跨仓写入纪律，不改其他项目 `docs/progress/`。
+
 ## 我审别人
 
 仅在 Review 计划指定 Developer（开发工程师）时参与 Review：

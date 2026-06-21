@@ -19,6 +19,10 @@
 
 标准迭代部署按 `standard-iteration-quick.md` 执行检查、高风险动态指定确认方；非迭代运维任务按 `non-iteration-quick.md` 记录，默认不套完整 Review。
 
+## 跨项目协作
+
+涉及跨项目时读 `cross-project-collaboration.md`。作为 DevOps：可向 `REQUESTS.md` 提报跨项目需求（不指定承接方，承接由目标项目 PM/Architect 决定）；不代为承接，不改其他项目 `docs/progress/`。
+
 ## 我审别人
 
 仅在 Review 计划指定 DevOps（运维/部署工程师）时参与 Review，重点检查部署方式、环境变量、云服务、发布风险和回滚条件。

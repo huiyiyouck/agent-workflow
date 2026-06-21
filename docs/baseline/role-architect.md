@@ -21,6 +21,10 @@
 
 标准迭代产出按 `standard-iteration-quick.md` 指定 Review 方；非迭代产出按 `non-iteration-quick.md` 记录，默认不套完整 Review，仅影响扩大 / 线上风险 / 升级迭代时再指定。
 
+## 跨项目协作
+
+涉及跨项目需求 / 契约 / 状态时读 `cross-project-collaboration.md`，按其发现机制定位 coordination 仓。作为 Architect：可在**本项目会话**承接 / 拒绝跨项目需求并推动转为本项目迭代，也可提报；跨项目契约改动先改 coordination `contracts/`；不替其他项目承接、不改其 `docs/progress/`。
+
 ## 我审别人
 
 仅在 Review 计划指定 Architect（架构师）时参与 Review：
