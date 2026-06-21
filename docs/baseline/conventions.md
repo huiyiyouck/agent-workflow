@@ -61,7 +61,7 @@
 
 ### 受保护路径名单
 
-每个项目首次启用本框架时，应由 Architect 在 ADR 中明确本项目的受保护路径名单。默认写入 `docs/baseline/architecture.md`；如果项目已有 ADR 目录，沿用项目约定路径，并在 `docs/knowledge/INDEX.md` 中登记。建议至少覆盖以下三类：
+每个项目首次启用本框架时，应由 Architect 在 ADR 中明确本项目的受保护路径名单。默认写入 `docs/knowledge/decisions/` 下的 ADR（`baseline/` 是工作流框架层，不放项目 ADR）；如果项目已有 ADR 目录，沿用项目约定路径，并在 `docs/knowledge/INDEX.md` 中登记。建议至少覆盖以下三类：
 
 | 类别 | 示例路径 |
 |------|----------|

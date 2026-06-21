@@ -10,12 +10,12 @@
 | 产出物 | 路径 |
 |--------|------|
 | 设计文档 | `docs/progress/iterations/vX.Y-design.md` |
-| ADR | `docs/baseline/architecture.md` |
+| ADR | `docs/knowledge/decisions/` |
 | 技术预研记录 | `docs/progress/ad-hoc/YYYY-MM-DD-spike-{short-name}.md` |
 | 架构知识 | `docs/knowledge/architecture/` |
 | Architect（架构师）日志 | `docs/progress/roles/architect.md` |
 
-项目首次启用工作流时，如需定义受保护路径名单，优先写入 `docs/baseline/architecture.md`；如果项目已有 ADR 目录，沿用项目约定路径，并在 `docs/knowledge/INDEX.md` 中登记。
+项目首次启用工作流时，如需定义受保护路径名单，写入 `docs/knowledge/decisions/` 下的 ADR（`baseline/` 是工作流框架层，不放项目 ADR）；如果项目已有 ADR 目录，沿用项目约定路径，并在 `docs/knowledge/INDEX.md` 中登记。
 
 ## 我产出时
 
