@@ -7,12 +7,12 @@
 
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
-- **更新于**：2026-06-20
+- **更新于**：2026-06-21
 - **正在做**：agent-workflow 自身演进，按本文档 P0→P4 推进。
-- **当前阶段**：P4 方案定稿（经二次复审补强：决策 4 复制范围与目标目录安全 + 端到端验证；对 Codex「排除 docs/knowledge/」建议作了修正，改为保留空骨架 + 自检，理由：Bootstrap 不建 knowledge 目录、排除会留工作台洞）。方案待提交，下一步进入实现。
+- **当前阶段**：P4 实现完成并验证通过（详见下「P4 已做」）。改动在工作区未提交：`scripts/install-downstream.sh`（新建）+ README 安装方式 + `measure-context.sh` 注释 + `bootstrap.md` project-context 时机 + 安装类回归用例 I1–I5。
 - **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）。
-- **下一步**：实现 P4 产物（`scripts/install-downstream.sh` + README 收敛 + measure 注释修正 + 安装类回归用例），再临时目录实跑 + 端到端验证 + diff 复审。
-- **待用户拍板**：是否现在开始实现（方案已定稿）。
+- **下一步**：用户确认后提交 P4（六个完成条件已全部实跑通过）。P0→P4 主线至此走完。
+- **待用户拍板**：是否提交 P4 改动。
 
 ## 演进定位
 
@@ -212,6 +212,13 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 - README「推荐安装方式」改为首选脚本、保留手动 fallback；
 - `measure-context.sh` 注释修正（与完整 diff 实现对齐）；
 - 回归用例补安装类：如「下游入口不应残留 SOURCE-REPO-ONLY 块」「下游副本不应含 ROADMAP / measure / regression 等真源专属文件」「下游会话不因残留块去读 ROADMAP 游标」。
+
+**已做（2026-06-21，实现 + 实跑验证）**：六个完成条件全部实跑通过——
+- 空目录实跑产出 0 退出，自检全过：入口无 SOURCE 锚点、双入口逐字一致、`project-context.md` 占位存在；
+- 产出副本不含真源专属（`ROADMAP`/`regression-cases`/`scripts/`/`progress/`），`docs/knowledge/` 仅空骨架（INDEX + 各分类 `.gitkeep`）；
+- 非空目标目录拒绝产出（退出 1）且不改动既有文件；knowledge 含真源条目时退出 1 且不建半成品目录；无参数退出 2；
+- 端到端：产出 `CLAUDE.md` 顶部直接为入口正文、无「自我演进→读 ROADMAP 游标」段、无 `ROADMAP` 引用，无 `docs/progress/` ⇒ 首个会话按 runtime 建议 Bootstrap，不读真源游标。
+- knowledge 自检在 `cp` 前（步骤 3），失败不残留半成品目标目录。
 
 **完成条件**：
 1. `install-downstream.sh` 在临时目录实跑一次，产出的副本：入口无 SOURCE-REPO-ONLY 锚点、双入口一致、`project-context.md` 占位存在（脚本自检全通过）；
