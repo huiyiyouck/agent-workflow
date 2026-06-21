@@ -8,11 +8,12 @@
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
 - **更新于**：2026-06-21
-- **正在做**：P0→P4 主线已全部完成并合入 `main`，当前无进行中的阶段。
-- **当前阶段**：无（主线完成，等待下一轮规划）。
-- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`，实现 `df8bd23`）。
-- **下一步**：待用户提出下一轮演进目标（如有），再据此规划新阶段。
-- **待用户拍板**：无。
+- **正在做**：P5「跨项目协调联动」方案定稿（经复审补强：已定架构边界 1-5、负向回归用例、P5-4 默认不做），尚未实现。
+- **当前阶段**：P5 方案待用户拍板后进入实现（实现范围 P5-1/2/3/5，P5-4 搁置）。
+- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`，实现 `df8bd23`）；ADR 路径一致性修正（`c50bec0`）。
+- **下一步**：用户拍板后实现 P5（P5-1~P5-5）。
+- **待用户拍板**：是否开始实现 P5。
+- **本轮搁置（明确不做）**：① WM（工作流管理者）角色去留——`xiaobao` 当前用旧版工作流，待其对齐最新真源后再单独审查；② 下游迁移执行（`xiaobao` 对齐、`ai`/`workboard` 接入）——本轮只补真源联动能力，不动下游。
 
 ## 演进定位
 
@@ -227,6 +228,49 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 4. **端到端验证**（采纳复审点 4）：产出副本能被一次干净的工作流启动加载——入口无 SOURCE 块、不去读 ROADMAP 游标、`project-context.md` 存在、`docs/progress/INDEX.md` 不存在时工作流应**建议 Bootstrap** 而非读真源游标；
 5. 新增安装类回归用例全过；
 6. README 与脚本口径一致，`measure-context.sh` 注释与实现一致。
+
+### P5 跨项目协调联动（方案定稿，待实现）
+
+**目标**：把「跨项目协调」从 `xiaobao` 的本地分叉，回收并提炼成 agent-workflow 真源的正式一环。让每个项目复制工作流时就自带「如何与 coordination 协调仓联动」的能力，使跨项目需求能在 coordination 的需求池（`REQUESTS.md`）与各业务项目内部迭代（`PRD → … → 测试`）之间顺畅流转。
+
+**背景诊断（2026-06-21）**：用户的 `niuma-cheng` 生态已是三层结构——agent-workflow（真源）→ N 个业务项目（`xiaobao`/`ai`/`workboard`/…）→ `niuma-cheng-coordination`（跨项目协调真源：需求池 / 契约 / 状态 / 沟通 / 决策）。
+
+- **衔接件已在下游实战、真源缺失**：`xiaobao/docs/baseline/cross-project-collaboration.md` 已写得相当完整（三层模型、需求流转生命周期、契约真源、开工前同步、会话边界、新项目复用），coordination 仓库 4 处把它当规则真源引用；但 agent-workflow 真源 `docs/baseline/` 没有此文件 → coordination 引用的是「住在下游、真源却没有」的规则，新项目复制真源工作流不会自带跨项目能力，联动断点在此。
+- **下游已分叉、版本落后**：`xiaobao` baseline 是旧版（仍用已废弃的 `architecture.md` ADR 路径），且其 `cross-project-collaboration.md` 内部有命名矛盾（communications 一处按需求 `REQ-001-news-l1.md`、另一处按项目对 `{a}__{b}.md`；coordination 实际用项目对 `xiaobao__ai.md`）→ 本轮按**项目对 v1** 统一消除矛盾（见已定架构边界 1）。
+- **`xiaobao` 还多发明了 `role-wm.md`（工作流管理者）角色**，真源无；其职责与真源「下游不改 baseline、只写基线修正提案」及已有流程审计机制大面积重叠。**本轮搁置**（待 `xiaobao` 对齐最新真源后单独审查）。
+
+**范围界定（用户拍板 2026-06-21）**：本轮**只补真源联动能力**；**不含**下游迁移执行（`xiaobao` 对齐、`ai`/`workboard` 接入），**不碰** WM 角色。**实现范围 = P5-1 / P5-2 / P5-3 / P5-5；P5-4（coordination 骨架模板）本轮默认不做**，除非用户单独拍板（理由：P5 目标是让业务项目知道如何联动**已有** coordination 仓，不是产出新的 coordination 产品模板；模板化应等 P5 真源规则稳定后再做）。
+
+**已定架构边界（2026-06-21 方案复审补强，实现时不得突破）**：
+
+1. **communications 命名 = 项目对（v1）**：采用 coordination 现状 `communications/{project-a}__{project-b}.md`（一对项目一份，承载这对项目之间所有需求的沟通过程）。回收 `cross-project-collaboration.md` 时，必须把 `xiaobao` 文件里「一个需求一份 `{REQ-id}-{短名}.md`」的相关表述**一并改写为「一对项目一份」**，消除其内部矛盾。「按需求命名」是 breaking 变更，**本轮不推**，列为 P7/v2 候选（避免在「不做下游迁移」的前提下把 coordination 现状变成 breaking 规则）。
+2. **coordination 仓发现机制（实操 blocker，必须补）**：协调仓位置记录在业务项目 `project-context.md` 的「外部依赖与集成」字段（如 `coordination_root`）。Agent 发现顺序固定为 **用户明确指定 > `project-context.md` 记录 > 找不到则询问用户**；**禁止靠 sibling path（如 `../niuma-cheng-coordination`）猜测**（换机器即错）。
+3. **跨仓写入纪律（P0/P1 红线）**：跨项目任务可读写 coordination 仓，但写入前必须确认 ① coordination 仓位置、② 其 git 同步状态（`git status` / 必要时 `pull`、冲突判断）、③ 本次改动范围；**只写 coordination 的跨项目事实**（`REQUESTS`/`STATUS`/`contracts`/`communications`）；**不得在 A 项目会话里改 B 项目的 `docs/progress/`**。该红线进 `runtime.md`（全模式）+ `cross-project-collaboration.md`。
+4. **角色权限三层**（保留 `xiaobao` 既有模型，非泛化指针）：**提报**——任一项目任一角色可写需求到 `REQUESTS.md`，不指定承接方；**承接 / 拒绝**——仅目标项目 PM（产品经理）或 Architect（架构师），Owner 可直接指派，其他角色不得代为承接；**联调 / 证据更新**——相关角色（通常 Developer）。
+5. **按需读取不破坏 P1**：新文件进 `docs/baseline/`（P4 安装脚本 `cp -R docs/baseline` 自动带上），但**只在「跨项目需求 / 契约 / 状态 / coordination 仓」触发时读取**，不进默认只读链路、不进标准迭代 quick、不计入固定规则链路。
+
+**步骤与产物**：
+
+| 步骤 | 做什么 | 产物 |
+|------|--------|------|
+| P5-1 回收衔接规则 | 把 `xiaobao` 的 `cross-project-collaboration.md` 提炼进真源 `docs/baseline/`：① communications **按项目对 v1**（边界 1），同步改写文件里「一个需求一份」表述消除内部矛盾；② 写入 coordination 仓**发现机制**（边界 2）与**跨仓写入纪律**（边界 3）；③ 保留**角色权限三层**模型（边界 4）；④ 对齐 P4 —「新项目复用」章节指向 `scripts/install-downstream.sh`、project-context 改为「安装脚本铺占位 / PM 填写」；⑤ 删除与已变更真源不符的引用（如已废弃的 `architecture.md` ADR 路径） | `docs/baseline/cross-project-collaboration.md`（真源新成员）；`project-context.template.md` 外部依赖字段加 `coordination_root` 示例 |
+| P5-2 runtime 路由接入 | 工作模式分流表加「跨项目需求 / 契约 / 状态」一行 → 读 `cross-project-collaboration.md`；跨模式触发索引加跨项目入口；**全模式红线加跨仓写入纪律**（边界 3）；明确加载时机（仅跨项目任务读，单项目任务不读 → 边界 5） | `runtime.md` 改 |
+| P5-3 角色职责挂钩 | 按**三层权限**（边界 4）挂钩：PM/Architect 加「承接 / 拒绝跨项目需求、转本项目迭代」；各角色加「可提报需求到 `REQUESTS.md`」；联调角色加「证据更新」。**轻量加指针**指向 `cross-project-collaboration.md`，不重写角色手册 | 相关 `role-*.md` 改 |
+| ~~P5-4 coordination 骨架模板~~ | **本轮默认不做**（见范围界定）。如单独拍板再做：把 coordination 的 `REQUESTS / STATUS / PROJECTS / contract / communication` 结构做成 `docs/templates/` | —（搁置） |
+| P5-5 收尾 | `install-downstream.sh` 确认带上新文件（`cp -R docs/baseline` 已覆盖，需确认非 SOURCE-REPO-ONLY、不被 knowledge 自检误拒）；`measure-context.sh` 复测（新文件按需读取，不进固定链路）；回归用例补跨项目（含负向，见完成条件 6）；ROADMAP 游标更新 | 脚本 / 回归 / ROADMAP |
+
+**完成条件**：
+1. 真源 `docs/baseline/cross-project-collaboration.md` 存在、内部命名自洽（communications 全文统一为项目对 v1，无「一个需求一份」残留）、引用全部可达、与 P4 安装流程口径一致；含发现机制、跨仓写入纪律、三层权限；
+2. `runtime.md` 能把「跨项目」意图路由到该文件，且单项目任务不误加载；全模式红线含跨仓写入纪律；
+3. PM/Architect/各角色手册的跨项目职责指针按三层权限挂钩、可达该文件，无断链；`project-context.template.md` 含 `coordination_root` 字段；
+4. `install-downstream.sh` 实跑产出的下游副本含 `cross-project-collaboration.md`，自检仍全通过；
+5. `measure-context.sh` 复测：固定规则链路不回归（新文件按需读取，不计入固定层）；双入口一致；
+6. 新增跨项目回归用例全过，**含负向**：① 单项目任务**不加载** `cross-project-collaboration.md`；② 找不到 coordination root 时**不得写入**、须询问；③ A 项目会话**不得改** B 项目 `docs/progress/`；④ 非 PM/Architect **不得承接**需求（只能提报）。
+
+**搁置项（后续阶段，本轮不做）**：
+- **P6 候选 · WM 角色审查**：待 `xiaobao` 对齐最新真源后，评估 WM 去留（不回收 / 仅真源元角色 / 通用角色）。
+- **P7 候选 · 下游迁移**：`xiaobao` 从旧分叉对齐到新真源；`ai`/`workboard` 用 `install-downstream.sh` 接入；在 coordination `PROJECTS.md`/`STATUS.md` 登记。
+- **v2 候选 · communications 按需求命名**：若未来要把 communications 从「一对项目一份」改为「一个需求一份 `{REQ-id}-{短名}.md`」，属 breaking 变更，须在 P7 下游迁移时同步改 coordination 现有结构与 `REQUESTS.md` 链接，单独设计。
 
 ## 执行原则
 
