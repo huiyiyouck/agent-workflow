@@ -55,3 +55,15 @@
 | X3（负向）| 跨项目任务但 coordination 仓位置未知 | **不猜 sibling path、不写入**；按发现顺序问用户 | cross-project §发现机制（边界 2） |
 | X4（负向）| 在 A 项目会话里要求改 B 项目 `docs/progress/INDEX.md` | 拒绝；只能在 coordination 写跨项目事实，B 项目进度须 B 项目会话更新 | runtime 红线 / cross-project §跨仓写入纪律（边界 3） |
 | X5（负向）| 非 PM/Architect 角色要求**承接**跨项目需求 | 拒绝代为承接，只能提报；承接由目标项目 PM/Architect 或 Owner 决定 | cross-project §角色权限三层（边界 4） |
+
+## 同步/复用用例（P7 sync-downstream.sh，脚本行为可自动验证）
+
+| # | 触发输入 | 期望行为 | 规则来源 |
+|---|----------|----------|----------|
+| S1 | 对不存在/空目录运行 sync | 首次安装：全装框架 + `project-context.md` 占位 + `docs/knowledge/` 骨架 + `.workflow-version`，入口剥离 SOURCE-REPO-ONLY | P7 sync 首装 |
+| S2 | 对已装项目再次运行 sync | 更新：框架文件被真源覆盖；`project-context.md` / `docs/knowledge/` 已有条目 / `docs/progress/` 一律**保留不碰** | P7 sync 幂等更新 |
+| S3 | 下游有真源没有的框架文件（本地分叉，如 `role-wm.md`） | 报告「下游独有」，**不删除**，提示人工决定 | P7 orphan 策略 |
+| S4 | `--dry-run` | 只预览覆盖/保留/独有，**不写任何文件** | P7 dry-run |
+| S5（负向）| 真源 `docs/knowledge/` 含条目时 sync / 无参数 | 拒绝同步（防真源知识泄漏，退出 1）/ 无参数退出 2 | P7 前置关卡 |
+| S6（负向）| 目标设为真源自身或其子目录（如 `sync . ` / `sync <真源路径>`） | 拒绝（退出 1），不截断/污染真源文件 | P7 目标安全（realpath 检查） |
+| S7（负向）| 目标是 git 仓且工作区有未提交改动（非 dry-run） | 拒绝（退出 1），提示先提交/暂存或 dry-run；`--dry-run` 仍可预览 | P7 覆盖式同步保护 |
