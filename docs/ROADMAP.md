@@ -8,11 +8,11 @@
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
 - **更新于**：2026-06-21
-- **正在做**：P0→P5 主线已全部完成并合入 `main`，当前无进行中阶段。
-- **当前阶段**：无（主线完成；P6/P7 候选待启动）。
+- **正在做**：P7「下游同步能力」第 1 步——`sync-downstream.sh`（幂等同步脚本，含目标安全 / dirty 保护 / dry-run 清单）已实现并通过二次复审，走 PR 复审合并。
+- **当前阶段**：P7 第 1 步（建能力）走 PR 合并中；第 2 步（ai 接入）、第 3 步（xiaobao 对齐）未开始。
 - **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`，实现 `df8bd23`）+ P5（PR #2，merge `ddf5683`，实现 `006bb24`）；ADR 路径一致性修正（`c50bec0`）。
-- **下一步**：待用户启动 P6（WM 角色审查）/ P7（下游迁移），或提出新目标。
-- **待用户拍板**：无。
+- **下一步**：复审通过后提交 sync 脚本（开分支 + PR），再进 P7 第 2 步给 `ai` 首次同步。
+- **待用户拍板**：是否提交 sync 脚本 + 启动 `ai` 接入。
 - **本轮搁置（明确不做）**：① WM（工作流管理者）角色去留——`xiaobao` 当前用旧版工作流，待其对齐最新真源后再单独审查；② 下游迁移执行（`xiaobao` 对齐、`ai`/`workboard` 接入）——本轮只补真源联动能力，不动下游。
 
 ## 演进定位
@@ -276,9 +276,29 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 6. 新增跨项目回归用例全过，**含负向**：① 单项目任务**不加载** `cross-project-collaboration.md`；② 找不到 coordination root 时**不得写入**、须询问；③ A 项目会话**不得改** B 项目 `docs/progress/`；④ 非 PM/Architect **不得承接**需求（只能提报）。
 
 **搁置项（后续阶段，本轮不做）**：
-- **P6 候选 · WM 角色审查**：待 `xiaobao` 对齐最新真源后，评估 WM 去留（不回收 / 仅真源元角色 / 通用角色）。
-- **P7 候选 · 下游迁移**：`xiaobao` 从旧分叉对齐到新真源；`ai`/`workboard` 用 `install-downstream.sh` 接入；在 coordination `PROJECTS.md`/`STATUS.md` 登记。
-- **v2 候选 · communications 按需求命名**：若未来要把 communications 从「一对项目一份」改为「一个需求一份 `{REQ-id}-{短名}.md`」，属 breaking 变更，须在 P7 下游迁移时同步改 coordination 现有结构与 `REQUESTS.md` 链接，单独设计。
+- **P6 候选 · WM 角色审查**：待 `xiaobao` 对齐最新真源后，评估 WM 去留（不回收 / 仅真源元角色 / 通用角色）。sync 脚本已能把 `role-wm.md` 作为「下游独有文件」报告出来，为本审查提供触发点。
+- **v2 候选 · communications 按需求命名**：若未来要把 communications 从「一对项目一份」改为「一个需求一份 `{REQ-id}-{短名}.md`」，属 breaking 变更，须随下游迁移同步改 coordination 现有结构与 `REQUESTS.md` 链接，单独设计。
+
+### P7 下游同步能力与接入（进行中）
+
+**目标**：让下游项目能**复用并持续同步**真源工作流，告别手动复制；据此把 `ai`/`xiaobao` 接入。用户拍板用**幂等同步脚本**机制（非 git subtree/submodule）。
+
+**第 1 步 · 建能力（已做，2026-06-21，未提交待复审）**：
+- 新增 `scripts/sync-downstream.sh`：幂等（首装 + 更新通吃，不要求空目录）；**覆盖框架**（入口剥离 SOURCE / `docs/baseline` 除 `project-context.md` / `docs/templates`），**保留项目专属**（`docs/progress/` / `project-context.md` / `docs/knowledge/` 已有条目）；**下游独有框架文件只报告不删**（接 P6 的 WM 触发点）；写 `.workflow-version` 版本标记；`--dry-run` 预览。
+- 与 `install-downstream.sh` 分工：install 管「严格空目录一次性首装」，sync 管「已有项目安装 + 持续更新」，install 保留不动。
+- **首轮复审加固**：① 目标安全 —— realpath 拒绝「目标=真源自身/子目录」（否则 `> $DEST/CLAUDE.md` 会先截断再读、毁真源入口）；② 覆盖式同步保护 —— 目标是 git 仓且工作区 dirty 则拒绝（提示先提交/暂存或 dry-run），dry-run 不受限；③ dry-run 由「只报数量」升级为「逐个列出覆盖清单」，便于审分叉项目。
+- 回归用例 `regression-cases` 加 S1-S7；临时目录全测试通过（首装 / 更新保留专属 / orphan 报告 / dry-run 清单 / 用法错误 / 目标=真源拒绝 / dirty 拒绝 / clean 回归）。
+
+**第 2 步 · `ai` 接入（未开始）**：`ai` 无分叉、有代码无工作流 → `sync-downstream.sh <ai>` 首次同步 → Bootstrap → 填 `project-context.md` 的 `coordination_root` → coordination `PROJECTS.md`/`STATUS.md` 登记。
+
+**第 3 步 · `xiaobao` 对齐（未开始，最谨慎）**：先 `--dry-run` 看分叉报告（`role-wm.md` 等独有文件、被覆盖的本地改动）→ 按 P6 决定 WM 去留 → 正式 sync 更新 → 校验 progress/project-context 未受损。
+
+**完成条件**：
+1. `sync-downstream.sh` 幂等：首装与重复更新均自检通过；项目专属在更新中零损失；
+2. 下游独有框架文件被报告而非删除；`--dry-run` 不写任何文件；真源 knowledge 含条目时拒绝同步；
+3. S1-S7 回归用例全过；
+4. `ai` 经 sync 接入后能干净启动工作流、跨项目联动可用（填 `coordination_root` 后）；
+5. `xiaobao` 对齐后 progress/project-context 无损，分叉项（WM）按 P6 结论处理。
 
 ## 执行原则
 
