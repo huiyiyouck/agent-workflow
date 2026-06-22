@@ -7,13 +7,13 @@
 
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
-- **更新于**：2026-06-21
-- **正在做**：P7「下游同步能力」第 1 步（建能力）已完成并合入 `main`；第 2 步（ai 接入）、第 3 步（xiaobao 对齐）未开始。
-- **当前阶段**：P7 第 1 步完成；待启动第 2 步（在 `ai` 项目内跑 sync 接入）。
-- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`，实现 `df8bd23`）+ P5（PR #2，merge `ddf5683`，实现 `006bb24`）+ P7 第 1 步（PR #3，merge `6bfba79`，实现 `e9d73cb`）；ADR 路径一致性修正（`c50bec0`）。
-- **下一步**：用户拍板后进 P7 第 2 步——在 `ai` 项目内 `sync-downstream.sh` 首装 → Bootstrap → 填 `coordination_root` → coordination 登记。
-- **待用户拍板**：是否启动 `ai` 接入（需离开本仓库、在 `ai` 项目内操作）。
-- **本轮搁置（明确不做）**：① WM（工作流管理者）角色去留——`xiaobao` 当前用旧版工作流，待其对齐最新真源后再单独审查；② 下游迁移执行（`xiaobao` 对齐、`ai`/`workboard` 接入）——本轮只补真源联动能力，不动下游。
+- **更新于**：2026-06-22
+- **正在做**：P8「基线修正提案走 coordination 管理」方案已 Owner 评审**通过、定稿**；本轮提交方案 commit（仅 `docs/ROADMAP.md`），暂不实现。
+- **当前阶段**：P0→P7 主线全部完成（P7 三步：建能力 PR #3 `6bfba79` / ai 接入 `6675531` / xiaobao 对齐 `1dae522`，agent-workflow 与 xiaobao 已 push）。注：**coordination 的 ai 接入登记本地已完成，尚有 `ahead 2` 待推送**（P8 实施前置收口）。推进至 P8 方案定稿。
+- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；收下下游基线修正提案（`2a8c936`，已 push）。
+- **下一步**：**实施前置** = coordination 会话 push `ahead 2` 收口 → 之后按 P8 ⑦ 6 步自举实现，跑 measure-context + sync 自检 + `rg` 旧口径复核 + BCR 回归用例。
+- **待前置**：coordination `ahead 2` 推送收口后再启动 P8 实现（实现前不动 baseline）。
+- **本轮搁置（明确不做）**：`workboard` 接入工作流。
 
 ## 演进定位
 
@@ -276,10 +276,10 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 6. 新增跨项目回归用例全过，**含负向**：① 单项目任务**不加载** `cross-project-collaboration.md`；② 找不到 coordination root 时**不得写入**、须询问；③ A 项目会话**不得改** B 项目 `docs/progress/`；④ 非 PM/Architect **不得承接**需求（只能提报）。
 
 **搁置项（后续阶段，本轮不做）**：
-- **P6 候选 · WM 角色审查**：待 `xiaobao` 对齐最新真源后，评估 WM 去留（不回收 / 仅真源元角色 / 通用角色）。sync 脚本已能把 `role-wm.md` 作为「下游独有文件」报告出来，为本审查提供触发点。
+- **P6（已决 · 2026-06-22）· WM 角色裁撤**：`xiaobao` 对齐真源时，因真源入口 / `runtime` / 角色矩阵均无 WM，sync 后 `role-wm.md` 已成无入口死文件，故按「裁撤」处理并在小报侧删除该 orphan。日后若要把 WM 泛化收编，仍走基线修正提案（归集人 = 真源维护方）。
 - **v2 候选 · communications 按需求命名**：若未来要把 communications 从「一对项目一份」改为「一个需求一份 `{REQ-id}-{短名}.md`」，属 breaking 变更，须随下游迁移同步改 coordination 现有结构与 `REQUESTS.md` 链接，单独设计。
 
-### P7 下游同步能力与接入（进行中）
+### P7 下游同步能力与接入（已完成）
 
 **目标**：让下游项目能**复用并持续同步**真源工作流，告别手动复制；据此把 `ai`/`xiaobao` 接入。用户拍板用**幂等同步脚本**机制（非 git subtree/submodule）。
 
@@ -289,9 +289,9 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 - **首轮复审加固**：① 目标安全 —— realpath 拒绝「目标=真源自身/子目录」（否则 `> $DEST/CLAUDE.md` 会先截断再读、毁真源入口）；② 覆盖式同步保护 —— 目标是 git 仓且工作区 dirty 则拒绝（提示先提交/暂存或 dry-run），dry-run 不受限；③ dry-run 由「只报数量」升级为「逐个列出覆盖清单」，便于审分叉项目。
 - 回归用例 `regression-cases` 加 S1-S7；临时目录全测试通过（首装 / 更新保留专属 / orphan 报告 / dry-run 清单 / 用法错误 / 目标=真源拒绝 / dirty 拒绝 / clean 回归）。
 
-**第 2 步 · `ai` 接入（未开始）**：`ai` 无分叉、有代码无工作流 → `sync-downstream.sh <ai>` 首次同步 → Bootstrap → 填 `project-context.md` 的 `coordination_root` → coordination `PROJECTS.md`/`STATUS.md` 登记。
+**第 2 步 · `ai` 接入（已完成 2026-06-21）**：`sync-downstream.sh` 首装（`.workflow-version` = `agent-workflow@90edee2`）→ Bootstrap（建 `docs/progress/`）→ 填 `coordination_root` → coordination `PROJECTS.md`/`STATUS.md` 登记「已接入」；`ai` 已配 git remote 并推送 `main`（commit `6675531`）。
 
-**第 3 步 · `xiaobao` 对齐（未开始，最谨慎）**：先 `--dry-run` 看分叉报告（`role-wm.md` 等独有文件、被覆盖的本地改动）→ 按 P6 决定 WM 去留 → 正式 sync 更新 → 校验 progress/project-context 未受损。
+**第 3 步 · `xiaobao` 对齐（已完成 2026-06-22）**：清 dirty → `--dry-run` 看分叉 → 按 P6 裁撤 WM（删 `role-wm.md`）→ 正式 sync（23 改 / 5 增）→ 校验 progress/project-context/knowledge 无损；项目 ADR `architecture.md` 作下游独有保留（commit `1dae522`，已 push origin/main）。
 
 **完成条件**：
 1. `sync-downstream.sh` 幂等：首装与重复更新均自检通过；项目专属在更新中零损失；
@@ -299,6 +299,57 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 3. S1-S7 回归用例全过；
 4. `ai` 经 sync 接入后能干净启动工作流、跨项目联动可用（填 `coordination_root` 后）；
 5. `xiaobao` 对齐后 progress/project-context 无损，分叉项（WM）按 P6 结论处理。
+
+### P8 · 基线修正提案走 coordination 管理（方案定稿 · Owner 已通过 2026-06-22）
+
+**动机**：现状基线修正提案靠 **Owner 人肉「带回真源」**（口头/记忆摆渡，易丢、无状态、无追踪）。改为走 coordination 登记，把摆渡介质从「人脑记忆」升级为「双方可查的共享真源仓」——有登记、有状态、可追溯，复用 P5 需求池范式，不发明新机制。`agent-workflow` 在结构上是「被提需求方」，但**非业务项目**，须特殊处理（见下）。
+
+**① 评估/采纳权（finding 5）**：基线修正由 **Owner + agent-workflow 真源维护会话（General）** 评估、采纳、落地。下游任一角色**只能提报**，不能在下游改 `docs/baseline/`，不能替真源判定「已采纳」。不套用 P5「目标项目 PM/Architect 承接」（agent-workflow 无 PM/Architect 承接语义）。
+
+**② 登记位置与 id（finding 3）**：在 `coordination/REQUESTS.md` 开独立区块 `## 基线修正提案池`，独立前缀 **`BCR-###`**（Baseline Change Request），不与普通 `REQ-###` 混用。**不放 `decisions/`**——`decisions/` 只承载已采纳的终态决策，不适合「待评估/拒绝/部分采纳」的流转态。
+**BCR 表最小列**（实现照此，避免写成散文，`BCR-001` 自举样例直接套模板）：`BCR id | 提出方 | 摘要 | 影响范围 | 状态 | 真源评估记录 | 真源落地 commit | 回流清单 | 备注`。
+
+**③ 专属状态机 + 回流清单（finding 4：「已回流」是闭环条件，非可选）**：
+`已提报 → 评估中 → 已采纳 / 部分采纳 / 已拒绝 / 转 v2 候选 → 已落地真源 → 回流中 → 已回流下游`
+每条 BCR 带**下游回流清单**（真源改完后各下游未 sync 前仍在旧规则，须逐项追踪）：
+`ai: <synced commit> / xiaobao: <synced commit> / workboard: 未接入（不适用）`。全部下游回流完才置「已回流下游」终态。
+**回流清单的下游集合来源（finding 4）**：以 `coordination/PROJECTS.md` 中「已接入 agent-workflow」的项目为准——新项目接入后须纳入；未接入工作流的项目不计入、不构成阻塞（标「不适用」）。
+
+**④ agent-workflow 登记进 PROJECTS.md**：`coordination/PROJECTS.md` 加 `agent-workflow` 条目，定位写死「**工作流真源，只承接基线修正提案（BCR），不承接业务功能 / 接口契约**」。未登记前不得受理提报。
+
+**⑤ 分工（沿用 P5「需求池记状态、过程在各仓」）**：
+- **coordination**：BCR 条目 + 状态流转 + 摘要 + 回流清单 + 链接。
+- **真源 `docs/progress/ad-hoc/`**：评估细节 + 落地 diff + 回归用例（即 `2a8c936` 那种 proposal 文件）。
+
+**⑥ 实施范围（finding 6：旧「带回真源」口径分散多处，须一并改，否则新旧并存）**：
+- `cross-project-collaboration.md`：新增「§基线修正提案流转」（BCR 全流程主规则）。
+- `runtime.md`（分流表/触发索引）、`work-modes.md`（审计行）、`mechanisms.md`（审计/收尾）、`multi-agent-workflow.md`（§14 基线修正 / §15 增删角色及相关引用）、`README.md`（真源性质说明）：把「写 `[基线修正提案]` 带回真源」统一改/补为「按 `cross-project-collaboration.md` 写入 coordination BCR 池」。
+- `regression-cases.md`：补 BCR 回归用例（见⑨）。
+- 行号随编辑漂移，实现时以 `grep "带回真源"` 为准定位。
+
+**⑦ 自举（第一次例外，按序执行，避免「先改真源但 BCR 池不存在」的空窗，finding 5）**：
+1. coordination 会话 push 当前 `ahead 2`；
+2. `coordination/PROJECTS.md` 登记 `agent-workflow`（④ 的定位）；
+3. `coordination/REQUESTS.md` 建 `BCR-001`（状态：评估中 → 已采纳）；
+4. 真源 General 实现 P8 baseline 修改（⑥ 范围）；
+5. `BCR-001` 置「已落地真源」，记真源 commit；
+6. sync 回流各下游后置「已回流下游」。
+自举例外**仅限本次**，不泛化为「下游可直接改 baseline」。
+
+**⑧ 实施前置**：
+1. 先在 **coordination 会话** push 当前 `ahead 2`（`048c757`/`65734c8`，ai 接入登记）——P8 要让 coordination 当共享真源，它自己得先收口。
+2. ROADMAP 两处 stale 已修（`2a8c936` / `1dae522` 均已 push，本次 review 修正）。
+
+**⑨ 回归用例（实现后补，纳入 `regression-cases.md`）**：
+- 下游发现规则问题 → 写 coordination `BCR-###`，**不改本项目 `baseline/`**。
+- `agent-workflow` 未登记进 `PROJECTS.md` 时**不得受理提报**。
+- 已落地真源但下游未 sync 时**不得标「已回流下游」**。
+- 被拒绝 / 转 v2 候选的提案**不得改 baseline**。
+- 真源自举例外**仅本次 P8**，不得泛化成下游可直接改 baseline。
+
+**实现后自检**：`./scripts/measure-context.sh`（字数不回退硬限）、`git diff --check`、`scripts/sync-downstream.sh /tmp/agent-workflow-p8-check`（同步自检通过）、`rg '带回真源|基线修正提案'`（复核旧口径无漏网残留——每处确认是有意保留还是已替换为 BCR 流转，finding 6）。
+
+**已知局限（诚实记录，非缺陷）**：coordination 是独立仓，仍需「下游会话写 coordination、真源会话读 coordination」，摆渡动作不消失——但介质从「人脑记忆」变为「共享仓库登记」，这正是其价值。
 
 ## 执行原则
 
