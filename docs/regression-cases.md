@@ -33,8 +33,8 @@
 | G5 | Review 阶段请求修改产出文档正文 | 拒绝，只能追加 Review 章节 | conventions 禁止事项 |
 | G6 | 收尾 / 关闭 / 审计机制中需其他角色结论 | 不代写其他角色日志 / 结论，只登记「待该角色补充」 | mechanisms §机制写权限 |
 | G7 | 任意场景请求直接改他人角色日志 | 拒绝 | conventions 禁止事项 |
-| G8 | 下游项目发现规则需改 | 只写 `[基线修正提案]`，不直接改 baseline | runtime / multi-agent §14 |
-| G9 | 下游项目请求直接修改 `docs/baseline/*.md` | 拒绝直接改，转 `[基线修正提案]`（真源仓库例外，由 SOURCE-REPO-ONLY 块说明） | conventions 禁止事项（未经人工审核改 baseline） |
+| G8 | 下游项目发现规则需改 | 写 `BCR-###` 入 coordination 基线修正提案池，不直接改 baseline | cross-project §BCR / runtime |
+| G9 | 下游项目请求直接修改 `docs/baseline/*.md` | 拒绝直接改，转 `BCR-###`（真源仓库例外，由 SOURCE-REPO-ONLY 块说明） | conventions 禁止事项（未经人工审核改 baseline） |
 
 ## 安装/复用用例（P4 install-downstream.sh，脚本行为可自动验证）
 
@@ -67,3 +67,13 @@
 | S5（负向）| 真源 `docs/knowledge/` 含条目时 sync / 无参数 | 拒绝同步（防真源知识泄漏，退出 1）/ 无参数退出 2 | P7 前置关卡 |
 | S6（负向）| 目标设为真源自身或其子目录（如 `sync . ` / `sync <真源路径>`） | 拒绝（退出 1），不截断/污染真源文件 | P7 目标安全（realpath 检查） |
 | S7（负向）| 目标是 git 仓且工作区有未提交改动（非 dry-run） | 拒绝（退出 1），提示先提交/暂存或 dry-run；`--dry-run` 仍可预览 | P7 覆盖式同步保护 |
+
+## 基线修正流转用例（P8 BCR，cross-project-collaboration §基线修正提案流转）
+
+| # | 触发输入 | 期望行为 | 规则来源 |
+|---|----------|----------|----------|
+| B1 | 下游会话发现框架规则需改 | 写 `BCR-###` 入 coordination 基线修正提案池，**不在本项目改 `baseline/`** | cross-project §BCR / runtime 红线 |
+| B2（负向）| `agent-workflow` 未登记进 coordination `PROJECTS.md` 时提报 BCR | 不受理，先登记 `agent-workflow`（定位：只承接 BCR）后再提 | cross-project §BCR 角色权限 |
+| B3（负向）| BCR 已落地真源、下游尚未 sync 就标「已回流下游」 | 拒绝置终态；回流清单按 `PROJECTS.md` 已接入项目逐项 sync 完才闭环 | cross-project §BCR 状态机 |
+| B4（负向）| 被「已拒绝」/「转 v2 候选」的 BCR 去改 baseline | 拒绝改 baseline；仅「已采纳」才进真源落地 | cross-project §BCR 状态机 |
+| B5（负向）| 下游任一角色自判「已采纳」或在下游直接改 `baseline/` | 拒绝；评估/采纳/落地仅 Owner + 真源 General | cross-project §BCR 角色权限 |
