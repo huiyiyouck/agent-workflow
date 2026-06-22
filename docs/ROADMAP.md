@@ -276,7 +276,7 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 
 **搁置项（后续阶段，本轮不做）**：
 - **P6（已决 · 2026-06-22）· WM 角色裁撤**：`xiaobao` 对齐真源时，因真源入口 / `runtime` / 角色矩阵均无 WM，sync 后 `role-wm.md` 已成无入口死文件，故按「裁撤」处理并在小报侧删除该 orphan。日后若要把 WM 泛化收编，仍走基线修正提案（归集人 = 真源维护方）。
-- **v2 候选 · communications 按需求命名**：若未来要把 communications 从「一对项目一份」改为「一个需求一份 `{REQ-id}-{短名}.md`」，属 breaking 变更，须随下游迁移同步改 coordination 现有结构与 `REQUESTS.md` 链接，单独设计。
+- ~~**v2 候选 · communications 按需求命名**~~：**已采纳落地（BCR-002，2026-06-22）**。P5 因「无回流机制 + 不动下游」搁置；P7/P8 建成 sync 回流后，趁生态仅 1 份沟通文档（`xiaobao__ai.md` / REQ-001）迁移成本最低之机切换为「一个需求一份 `{REQ-id}-{短名}.md`」，命名轴对齐机制核心单元 REQ。真源 `cross-project-collaboration.md` §communications 已改（反孤儿移交 REQUESTS 一一对应 + `communications/README.md` 索引）；coordination 实体迁移与下游 sync 回流随 BCR-002 流转。
 
 ### P7 下游同步能力与接入（已完成）
 

@@ -55,6 +55,8 @@
 | X3（负向）| 跨项目任务但 coordination 仓位置未知 | **不猜 sibling path、不写入**；按发现顺序问用户 | cross-project §发现机制（边界 2） |
 | X4（负向）| 在 A 项目会话里要求改 B 项目 `docs/progress/INDEX.md` | 拒绝；只能在 coordination 写跨项目事实，B 项目进度须 B 项目会话更新 | runtime 红线 / cross-project §跨仓写入纪律（边界 3） |
 | X5（负向）| 非 PM/Architect 角色要求**承接**跨项目需求 | 拒绝代为承接，只能提报；承接由目标项目 PM/Architect 或 Owner 决定 | cross-project §角色权限三层（边界 4） |
+| X6 | 某 REQ 被承接后建沟通文档 | 按 `communications/{REQ-id}-{短名}.md` 命名（一需求一份），`REQUESTS.md` 该 REQ「沟通文档」字段一一对应链接；`PROJECTS.md` 不逐份钉死、指向 `REQUESTS.md` | cross-project §communications（按需求，BCR-002） |
+| X7（负向）| 把多个 REQ 的沟通塞进一份按项目对命名的 `{a}__{b}.md` | 拒绝旧命名轴；改按需求一份，反孤儿由 REQ↔文档一一对应 + `communications/README.md` 索引担保 | cross-project §communications（按需求，BCR-002） |
 
 ## 同步/复用用例（P7 sync-downstream.sh，脚本行为可自动验证）
 
