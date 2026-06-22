@@ -8,9 +8,9 @@
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
 - **更新于**：2026-06-22
-- **正在做**：P8「基线修正提案走 coordination 管理」方案已 Owner 评审**通过、定稿**；本轮提交方案 commit（仅 `docs/ROADMAP.md`），暂不实现。
+- **正在做**：P8 方案已并入 `main`（PR #4，merge `fe99ac3`，方案 commit `27b5def`）；下一步实施前置（coordination push `ahead 2`），再按 ⑦ 6 步自举实现。
 - **当前阶段**：P0→P7 主线全部完成（P7 三步：建能力 PR #3 `6bfba79` / ai 接入 `6675531` / xiaobao 对齐 `1dae522`，agent-workflow 与 xiaobao 已 push）。注：**coordination 的 ai 接入登记本地已完成，尚有 `ahead 2` 待推送**（P8 实施前置收口）。推进至 P8 方案定稿。
-- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；收下下游基线修正提案（`2a8c936`，已 push）。
+- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；收下下游基线修正提案（`2a8c936`，已 push）；P8 方案定稿（PR #4，merge `fe99ac3`，commit `27b5def`，仅方案、未实现）。
 - **下一步**：**实施前置** = coordination 会话 push `ahead 2` 收口 → 之后按 P8 ⑦ 6 步自举实现，跑 measure-context + sync 自检 + `rg` 旧口径复核 + BCR 回归用例。
 - **待前置**：coordination `ahead 2` 推送收口后再启动 P8 实现（实现前不动 baseline）。
 - **本轮搁置（明确不做）**：`workboard` 接入工作流。
@@ -300,7 +300,7 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 4. `ai` 经 sync 接入后能干净启动工作流、跨项目联动可用（填 `coordination_root` 后）；
 5. `xiaobao` 对齐后 progress/project-context 无损，分叉项（WM）按 P6 结论处理。
 
-### P8 · 基线修正提案走 coordination 管理（方案定稿 · Owner 已通过 2026-06-22）
+### P8 · 基线修正提案走 coordination 管理（方案定稿 · Owner 通过 · 已并入 main PR #4 `fe99ac3`）
 
 **动机**：现状基线修正提案靠 **Owner 人肉「带回真源」**（口头/记忆摆渡，易丢、无状态、无追踪）。改为走 coordination 登记，把摆渡介质从「人脑记忆」升级为「双方可查的共享真源仓」——有登记、有状态、可追溯，复用 P5 需求池范式，不发明新机制。`agent-workflow` 在结构上是「被提需求方」，但**非业务项目**，须特殊处理（见下）。
 
