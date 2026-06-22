@@ -8,11 +8,10 @@
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
 - **更新于**：2026-06-22
-- **正在做**：P8 方案已并入 `main`（PR #4，merge `fe99ac3`，方案 commit `27b5def`）；下一步实施前置（coordination push `ahead 2`），再按 ⑦ 6 步自举实现。
-- **当前阶段**：P0→P7 主线全部完成（P7 三步：建能力 PR #3 `6bfba79` / ai 接入 `6675531` / xiaobao 对齐 `1dae522`，agent-workflow 与 xiaobao 已 push）。注：**coordination 的 ai 接入登记本地已完成，尚有 `ahead 2` 待推送**（P8 实施前置收口）。推进至 P8 方案定稿。
-- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；收下下游基线修正提案（`2a8c936`，已 push）；P8 方案定稿（PR #4，merge `fe99ac3`，commit `27b5def`，仅方案、未实现）。
-- **下一步**：**实施前置** = coordination 会话 push `ahead 2` 收口 → 之后按 P8 ⑦ 6 步自举实现，跑 measure-context + sync 自检 + `rg` 旧口径复核 + BCR 回归用例。
-- **待前置**：coordination `ahead 2` 推送收口后再启动 P8 实现（实现前不动 baseline）。
+- **正在做**：P8 step 4（真源 baseline 改造，BCR 流转落地）已完成、自检全绿，待开 PR 复审合并。
+- **当前阶段**：P0→P7 完成；P8 自举进行中——前置（coordination 收口）已完成，coordination 已登记 `agent-workflow` + 建 `BCR-001`（`b80ea80`，远端同步），真源 baseline 已改完待 PR。
+- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；收下下游基线修正提案（`2a8c936`，已 push）；P8 方案定稿（PR #4，merge `fe99ac3`，commit `27b5def`）。
+- **下一步**：开 `feat/p8-bcr-impl` PR → 合并后回填 `BCR-001` 真源落地 commit；再由 coordination / 下游会话推进 `BCR-001` step 5/6（已落地真源 → 回流中 → 已回流下游）。
 - **本轮搁置（明确不做）**：`workboard` 接入工作流。
 
 ## 演进定位
@@ -348,6 +347,8 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 - 真源自举例外**仅本次 P8**，不得泛化成下游可直接改 baseline。
 
 **实现后自检**：`./scripts/measure-context.sh`（字数不回退硬限）、`git diff --check`、`scripts/sync-downstream.sh /tmp/agent-workflow-p8-check`（同步自检通过）、`rg '带回真源|基线修正提案'`（复核旧口径无漏网残留——每处确认是有意保留还是已替换为 BCR 流转，finding 6）。
+
+**度量记录（实现后）**：`runtime.md` 因 BCR 分流行/红线/触发索引由 2937→**3068 字符**，超过 P5 接受的 2937；但固定规则链路 **6992 < 13000**、标准迭代链路 **9952 < 15000**、真实启动 **12473 < 15000**，双入口一致。**接受 3068**，理由同 P1/P5 既定调——**BCR P0 可达性优先于 `runtime.md` 单文件体量**。
 
 **已知局限（诚实记录，非缺陷）**：coordination 是独立仓，仍需「下游会话写 coordination、真源会话读 coordination」，摆渡动作不消失——但介质从「人脑记忆」变为「共享仓库登记」，这正是其价值。
 
