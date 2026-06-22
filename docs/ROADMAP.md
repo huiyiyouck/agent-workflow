@@ -8,10 +8,10 @@
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
 - **更新于**：2026-06-22
-- **正在做**：P8 step 4（真源 baseline 改造，BCR 流转落地）已完成、自检全绿，待开 PR 复审合并。
-- **当前阶段**：P0→P7 完成；P8 自举进行中——前置（coordination 收口）已完成，coordination 已登记 `agent-workflow` + 建 `BCR-001`（`b80ea80`，远端同步），真源 baseline 已改完待 PR。
-- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；收下下游基线修正提案（`2a8c936`，已 push）；P8 方案定稿（PR #4，merge `fe99ac3`，commit `27b5def`）。
-- **下一步**：开 `feat/p8-bcr-impl` PR → 合并后回填 `BCR-001` 真源落地 commit；再由 coordination / 下游会话推进 `BCR-001` step 5/6（已落地真源 → 回流中 → 已回流下游）。
+- **正在做**：P8 step 4（真源 baseline 改造，BCR 流转落地）已合并入 main（PR #5，merge `663f59b`，落地 commit `fc22e75`）。真源侧 P8 收尾完成。
+- **当前阶段**：P0→P7 完成；P8 真源侧已落地（step 1–4 完成）。剩 `BCR-001` step 5/6 在 coordination / 下游会话执行，不在真源会话。
+- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；收下下游基线修正提案（`2a8c936`，已 push）；P8 方案定稿（PR #4，merge `fe99ac3`，commit `27b5def`）+ **P8 实现落地真源**（PR #5，merge `663f59b`，commit `fc22e75`）。
+- **下一步**（均非真源会话，真源侧无待办）：① coordination 会话把 `BCR-001` 标「已落地真源」，回填真源落地 commit `fc22e75`（和/或 merge `663f59b`）；② 各下游会话跑 `sync-downstream.sh` 回流；③ 回流清单逐项完成后 coordination 把 `BCR-001` 标「已回流下游」终态。下一个新阶段（P9+）待 Owner 提出。
 - **本轮搁置（明确不做）**：`workboard` 接入工作流。
 
 ## 演进定位
