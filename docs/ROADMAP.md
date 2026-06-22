@@ -8,10 +8,10 @@
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
 - **更新于**：2026-06-22
-- **正在做**：P9 — `workboard` 接入工作流。真源会话已直接对 workboard 完成 git 化 + sync 对齐（@`1b01fba`）+ 裁撤 WM + 修 config 路径并 push（远端 main 新建，commit `2016cee`）。剩 coordination 登记。
-- **当前阶段**：P0→P8 完成；P9 进行中。P8 机制已跑通两个真实 BCR（BCR-001/002 均闭环）。
+- **正在做**：无待办。P9（`workboard` 接入工作流）**已闭环**——workboard git 化 + sync 对齐 @`1b01fba` + 裁撤 WM + 修 config（commit `2016cee`，远端 main 新建），coordination `PROJECTS.md` 已登记（`6cbcd9e`）。
+- **当前阶段**：P0→P9 完成。P8 机制已跑通两个真实 BCR（BCR-001/002 均闭环）；全部开发型下游（ai/xiaobao/workboard）已接入并可同步。
 - **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；P8 方案定稿（PR #4，merge `fe99ac3`）+ **P8 实现落地真源**（PR #5，merge `663f59b`，commit `fc22e75`）；**BCR-001 全闭环**（coordination 终态「已回流下游」，ai/xiaobao sync 至 `c8c66ce`）；**BCR-002 全闭环**（PR #6 merge `0a76dca` / commit `b5a29a3`，方案存档 `8af4e62`；coordination 终态「已回流下游」，ai `7fe90a4` / xiaobao `91b442a` 已回流）；**P9 workboard 接入**（git 化 + sync 对齐 `2016cee`，远端 main 新建，剩 coordination 登记）。
-- **下一步**：① coordination 会话 `PROJECTS.md` 登记 `workboard`「已接入 agent-workflow」（纳入今后 BCR 回流清单下游集合）→ P9 闭环；② BCR-002 下游回流（已完成：ai/xiaobao 已回流、coordination 终态，见已完成）。下一个新阶段（P10+）待 Owner 提出。
+- **下一步**：下一个新阶段（P10+）待 Owner 提出。真源 / coordination / 三个下游（ai/xiaobao/workboard）状态一致、全干净。
 - **本轮搁置（明确不做）**：暂无。
 
 ## 演进定位
@@ -365,7 +365,7 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 4. 修 `projects.config.json` 看板路径 `../claude-workflow`→`../agent-workflow`（消除已知失配）；
 5. commit `2016cee` + push（远端 main 新建）。
 
-**剩**：coordination `PROJECTS.md` 登记 workboard「已接入」→ 纳入今后 BCR 回流清单下游集合，P9 闭环。
+**闭环**：coordination `PROJECTS.md` 已登记 workboard「已接入」（`6cbcd9e`）→ 今后 BCR 回流清单下游集合 = ai/xiaobao/workboard。P9 完成。
 
 ## 执行原则
 
