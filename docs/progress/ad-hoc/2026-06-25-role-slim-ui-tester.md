@@ -39,7 +39,7 @@
 1. **Developer 自测 = 提供证据，不算 Review**：自测覆盖范围 + 结果证据必留（无证据不得进关闭），但它是自审、不充当独立评审方。
 2. **「验收标准 / 边界条件 / 回归风险」独立复核**（接管原 Tester 那一行，吸收 Finding 4 防自审）：验收标准由 PM 产出时，边界/回归至少由 **Architect 或 DevOps** 复核——**不得让 PM 复核自己产出的验收标准**；实现完成后 PM 可做产品验收复核，但不算对自己 PRD 的独立 Review。
 3. **Owner 验收 = 关闭门禁，不代写角色 Review**：Owner 给通过/打回结论是关闭的硬前置，但不顶替上面的 PM/Architect 复核。
-- 与现有「核心产出默认至少 2 个 Review 方」（multi-agent §165 L182-183）衔接：删 Tester 后 Review 方池仍有 PM/Architect/Developer/DevOps，核心产出仍可凑满 2 方；验收/回归视角由 PM 或 Architect 顶上，不留空。
+- 与现有「核心产出默认至少 2 个 Review 方」（multi-agent §165 L182-183）衔接：删 Tester 后 Review 方池仍有 PM/Architect/Developer/DevOps，核心产出仍可凑满 2 方；验收/回归视角由 **Architect 或 DevOps** 顶上（PM 可参与产品验收复核，但不得复核自己产出的验收标准），不留空。
 
 ## 五、Owner 验收 checkpoint（吸收 Finding 3）
 
@@ -84,7 +84,7 @@
 
 1. 角色集定 **4 角色**？
 2. 测试阶段**彻底取消**（并入自测 + Owner 验收）？
-3. §四质量门禁三条硬规则（自测=证据 / PM 或 Architect 复核验收回归 / Owner 验收=关闭门禁）OK？
+3. §四质量门禁三条硬规则（自测=证据 / 验收回归由 **Architect 或 DevOps** 复核·非 PM 自审 / Owner 验收=关闭门禁）OK？
 4. §五 Owner 验收记录位置（iteration.md 关闭归档区）+ 状态枚举 + 未验收不得关闭 OK？
 5. **§六清除策略选 A（墓碑化，推荐）还是 B（sync 增强）**？
 6. UI 方案并入 PRD？`ui-spec.md` 保留为 PM 可选模板还是墓碑化？
@@ -93,6 +93,6 @@
 
 ## 十、未决 / 待续
 
-- v2 是设计（范围+职责+门禁替代+清除策略+风险）；**精确到行落地 spec 待 review 通过 + §六/§七 拍板后再出**。
+- v3 是设计（范围+职责+门禁替代+清除策略+风险）；本轮 review 后按 Owner 拍板的默认值直接实施。
 - BCR-004/006 已在 coordination「评估中」并指向本方案。
 - 验证：本轮 grep 已核实改动范围（含 test-plan.md、L182-183、ROADMAP、sync orphan 行为），未改任何 baseline。
