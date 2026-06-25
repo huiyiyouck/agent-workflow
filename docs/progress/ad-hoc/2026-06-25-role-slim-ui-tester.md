@@ -1,10 +1,11 @@
-# 角色集精简设计 v1 · 删 UI（BCR-004）+ 删 Tester（BCR-006）
+# 角色集精简设计 v2 · 删 UI（BCR-004）+ 删 Tester（BCR-006）
 
 - 日期：2026-06-25
-- 范围：删除 **UI（界面设计师）** 和 **Tester（测试工程师）** 两个工作流角色，6 角色 → 4 角色（PM / Architect / Developer / DevOps）。
+- 范围：删除 **UI（界面设计师）** 和 **Tester（测试工程师）**，6 角色 → 4 角色（PM / Architect / Developer / DevOps）。
 - 设计方：agent-workflow 真源会话（General，Owner 驱动）
-- 关联：coordination `REQUESTS.md` BCR-004（删 UI，已提报）+ BCR-006（删 Tester，本次新立）
-- 状态：**设计 v1，待 review**（review→定稿→精确到行落地 spec→改 baseline→回流）
+- 关联：coordination `REQUESTS.md` **BCR-004 + BCR-006 均「评估中」**，均指向本方案
+- 状态：**设计 v2，待 review**（吸收第一轮 7 条 Finding）。review→定稿→精确到行落地 spec→改 baseline→回流
+- 修订：v2 吸收 7 条——① 角色/模板文件下游清除策略（sync 不删 orphan）；② 质量门禁硬规则；③ Owner 验收记录/阻塞语义；④ 文档状态对齐 coordination；⑤ 改动范围补 scripts+回归用例；⑥ 模板补 test-plan、ui-spec 处置拍板；⑦ ROADMAP Tester 依赖
 
 > 本文是评估附件，非状态真源；流转状态以 coordination `REQUESTS.md` 为准。
 
@@ -12,77 +13,83 @@
 
 ## 一、提案
 
-**删 UI**：职责并入 **PM**。一人公司 + AI 出原型（Figma Make / Claude Design）下，UI 与 PM 高度重叠；workboard v0.1 已实证「PM 兼 UI」跑通整迭代。
-
-**删 Tester**：不再设独立测试角色。理由（Owner）：
-- Tester 实际只能调接口测试，**没法代人手动点击**，与 Developer 自测高度重叠；
-- 后续 **Developer 自测**（接口/自动化）覆盖这块；
-- **手动点击验收由 Owner 完成**，提 bug 给 Developer 修；
-- 故独立 Tester 角色用处不大、空转。
+**删 UI** → 并入 PM（UI 要点进 PRD）。**删 Tester** → 接口/自动化测试并入 Developer 自测、手动验收由 Owner、取消独立 Tester Review 门禁。理由见 BCR-004/006，从略。
 
 ## 二、职责再分配
 
-| 原角色职责 | 移交给 |
+| 原职责 | 移交给 |
 |---|---|
-| UI：用户流程映射 / 交互状态 / 视觉约束 / UI 验收 | **PM**（择要并入 role-pm；UI 要点并入 PRD） |
-| Tester：接口 / 自动化测试、回归 | **Developer 自测**（实现阶段内，自测证据必留） |
-| Tester：验收 / 手动点击测试 | **Owner**（人工验收，提 bug） |
-| Tester：bug 跟踪 | Owner 提 → Developer 修（迭代内回归或 Change Note） |
-| Tester Review（验收/边界/回归 影响域门禁） | 取消独立门禁 → Developer 自测自审 + **Owner 验收 checkpoint（强制）** |
+| UI：流程/交互/视觉/UI 验收 | PM（择要并入 role-pm；UI 要点进 PRD） |
+| Tester：接口/自动化测试、回归 | Developer 自测（**产出证据，不等同 Review**） |
+| Tester：手动点击验收 | Owner（验收 + 提 bug） |
+| Tester Review（验收/边界/回归 门禁） | 见 §四（不是简单删，有硬替代） |
 
-## 三、新角色集 + 新流水线
+## 三、新角色集 + 流水线
 
-**角色集（4）**：PM（产品经理）/ Architect（架构师）/ Developer（开发工程师）/ DevOps（运维部署）。
+**4 角色**：PM / Architect / Developer / DevOps。
 
-**标准迭代流水线**（前 / 后）：
-```
-旧：PRD → UI 方案 → 设计 → 实现 → 测试 → 部署就绪 → 关闭 → 收尾
-新：PRD(含 UI/界面要点) → 设计 → 实现(含 Developer 自测) → 部署就绪 → 关闭(含 Owner 验收) → 收尾
-```
-- UI 方案阶段：并入 PRD（PM 出，界面要点作为 PRD 一节或可选产出）。
-- 测试阶段：取消独立阶段；接口/自动化测试并入实现（Developer 自测），手动验收落到「关闭」前的 Owner 验收。
+**流水线**：`PRD(含 UI 要点) → 设计 → 实现(含 Developer 自测) → 部署就绪 → 关闭(含 Owner 验收) → 收尾`（UI 方案并入 PRD；测试阶段取消）。
 
-**Review 影响领域调整**：
-- 「用户流程 / 页面 / 交互 / 视觉」→ Review 方由 UI 改 **PM**。
-- 「验收标准 / 边界条件 / 回归风险」→ 不再有 Tester 同行评审；改为 **Developer 自测自审 + Owner 验收**（移出 peer-Review 机制）。
+**Review 影响领域**：「用户流程/页面/交互/视觉」Review 方 UI→**PM**；「验收/边界/回归」见 §四。
 
-## 四、改动范围（按文件，待落地 spec 精确到行）
+## 四、质量门禁替代（吸收 Finding 2，硬规则）
 
-**删除**：`role-ui.md`、`role-tester.md`（核心方法择要并入 `role-pm.md` / `role-developer.md`）。
+删 Tester **不等于**删质量门禁。明确三条硬规则，避免门禁降级：
 
-**核心改**：
-- `multi-agent-workflow.md`：角色表去 UI/Tester（L71/74）；流水线去 UI 方案/测试阶段（L102）；阶段表去对应行、迭代关闭去「切 Tester」（L108/111/113）；Review 影响领域表 UI→PM、删 Tester 行（L172/175）；Review 矩阵删 UI 方案/测试报告行（L242/243）；一人场景提示去 Tester 例（L202）；intro 角色列举（L11）。
-- `runtime.md`：角色加载路由去 UI/Tester。
-- 入口 `CLAUDE.md` / `AGENTS.md`：角色切换触发表去「UI/界面设计师」「测试/QA/Tester/测试工程师」精准触发 + 模糊反问（或把「测试」关键词指向 Developer 自测说明）。
-- `mechanisms.md`：迭代关闭检查——「测试报告有结论」→「Developer 自测结论 + Owner 验收结论」；「切 Tester / Tester Review」→「Developer 自测核对，无法判断报 Owner」。
-- `standard-iteration-quick.md`：流水线 UI/测试阶段处理。
-- `work-modes.md` / `non-iteration-quick.md` / `bootstrap.md` / `role-developer.md` / `role-pm.md` / `role-devops.md` / `role-general.md` / `conventions.md` / `knowledge-base.md` / `cross-project-collaboration.md`：清理 UI/Tester 提及（多为顺带列举，落地 spec 逐处核）。
+1. **Developer 自测 = 提供证据，不算 Review**：自测覆盖范围 + 结果证据必留（无证据不得进关闭），但它是自审、不充当独立评审方。
+2. **「验收标准 / 边界条件 / 回归风险」至少由 PM 或 Architect 复核**（独立第二视角）——接管原 Tester 在 Review 影响领域表里的那一行。
+3. **Owner 验收 = 关闭门禁，不代写角色 Review**：Owner 给通过/打回结论是关闭的硬前置，但不顶替上面的 PM/Architect 复核。
+- 与现有「核心产出默认至少 2 个 Review 方」（multi-agent §165 L182-183）衔接：删 Tester 后 Review 方池仍有 PM/Architect/Developer/DevOps，核心产出仍可凑满 2 方；验收/回归视角由 PM 或 Architect 顶上，不留空。
 
-**模板**：
-- `test-report.md`：保留并改为 **Developer 自测报告**模板（或并入 `iteration.md`）；
-- `ui-spec.md`：并入 PRD 模板或留作 PM 可选产出；
-- `review-plan.md` / `iteration.md` / `progress-index.md`：去 UI/测试阶段字段。
+## 五、Owner 验收 checkpoint（吸收 Finding 3）
 
-## 五、风险与缓解（供评估）
+- **记录位置**：迭代记录 `iteration.md` 关闭归档区新增「Owner 验收」小节（或 INDEX 关闭行）。
+- **状态枚举**：`通过 / 打回 / 有条件通过 / 未验收`。
+- **阻塞语义**：**未验收或打回 → 迭代不得关闭**；有条件通过须列明条件并跟踪。
+- **bug 去向**：Owner 验收发现的 bug 进 Change Note 或当前迭代实现修复记录，回归后再验收。
+- **不代签**：Agent 只能记录 Owner **明确给出**的验收结论，不得代 Owner 判「通过」。
 
-1. **删 Tester = 移除独立质量门禁**（ROADMAP 核心风险点：别把高危规则当长尾裁掉）。
-   - 缓解：**Owner 验收 checkpoint 升为强制**——迭代关闭前必须有 Owner 验收结论（通过/打回），不可省；**Developer 自测纪律强化**（自测范围 + 证据必留，无证据不得进关闭）。
-2. **删 UI = 视觉/交互专门视角弱化**。
-   - 缓解：UI 要点并入 PRD 由 PM 负责；AI 出原型补足；workboard v0.1 已验证可行。
-3. **历史产物归属**：各下游历史迭代有 `roles/ui.md`/`roles/tester.md`、`vX.Y-ui-spec.md`/`vX.Y-test-report.md`。
-   - 处理：保留为历史存档，不追溯改写；新迭代起按新角色集走。落地 spec 须明确「历史产物不动、仅停用角色」。
+## 六、角色/模板文件的下游清除策略（吸收 Finding 1，高·拍板点）
 
-## 六、待 Owner / reviewer 拍板点
+**问题**：`sync-downstream.sh` 对真源没有的下游文件**只报告不删**（L9/50/56），模板也整目录覆盖不删 orphan（L90）。所以**物理删除 `role-ui.md`/`role-tester.md`（及废弃模板）后，下游 sync 不会清掉它们**，残留旧角色文件，与「删角色」目标冲突。两条路二选一（**拍板点**）：
 
-1. 角色集定为 **4 角色**（PM/Architect/Developer/DevOps）——确认？
-2. **测试阶段彻底取消**、并入 Developer 自测 + Owner 验收（而非保留一个轻量测试阶段）——确认？
-3. **Owner 验收升为强制关闭门禁**（替代 Tester Review）——接受这个补偿性约束吗？
-4. UI 方案阶段**并入 PRD**（vs 保留为 PM 可选独立阶段）——选哪个？
-5. 模板 `test-report.md` **改为 Developer 自测报告**（vs 删除并入 iteration）——选哪个？
-6. 历史 UI/Tester 产物**保留存档不追溯**——确认？
+- **方案 A · 墓碑化（retire，推荐，零机制风险）**：真源里**保留**这些文件，但内容替换为一行墓碑——「本角色/模板已废弃，职责见 role-pm.md / role-developer.md」。sync 照常覆盖下游同名文件 → 下游拿到墓碑。角色已从 runtime/入口/multi-agent 路由移除 → 不可达；文件留作墓碑。代价：留几个死文件。
+- **方案 B · sync 增强**：给 `sync-downstream.sh` 加「废弃 baseline/模板清单」，安全删除下游这些已知文件（带 dry-run + 自检）。end-state 干净（文件真没了），但**改动同步机制本身**，风险/工作量更大。
+- 适用对象一致：`role-ui.md`/`role-tester.md` + 废弃模板（见 §七）。
 
-## 七、未决 / 待续
+## 七、改动范围（吸收 Finding 5/6/7）
 
-- 本文是设计 v1（范围 + 职责 + 风险）；**精确到行的落地 spec 待 review 通过后再出**（同 BCR-003/005：design→merged spec→落地）。
-- BCR-006（删 Tester）待在 coordination 登记（Owner 驱动）；BCR-004（删 UI）已在册，落地时与 BCR-006 合并为一份「角色集精简」spec。
-- 验证：本轮仅 grep 摸清引用范围，未改任何 baseline。
+**角色文件**：`role-ui.md`/`role-tester.md` 按 §六策略墓碑化或删除；核心方法择要并入 `role-pm.md`/`role-developer.md`。
+
+**核心 baseline**：`multi-agent-workflow.md`（角色表 L71/74、流水线 L102、阶段表 L108/111/113、Review 影响领域 L172/175、Review 矩阵 L242/243、一人提示 L202、intro L11、**衔接「至少 2 Review 方」L182-183**）、`runtime.md`（路由）、入口 `CLAUDE.md`/`AGENTS.md`（触发表）、`mechanisms.md`（关闭检查：测试报告→Developer 自测+Owner 验收、切 Tester→自测核对/报 Owner）、`standard-iteration-quick.md`；顺带清理 `work-modes.md`/`non-iteration-quick.md`/`bootstrap.md`/`conventions.md`/`knowledge-base.md`/`role-developer.md`/`role-pm.md`/`role-devops.md`/`role-general.md`/`cross-project-collaboration.md` 中的 UI/Tester 提及。
+
+**模板**（同 §六清除策略）：`ui-spec.md`、`test-plan.md`、`test-report.md`（处置见拍板点）；`review-plan.md`/`iteration.md`/`progress-index.md` 去 UI/测试阶段字段、加 Owner 验收区。
+
+**脚本 + 回归 + 真源自述（吸收 Finding 5/7）**：
+- `scripts/measure-context.sh`：角色 6→4，更新 role-*.md 测量口径。
+- `scripts/sync-downstream.sh`：仅当选方案 B 时改（加废弃清单 + 安全删除 + dry-run）。
+- `docs/regression-cases.md`：新增用例——触发「测试/QA/UI/界面」不再切到已删角色；下游 sync 后无可达旧角色（A：墓碑可达但标废弃 / B：文件已删）。
+- `docs/ROADMAP.md`（真源自述，**不回流**）：L90 缺陷严重度「Tester/Review 触发」、L131、L255「Tester/UI 提报层」改为新角色集口径。
+
+## 八、风险与缓解
+
+1. **删 Tester = 移除独立质量门禁**（ROADMAP 核心风险：勿把高危规则当长尾裁掉）→ 缓解：§四三条硬规则 + §五 Owner 验收强制门禁。
+2. **删角色文件回流不闭合**（Finding 1）→ §六策略闭合。
+3. **历史产物**：下游历史 `roles/ui.md`/`roles/tester.md`、`vX.Y-ui-spec.md`/`vX.Y-test-report.md` 保留存档不追溯，新迭代起按新角色集走。
+
+## 九、待 Owner / reviewer 拍板点
+
+1. 角色集定 **4 角色**？
+2. 测试阶段**彻底取消**（并入自测 + Owner 验收）？
+3. §四质量门禁三条硬规则（自测=证据 / PM 或 Architect 复核验收回归 / Owner 验收=关闭门禁）OK？
+4. §五 Owner 验收记录位置（iteration.md 关闭归档区）+ 状态枚举 + 未验收不得关闭 OK？
+5. **§六清除策略选 A（墓碑化，推荐）还是 B（sync 增强）**？
+6. UI 方案并入 PRD？`ui-spec.md` 保留为 PM 可选模板还是墓碑化？
+7. `test-plan.md` + `test-report.md`：合并为一份 **Developer 自测计划/报告**模板，还是都墓碑化？
+8. 历史 UI/Tester 产物保留存档不追溯？
+
+## 十、未决 / 待续
+
+- v2 是设计（范围+职责+门禁替代+清除策略+风险）；**精确到行落地 spec 待 review 通过 + §六/§七 拍板后再出**。
+- BCR-004/006 已在 coordination「评估中」并指向本方案。
+- 验证：本轮 grep 已核实改动范围（含 test-plan.md、L182-183、ROADMAP、sync orphan 行为），未改任何 baseline。
