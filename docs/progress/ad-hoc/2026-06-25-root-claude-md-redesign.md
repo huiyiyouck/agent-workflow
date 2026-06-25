@@ -100,3 +100,41 @@
 - 未推进 coordination BCR-003 状态（仍「已提报」）——按 Finding 5，review 通过后再由 coordination 会话推「评估中」。
 - 未写 BCR-003 在 agent-workflow baseline 的逐行 diff（mechanisms 第 9 项 / cross-project 一句的精确措辞）——拍板后补这一环的落地游标。
 - 验证：本轮仅文档/状态核对，未跑任何脚本或测试。
+
+## 九、agent-workflow 环 baseline 落地游标（待 BCR-003 转评估中后执行）
+
+> **边界**：本节是**落地准备**，只给精确措辞与插入点；**本步不改 baseline**。等 coordination 会话把 BCR-003 推到「评估中」后，再按本节改 `mechanisms.md` / `cross-project-collaboration.md`。
+
+### 块 A：`mechanisms.md` 新增第 9 项检查
+
+- 目标文件：`docs/baseline/mechanisms.md`
+- 插入位置：§3 迭代关闭检查 → `### 检查项` 列表末尾，现第 8 项之后，新增第 9 项。
+- 精确文案：
+
+```markdown
+9. 本迭代是否变更了项目定位 / 名称 / 技术栈 / 上线状态 / 工作流接入状态？若是，由关闭检查执行者在 coordination `STATUS.md`「元信息变更台账」登记一行（项目 / 字段 / old / new / 来源），后续由 coordination 会话据此同步 `PROJECTS.md`、生态索引维护方照真源订正其导航视图（详见 `cross-project-collaboration.md` §项目元信息同步）。
+```
+
+### 块 B：`cross-project-collaboration.md` 新增「## 项目元信息同步」
+
+- 目标文件：`docs/baseline/cross-project-collaboration.md`
+- 插入位置：§基线修正提案流转（BCR）之后、`## communications（按需求）` 之前，新增一节。
+- 精确文案：
+
+```markdown
+## 项目元信息同步
+
+项目迭代中变更了**定位 / 名称 / 技术栈 / 上线状态 / 工作流接入状态**时，须保证生态层真源被同步订正，避免悄悄过期。
+
+- **真源**：项目元信息的结构化单一真源是 coordination `PROJECTS.md`；各处生态索引（如生态根导航文件）是它的**导航视图**，照真源同步、不自由发挥。
+- **载体**：变更登记在 coordination `STATUS.md`「元信息变更台账」——字段 `项目 | 字段 | old | new | 来源（commit/迭代） | PROJECTS 已同步 | 生态索引已同步`（本生态即根索引）。
+- **三方接力**：
+  1. 子项目迭代关闭检查发现变更 → 在台账登记一行（两个「已同步」列留空）；
+  2. coordination 会话照该行 new 值改 `PROJECTS.md` → 勾「PROJECTS 已同步」；
+  3. 生态索引维护方照已更新的 `PROJECTS.md` 订正导航视图 → 通知 coordination 会话勾「生态索引已同步」（索引维护方对 coordination 只读时，输出回执转交，不自行写台账）。
+- **真源可疑时停机**：索引维护方发现「各仓实况」与 `PROJECTS.md` 不一致且台账无在途行时，**不得**按实况直接改索引、**不得**同步到过期真源，须输出待登记台账行转交 coordination 会话先订正 `PROJECTS.md`，再同步。
+```
+
+- **设计注（生态特定 vs 通用产品）**：上文用「生态根导航文件 / 导航视图」等**通用措辞**，刻意**不在通用 baseline 里硬编码 `/root/Project/CLAUDE.md`** 这种本生态特定路径——根索引那部分职责落在根 CLAUDE.md 自己（本文件§四），保证 baseline 复制到其他下游时不泄露本生态根路径。
+
+> 落地后自检：`./scripts/measure-context.sh`（评估固定层增量）；若改动属会回流 baseline，按惯例跑 `scripts/sync-downstream.sh` 自检。
