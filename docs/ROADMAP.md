@@ -7,12 +7,12 @@
 
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
-- **更新于**：2026-06-22
-- **正在做**：无待办。P9（`workboard` 接入工作流）**已闭环**——workboard git 化 + sync 对齐 @`1b01fba` + 裁撤 WM + 修 config（commit `2016cee`，远端 main 新建），coordination `PROJECTS.md` 已登记（`6cbcd9e`）。
-- **当前阶段**：P0→P9 完成。P8 机制已跑通两个真实 BCR（BCR-001/002 均闭环）；全部开发型下游（ai/xiaobao/workboard）已接入并可同步。
-- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；P8 方案定稿（PR #4，merge `fe99ac3`）+ **P8 实现落地真源**（PR #5，merge `663f59b`，commit `fc22e75`）；**BCR-001 全闭环**（coordination 终态「已回流下游」，ai/xiaobao sync 至 `c8c66ce`）；**BCR-002 全闭环**（PR #6 merge `0a76dca` / commit `b5a29a3`，方案存档 `8af4e62`；coordination 终态「已回流下游」，ai `7fe90a4` / xiaobao `91b442a` 已回流）；**P9 workboard 接入**（git 化 + sync 对齐 `2016cee`，远端 main 新建，剩 coordination 登记）。
-- **下一步**：下一个新阶段（P10+）待 Owner 提出。真源 / coordination / 三个下游（ai/xiaobao/workboard）状态一致、全干净。
-- **本轮搁置（明确不做）**：暂无。
+- **更新于**：2026-06-25
+- **正在做**：**P10 · BCR 系列（生态参与者系统化）**。父框架 **BCR-005**（生态参与者拓扑 + 跨界写协议）已立项 + 设计 v1（`1045c9d`）；子条目 **BCR-003**（元信息同步台账 + 根 `/root/Project/CLAUDE.md` 重设计）设计 v2.1（`1b07f26`）+ §九 baseline 落地游标（`ced333b`）就绪；**BCR-004**（删 UI 角色并入 PM）待评估。三者均处**设计/评估阶段，baseline 未落地**。另：真源仓接 BCR 防滑（不切角色）已改入口 CLAUDE.md（`1d55eea`）。
+- **当前阶段**：P0→P9 完成；P10 进行中——三份设计游标就绪，等一次**全量 review → 定稿 → 分环落地**。coordination 已登记 BCR-003 评估中（`748dc22`/`58de4eb`）+ BCR-005（`64496a8`）。
+- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；P8 方案定稿（PR #4，merge `fe99ac3`）+ **P8 实现落地真源**（PR #5，merge `663f59b`，commit `fc22e75`）；**BCR-001 全闭环**（coordination 终态「已回流下游」，ai/xiaobao sync 至 `c8c66ce`）；**BCR-002 全闭环**（PR #6 merge `0a76dca` / commit `b5a29a3`，方案存档 `8af4e62`；coordination 终态「已回流下游」，ai `7fe90a4` / xiaobao `91b442a` 已回流）；**P9 workboard 接入**（git 化 + sync 对齐 `2016cee`，远端 main 新建）；**P10 本轮（分支 `fix/source-repo-bcr-no-role-switch`，未合 main）**：防滑 `1d55eea` / BCR-003 设计 `1b07f26`+`ced333b` / BCR-005 设计 `1045c9d`；coordination 侧 `748dc22`/`58de4eb`/`64496a8`。
+- **下一步**：Owner **一次全量 review** 三份设计（BCR-005 拓扑 + BCR-003 root 重设计 + §九 baseline diff）→ 修改定稿 → 分环落地（agent-workflow baseline / coordination `STATUS.md` 台账 + `PROJECTS.md` / 根索引）。BCR-004 待单出评估方案。
+- **本轮搁置（明确不做）**：BCR-004 落地（排在 BCR-003/005 之后）。
 
 ## 演进定位
 
