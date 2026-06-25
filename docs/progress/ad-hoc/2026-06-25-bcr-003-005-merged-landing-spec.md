@@ -3,8 +3,8 @@
 - 日期：2026-06-25
 - 范围：**BCR-005（父·生态参与者拓扑+跨界协议）+ BCR-003（子·元信息同步台账+根 `/root/Project/CLAUDE.md` 重设计）**。**不含 BCR-004（删 UI 角色，另算）**。
 - 设计方：agent-workflow 真源会话（General）
-- 状态：**合并 spec v2，待 reviewer review → 定稿 → 落地**
-- 修订：v2 吸收第二轮 5 条 Finding（写权限收口 / 第9项条件化+按需加载 / 状态机交错 / 命名统一）；**v3 吸收第三轮 3 条**（① BCR-003 终态硬前置改动3/4/5；② 第9项回扣跨仓写入纪律+无权限转交；③ mechanisms typo）
+- 状态：**合并 spec v4，待 reviewer 终审 → 定稿 → 落地**
+- 修订：v2 吸收第二轮 5 条 Finding（写权限收口 / 第9项条件化+按需加载 / 状态机交错 / 命名统一）；v3 吸收第三轮 3 条（BCR-003 终态硬前置 / 第9项回扣跨仓写入纪律 / mechanisms typo）；**v4 吸收第四轮 2 条**（① §跨仓写入纪律 [P0] 允许清单补 `PROJECTS`；② 头部版本号统一为 v4）
 - 关联：coordination `REQUESTS.md` BCR-003（评估中）/ BCR-005（评估中）
 - 来源游标：`2026-06-25-bcr-005-ecosystem-participant-topology.md`、`2026-06-25-root-claude-md-redesign.md`（本 spec 是这两份的**落地整合定稿版**；细节推理见来源，本文只承载"最终改什么、改哪、什么顺序"）
 
@@ -20,7 +20,7 @@
 
 | # | 文件 | 节点 | 谁落地 | 改什么 | 来源 |
 |---|------|------|--------|--------|------|
-| 1 | `docs/baseline/cross-project-collaboration.md` | 框架真源（我可直写） | agent-workflow 真源会话 | 新增两节：`## 生态参与者与跨界协议`（总）+ `## 项目元信息同步`（分） | 005 + 003 |
+| 1 | `docs/baseline/cross-project-collaboration.md` | 框架真源（我可直写） | agent-workflow 真源会话 | 新增两节（生态参与者与跨界协议 / 项目元信息同步）**+ §跨仓写入纪律 [P0] 清单补 `PROJECTS`**（改动 1b） | 005 + 003 |
 | 2 | `docs/baseline/mechanisms.md` | 框架真源（我可直写） | agent-workflow 真源会话 | 迭代关闭检查新增第 9 项 | 003 |
 | 3 | coordination `STATUS.md` | 协调台账 | **coordination 会话** | 新增 `## 元信息变更台账` 区块 | 003/005 |
 | 4 | coordination `PROJECTS.md` | 协调台账 | coordination 会话 | 订正 workboard 行（照实况）；BCR-001 回流清单 workboard 状态 | 003 |
@@ -74,6 +74,13 @@
 ````
 
 > 通用性把关：以上**通用措辞**，不在 baseline 硬编码 `/root/Project/CLAUDE.md`；本生态把「生态索引根」实例化为根 `CLAUDE.md` 的职责，写在根文件自己（改动 5）。
+
+### 改动 1b · 同文件 §跨仓写入纪律 [P0] 允许清单补 `PROJECTS`（吸收第四轮 Finding 1）
+
+`PROJECTS.md` 既是项目元信息真源、本机制要写它，但现有 [P0] 允许清单未列它，按现行红线会被拦。改 `cross-project-collaboration.md` 该行（现 L59）：
+
+- **before**：`只写 coordination 的**跨项目事实**（REQUESTS / STATUS / contracts / communications / decisions）`
+- **after**：`只写 coordination 的**跨项目事实**（PROJECTS / REQUESTS / STATUS / contracts / communications / decisions）`
 
 ## 三、改动 2 · `mechanisms.md` 第 9 项（精确文案）
 
