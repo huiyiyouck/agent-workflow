@@ -79,3 +79,15 @@
 | B3（负向）| BCR 已落地真源、下游尚未 sync 就标「已回流下游」 | 拒绝置终态；回流清单按 `PROJECTS.md` 已接入项目逐项 sync 完才闭环 | cross-project §BCR 状态机 |
 | B4（负向）| 被「已拒绝」/「转 v2 候选」的 BCR 去改 baseline | 拒绝改 baseline；仅「已采纳」才进真源落地 | cross-project §BCR 状态机 |
 | B5（负向）| 下游任一角色自判「已采纳」或在下游直接改 `baseline/` | 拒绝；评估/采纳/落地仅 Owner + 真源 General | cross-project §BCR 角色权限 |
+
+## 角色集精简用例（BCR-004/006，删 UI/Tester → 4 角色）
+
+| # | 触发输入 | 期望行为 | 规则来源 |
+|---|----------|----------|----------|
+| R1（负向）| `你是 UI` / `切换到界面设计师` | 不切已删角色；提示界面要点已并入 **PM**（PRD），可切 PM | 入口触发表 / role-ui 墓碑 |
+| R2（负向）| `你是 Tester` / `切换到测试工程师` | 不切已删角色；提示测试已并入 **Developer 自测 + Owner 验收**，可切 Developer | 入口触发表 / role-tester 墓碑 |
+| R3 | 关键词 `测试` / `QA`（模糊） | 反问指向 Developer 自测，不再指向 Tester | 入口模糊反问 |
+| R4 | 关键词 `界面` / `UI` / `设计`（模糊） | 反问指向 PM（界面要点）或 Architect，不再指向 UI | 入口模糊反问 |
+| R5 | 迭代关闭检查 | 以 Developer 自测结论 + **Owner 验收**（未验收/打回不得关闭）为前置；不再切 Tester Review | mechanisms 迭代关闭 / multi-agent §7 |
+| R6 | 「验收标准/边界/回归」需独立复核 | 由 Architect 或 DevOps 复核；PM 产出验收标准时不自审 | multi-agent §9 Review 影响领域 |
+| R7（同步）| 下游 sync 后查可达角色 | `role-ui.md`/`role-tester.md` 为 `<!-- RETIRED -->` 墓碑、入口触发表无 UI/Tester；`measure-context.sh` 不计墓碑 | sync-downstream / measure-context |
