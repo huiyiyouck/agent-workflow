@@ -3,7 +3,8 @@
 - 日期：2026-06-25
 - 范围：**BCR-005（父·生态参与者拓扑+跨界协议）+ BCR-003（子·元信息同步台账+根 `/root/Project/CLAUDE.md` 重设计）**。**不含 BCR-004（删 UI 角色，另算）**。
 - 设计方：agent-workflow 真源会话（General）
-- 状态：**合并 spec，待 reviewer review → 定稿 → 落地**
+- 状态：**合并 spec v2，待 reviewer review → 定稿 → 落地**
+- 修订：v2（吸收第二轮评审 5 条 Finding：① coordination 写权限收回 coordination 会话、真源会话只直写 baseline+BCR 池；② 第9项条件化 + 按需加载；③ BCR 状态机交错推进；④⑤ 命名统一）
 - 关联：coordination `REQUESTS.md` BCR-003（评估中）/ BCR-005（评估中）
 - 来源游标：`2026-06-25-bcr-005-ecosystem-participant-topology.md`、`2026-06-25-root-claude-md-redesign.md`（本 spec 是这两份的**落地整合定稿版**；细节推理见来源，本文只承载"最终改什么、改哪、什么顺序"）
 
@@ -21,7 +22,7 @@
 |---|------|------|--------|--------|------|
 | 1 | `docs/baseline/cross-project-collaboration.md` | 框架真源（我可直写） | agent-workflow 真源会话 | 新增两节：`## 生态参与者与跨界协议`（总）+ `## 项目元信息同步`（分） | 005 + 003 |
 | 2 | `docs/baseline/mechanisms.md` | 框架真源（我可直写） | agent-workflow 真源会话 | 迭代关闭检查新增第 9 项 | 003 |
-| 3 | coordination `STATUS.md` | 协调台账（我可直写） | 真源会话直写 or coordination 会话 | 新增 `## 元信息变更台账` 区块 | 003/005 |
+| 3 | coordination `STATUS.md` | 协调台账 | **coordination 会话** | 新增 `## 元信息变更台账` 区块 | 003/005 |
 | 4 | coordination `PROJECTS.md` | 协调台账 | coordination 会话 | 订正 workboard 行（照实况）；BCR-001 回流清单 workboard 状态 | 003 |
 | 5 | `/root/Project/CLAUDE.md` | 生态索引根（仅根会话） | 根目录会话（读 `PROJECTS.md`） | 套重设计结构 + 照清单填值 | 003/005 |
 
@@ -79,12 +80,14 @@
 - 插入位置：§3 迭代关闭检查 → `### 检查项` 列表末尾，第 8 项之后。
 
 ```markdown
-9. 本迭代是否变更了项目定位 / 名称 / 技术栈 / 上线状态 / 工作流接入状态？若是，由关闭检查执行者在协调台账 `STATUS.md`「元信息变更台账」登记一行（项目 / 字段 / old / new / 来源），后续由协调台账会话据此同步 `PROJECTS.md`、生态索引维护方照真源订正其导航视图（详见 `cross-project-collaboration.md` §项目元信息同步）。
+9. 本迭代是否变更了项目定位 / 名称 / 技术栈 / 上线状态 / 工作流接入状态？若否，跳过。若是：
+   - 本项目属多项目生态且已配置 / 确认 coordination（按 `cross-project-collaboration.md` 的 coordination 发现机制定位）→ 再按该文件 §项目元信息同步处理：在协调台账 `STATUS.md`「元信息变更台账」登记一行（项目 / 字段 / old / new / 来源）；
+   - 无 coordination → 在本次迭代关闭记录中登记「本次元信息变更未同步生态台账（无 coordination）」，并提示 Owner 是否建立 coordination。
 ```
 
 ## 四、改动 3 · coordination `STATUS.md` 新增台账区块
 
-新增区块（命名一致性 Finding 3：**本生态台账列名钉死用「生态索引已同步」**，与 baseline 通用措辞一致）：
+新增区块（命名统一：**台账列名统一用「生态索引已同步」**，通用层与本生态一致、不分两层；根 `CLAUDE.md` 内部说明本生态的生态索引即根索引）：
 
 ```markdown
 ## 元信息变更台账
@@ -113,12 +116,14 @@
 ## 七、落地顺序（跨权限节点）
 
 ```text
-1. 框架真源（真源会话直写）：改动 1（cross-project 两节）→ 改动 2（mechanics 第9项）
-   └ 自检：./scripts/measure-context.sh（固定层增量）+ scripts/sync-downstream.sh（会回流 baseline，必跑）
-2. 协调台账（真源会话按 [P0] 直写 or coordination 会话）：改动 3（建台账区块）→ 改动 4（订 PROJECTS.md workboard + BCR-001 清单）
-3. 生态索引根（根目录会话，读 PROJECTS.md，不 retype）：改动 5（根 CLAUDE.md 重设计 + 填值）
-4. BCR 状态推进（协调台账）：BCR-003/005 → 已采纳 → 已落地真源 → 回流中
-5. 下游 sync 回流：ai / xiaobao / workboard 跑 sync-downstream → coordination 置「已回流下游」终态
+0. review 通过 → 真源会话直写 coordination BCR 池：BCR-003/005 标「已采纳」（BCR 池属真源会话权限）。
+1. 框架真源（真源会话直写 baseline）：改动 1（cross-project 两节）→ 改动 2（mechanics 第9项）→ commit。
+   └ 自检：./scripts/measure-context.sh（固定层增量）+ scripts/sync-downstream.sh（会回流 baseline，必跑）。
+   └ commit 后 → 真源会话标 BCR 池「已落地真源」。
+2. 生态侧配套（记为 BCR-003 配套任务，不阻塞状态机；非 BCR 池，按§二矩阵由各自权限方落）：
+   - coordination 会话：改动 3（建 STATUS.md 台账区块）→ 改动 4（订 PROJECTS.md workboard + BCR-001 回流清单）；
+   - 根目录会话（读已订正的 PROJECTS.md，不 retype）：改动 5（根 CLAUDE.md 重设计 + 填值）。
+3. 回流：下游 sync 开始 → 真源会话标 BCR 池「回流中」；ai/xiaobao/workboard 跑 sync-downstream 回流完 → 标「已回流下游」终态。
 ```
 
 ## 八、给 reviewer 的检查点
@@ -127,8 +132,9 @@
 2. §二**四类参与者**划分、边界、跨仓写权限矩阵是否准确（尤其协调台账「非回流对象」、生态索引根「只读+回执」）？
 3. **跨界写协议三条**是否真能消除"人肉转述"（回归用例：BCR-003 评估记录 garble `748dc22`→`58de4eb`）？
 4. **通用 baseline 不硬编码根路径**的取舍是否保持？
-5. **台账列名**通用层「生态索引已同步」/ 本生态层「根索引已同步」两层是否接受（§四已钉死本生态用前者）？
+5. **台账列名统一用「生态索引已同步」**（不分两层），根 `CLAUDE.md` 内部说明本生态的生态索引即根索引——这样表述是否 OK？
 6. **落地顺序**的两处依赖（改动1→2、改动4→5）是否正确？
+7. **写权限收口**（Finding 1）：真源会话只直写 baseline + BCR 池；STATUS.md 台账 / PROJECTS.md / BCR-001 清单归 coordination 会话——是否彻底消除了"谁能写 coordination"的临场判断？
 
 ## 九、未决 / 边界
 
