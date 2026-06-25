@@ -4,7 +4,7 @@
 - 范围：**BCR-005（父·生态参与者拓扑+跨界协议）+ BCR-003（子·元信息同步台账+根 `/root/Project/CLAUDE.md` 重设计）**。**不含 BCR-004（删 UI 角色，另算）**。
 - 设计方：agent-workflow 真源会话（General）
 - 状态：**合并 spec v2，待 reviewer review → 定稿 → 落地**
-- 修订：v2（吸收第二轮评审 5 条 Finding：① coordination 写权限收回 coordination 会话、真源会话只直写 baseline+BCR 池；② 第9项条件化 + 按需加载；③ BCR 状态机交错推进；④⑤ 命名统一）
+- 修订：v2 吸收第二轮 5 条 Finding（写权限收口 / 第9项条件化+按需加载 / 状态机交错 / 命名统一）；**v3 吸收第三轮 3 条**（① BCR-003 终态硬前置改动3/4/5；② 第9项回扣跨仓写入纪律+无权限转交；③ mechanisms typo）
 - 关联：coordination `REQUESTS.md` BCR-003（评估中）/ BCR-005（评估中）
 - 来源游标：`2026-06-25-bcr-005-ecosystem-participant-topology.md`、`2026-06-25-root-claude-md-redesign.md`（本 spec 是这两份的**落地整合定稿版**；细节推理见来源，本文只承载"最终改什么、改哪、什么顺序"）
 
@@ -81,7 +81,7 @@
 
 ```markdown
 9. 本迭代是否变更了项目定位 / 名称 / 技术栈 / 上线状态 / 工作流接入状态？若否，跳过。若是：
-   - 本项目属多项目生态且已配置 / 确认 coordination（按 `cross-project-collaboration.md` 的 coordination 发现机制定位）→ 再按该文件 §项目元信息同步处理：在协调台账 `STATUS.md`「元信息变更台账」登记一行（项目 / 字段 / old / new / 来源）；
+   - 本项目属多项目生态且已配置 / 确认 coordination → 按 `cross-project-collaboration.md` 的 coordination 发现机制与**跨仓写入纪律**处理（§项目元信息同步）：**有写权限**时在协调台账 `STATUS.md`「元信息变更台账」登记一行（项目 / 字段 / old / new / 来源）；**无写权限**时输出待登记行转交有权限会话；
    - 无 coordination → 在本次迭代关闭记录中登记「本次元信息变更未同步生态台账（无 coordination）」，并提示 Owner 是否建立 coordination。
 ```
 
@@ -117,13 +117,16 @@
 
 ```text
 0. review 通过 → 真源会话直写 coordination BCR 池：BCR-003/005 标「已采纳」（BCR 池属真源会话权限）。
-1. 框架真源（真源会话直写 baseline）：改动 1（cross-project 两节）→ 改动 2（mechanics 第9项）→ commit。
+1. 框架真源（真源会话直写 baseline）：改动 1（cross-project 两节）→ 改动 2（mechanisms 第9项）→ commit。
    └ 自检：./scripts/measure-context.sh（固定层增量）+ scripts/sync-downstream.sh（会回流 baseline，必跑）。
    └ commit 后 → 真源会话标 BCR 池「已落地真源」。
-2. 生态侧配套（记为 BCR-003 配套任务，不阻塞状态机；非 BCR 池，按§二矩阵由各自权限方落）：
+2. 生态侧配套（非 BCR 池，按§二矩阵由各自权限方落）：
    - coordination 会话：改动 3（建 STATUS.md 台账区块）→ 改动 4（订 PROJECTS.md workboard + BCR-001 回流清单）；
    - 根目录会话（读已订正的 PROJECTS.md，不 retype）：改动 5（根 CLAUDE.md 重设计 + 填值）。
-3. 回流：下游 sync 开始 → 真源会话标 BCR 池「回流中」；ai/xiaobao/workboard 跑 sync-downstream 回流完 → 标「已回流下游」终态。
+   这些**不阻塞** baseline 的「已落地真源 / 回流中」推进，但**是 BCR-003 终态的硬前置**（见 step 3）。
+3. 回流与闭环：下游 sync 开始 → 真源会话标 BCR 池「回流中」；ai/xiaobao/workboard 跑 sync-downstream 回流完后——
+   - **BCR-005**：baseline + 下游 sync 完即可置「已回流下游」终态（其真源在 baseline）；
+   - **BCR-003**：**必须改动 3/4/5 全部完成、workboard 等过期数据已订正、且在 BCR-003 备注登记证据（commit / 链接）后**，才可置「已回流下游」终态；否则保持「回流中」。（Finding 1：BCR-003 的病根就是生态侧过期数据，不修完不许闭环。）
 ```
 
 ## 八、给 reviewer 的检查点
