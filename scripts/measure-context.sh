@@ -13,6 +13,7 @@ for f in CLAUDE.md AGENTS.md \
          docs/baseline/standard-iteration-quick.md docs/baseline/non-iteration-quick.md \
          docs/baseline/multi-agent-workflow.md docs/baseline/work-modes.md docs/baseline/conventions.md \
          docs/baseline/role-*.md; do
+  head -1 "$f" 2>/dev/null | grep -q "RETIRED" && continue   # 跳过已废弃角色墓碑（不计入角色集体量）
   printf "  %-48s %6s\n" "$f" "$(count "$f")"
 done
 

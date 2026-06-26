@@ -8,11 +8,11 @@
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
 - **更新于**：2026-06-25
-- **正在做**：**P10 · BCR 系列（生态参与者系统化）**。父框架 **BCR-005**（生态参与者拓扑 + 跨界写协议）已立项 + 设计 v1（`1045c9d`）；子条目 **BCR-003**（元信息同步台账 + 根 `/root/Project/CLAUDE.md` 重设计）设计 v2.1（`1b07f26`）+ §九 baseline 落地游标（`ced333b`）就绪；**BCR-004**（删 UI 角色并入 PM）待评估。三者均处**设计/评估阶段，baseline 未落地**。另：真源仓接 BCR 防滑（不切角色）已改入口 CLAUDE.md（`1d55eea`）。
-- **当前阶段**：P0→P9 完成；P10 进行中——三份设计游标就绪，等一次**全量 review → 定稿 → 分环落地**。coordination 已登记 BCR-003 评估中（`748dc22`/`58de4eb`）+ BCR-005（`64496a8`）。
-- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；P8 方案定稿（PR #4，merge `fe99ac3`）+ **P8 实现落地真源**（PR #5，merge `663f59b`，commit `fc22e75`）；**BCR-001 全闭环**（coordination 终态「已回流下游」，ai/xiaobao sync 至 `c8c66ce`）；**BCR-002 全闭环**（PR #6 merge `0a76dca` / commit `b5a29a3`，方案存档 `8af4e62`；coordination 终态「已回流下游」，ai `7fe90a4` / xiaobao `91b442a` 已回流）；**P9 workboard 接入**（git 化 + sync 对齐 `2016cee`，远端 main 新建）；**P10 本轮（分支 `fix/source-repo-bcr-no-role-switch`，未合 main）**：防滑 `1d55eea` / BCR-003 设计 `1b07f26`+`ced333b` / BCR-005 设计 `1045c9d`；coordination 侧 `748dc22`/`58de4eb`/`64496a8`。
-- **下一步**：Owner **一次全量 review** 三份设计（BCR-005 拓扑 + BCR-003 root 重设计 + §九 baseline diff）→ 修改定稿 → 分环落地（agent-workflow baseline / coordination `STATUS.md` 台账 + `PROJECTS.md` / 根索引）。BCR-004 待单出评估方案。
-- **本轮搁置（明确不做）**：BCR-004 落地（排在 BCR-003/005 之后）。
+- **正在做**：无待办。**P10 · BCR 系列（生态参与者系统化）已闭环**——BCR-005（生态参与者拓扑+跨界协议）+ BCR-003（元信息同步台账+根 CLAUDE.md 重设计）经 4 轮修改/3 轮 review 定稿（合并 spec v4 `fec6135`），baseline 合 main（PR #7，merge `66c1e1a`），下游 ai/xiaobao/workboard 已回流，coordination 两 BCR 均「已回流下游」终态，生态侧改动 3/4/5 已落（STATUS 台账 + PROJECTS 订正 + 根索引重设计）。**BCR-004**（删 UI 角色）待评估。
+- **当前阶段**：P0→P10 完成。BCR-001/002/003/005 均全闭环；真源仓接 BCR 防滑（不切角色）已生效（`1d55eea`，随 PR #7 入 main）。
+- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；P8 方案定稿（PR #4，merge `fe99ac3`）+ **P8 实现落地真源**（PR #5，merge `663f59b`，commit `fc22e75`）；**BCR-001 全闭环**（coordination 终态「已回流下游」，ai/xiaobao sync 至 `c8c66ce`）；**BCR-002 全闭环**（PR #6 merge `0a76dca` / commit `b5a29a3`，方案存档 `8af4e62`；coordination 终态「已回流下游」，ai `7fe90a4` / xiaobao `91b442a` 已回流）；**P9 workboard 接入**（git 化 + sync 对齐 `2016cee`，远端 main 新建）；**P10 全闭环（PR #7，merge `66c1e1a`）**：防滑 `1d55eea` + BCR-003/005 设计与 baseline 落地（`b8c7c15`）；下游回流 ai `6b1c8b8` / xiaobao `2e41947` / workboard `4b8e563`；coordination 终态 `f62e76e`；根索引重设计已落。
+- **下一步**：下一阶段待 Owner 提出。可选：**BCR-004**（删 UI 角色并入 PM）评估方案。真源 / coordination / 三下游均已推远端、状态一致（回流 ai `6b1c8b8` / xiaobao `2e41947` / workboard `4b8e563` 均已 push）。
+- **本轮搁置（明确不做）**：BCR-004 落地（待单出评估方案）。
 
 ## 演进定位
 
@@ -87,7 +87,7 @@
 | 动态 Review 计划：影响领域决定 Review 方 | 高 | P1 | 速查表保留选择矩阵 |
 | 标准迭代核心产出默认至少 2 个 Review 方，少于 2 个需用户确认 | 高 | P1 | runtime 红线短句 + 速查表保留 |
 | Review 轮次 R1/R2/R3，R3 仍未通过升级阻塞 | 中 | P1 | 速查表保留状态机 |
-| 缺陷严重度定义 | 中 | P2 | 完整规范保留；Tester/Review 触发时按需读 |
+| 缺陷严重度定义 | 中 | P2 | 完整规范保留；Review / 自测触发时按需读 |
 | 定稿后问题三档：实现取舍 / 轻量变更 / 重大变更 | 中 | P1 | 速查表保留三档表格 |
 | 写权限矩阵 | 中 | P1 | 速查表保留压缩版；完整规范保留全表 |
 | 角色日志和纠错记录 | 中 | P2 | runtime 留会话结束红线；细节指向 `context-policy.md` |
@@ -126,7 +126,7 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 3. `跨模式触发索引`：遇删除 → `conventions.md §受保护路径删除`；遇收尾 / 关闭 / 审计 → `mechanisms.md`；遇基线修正 → `multi-agent-workflow.md §14`。
 
 **`standard-iteration-quick.md`（仅标准迭代必读，不放跨模式安全规则）**：
-1. `标准迭代流水线`：PRD → UI → 设计 → 实现 → 测试 → 部署 → 关闭 → 收尾；非 PM 启动迭代必须转 PM。
+1. `标准迭代流水线`：PRD(含界面要点) → 设计 → 实现(含自测) → 部署 → 关闭(含 Owner 验收) → 收尾；非 PM 启动迭代必须转 PM。
 2. `状态机与真源`：阶段状态、任务 / 迭代 / Change Note 状态、`INDEX` 与 `vX.Y.md` 真源关系。
 3. `动态 Review`：影响领域选择矩阵、默认至少 2 方、R1/R2/R3 轮次、缺陷严重度简表。
 4. `定稿后变更`：实现取舍 / 轻量变更 / 重大变更三档及触发 `mechanisms.md` 的条件。
@@ -252,7 +252,7 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 - P5-1：新建 `docs/baseline/cross-project-collaboration.md`（项目对命名 v1、coordination 发现机制、跨仓写入纪律、角色权限三层、新项目复用对齐 P4）；`project-context.template.md` 外部依赖加 `coordination_root`。
 - P5-2：`runtime.md` 加「跨项目协作」分流行 + 全模式红线「跨仓写入」[P0] + 触发索引；`runtime` 2606→2937，固定规则链路 6530→**6861（<13000）**。
   - **选择记录**：`runtime` 2937 > P1 放宽后的 2700 软上限——单是分流行 + 触发索引已推过 2700，P0 跨仓红线的「不猜路径 / 同步状态 / 改动范围 / 不改 B progress」是全模式不可绕过约束，压缩损害可达性。**接受 2937，可达性优先**（P1 既定调）；固定规则链路 6861 仍远低于 13000 硬指标。
-- P5-3：6 个角色手册按三层权限挂钩跨项目（PM/Architect 承接层、Developer 联调层、Tester/UI/DevOps 提报层），轻量指针指向衔接文件。
+- P5-3：角色手册按三层权限挂钩跨项目（PM/Architect 承接层、Developer 联调层、DevOps 提报层），轻量指针指向衔接文件。（角色集 2026-06-25 由 6 精简为 4，删 UI/Tester，见 BCR-004/006。）
 - P5-5：`regression-cases` 加跨项目用例 X1-X5（1 正 + 4 负）；`install-downstream` 实跑产出副本含衔接文件、自检全过；measure 双入口一致、标准迭代链路 9318→9821（<15000）；衔接文件引用与角色指针全部可达。
 - P5-4 未做（按方案搁置）。
 
