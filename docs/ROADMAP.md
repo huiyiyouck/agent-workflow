@@ -8,11 +8,11 @@
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
 - **更新于**：2026-06-25
-- **正在做**：无待办。**P10 · BCR 系列（生态参与者系统化）已闭环**——BCR-005（生态参与者拓扑+跨界协议）+ BCR-003（元信息同步台账+根 CLAUDE.md 重设计）经 4 轮修改/3 轮 review 定稿（合并 spec v4 `fec6135`），baseline 合 main（PR #7，merge `66c1e1a`），下游 ai/xiaobao/workboard 已回流，coordination 两 BCR 均「已回流下游」终态，生态侧改动 3/4/5 已落（STATUS 台账 + PROJECTS 订正 + 根索引重设计）。**BCR-004**（删 UI 角色）待评估。
-- **当前阶段**：P0→P10 完成。BCR-001/002/003/005 均全闭环；真源仓接 BCR 防滑（不切角色）已生效（`1d55eea`，随 PR #7 入 main）。
-- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；P8 方案定稿（PR #4，merge `fe99ac3`）+ **P8 实现落地真源**（PR #5，merge `663f59b`，commit `fc22e75`）；**BCR-001 全闭环**（coordination 终态「已回流下游」，ai/xiaobao sync 至 `c8c66ce`）；**BCR-002 全闭环**（PR #6 merge `0a76dca` / commit `b5a29a3`，方案存档 `8af4e62`；coordination 终态「已回流下游」，ai `7fe90a4` / xiaobao `91b442a` 已回流）；**P9 workboard 接入**（git 化 + sync 对齐 `2016cee`，远端 main 新建）；**P10 全闭环（PR #7，merge `66c1e1a`）**：防滑 `1d55eea` + BCR-003/005 设计与 baseline 落地（`b8c7c15`）；下游回流 ai `6b1c8b8` / xiaobao `2e41947` / workboard `4b8e563`；coordination 终态 `f62e76e`；根索引重设计已落。
-- **下一步**：下一阶段待 Owner 提出。可选：**BCR-004**（删 UI 角色并入 PM）评估方案。真源 / coordination / 三下游均已推远端、状态一致（回流 ai `6b1c8b8` / xiaobao `2e41947` / workboard `4b8e563` 均已 push）。
-- **本轮搁置（明确不做）**：BCR-004 落地（待单出评估方案）。
+- **正在做**：无待办。**P10 · BCR 系列（生态参与者系统化）已闭环**——BCR-005（生态参与者拓扑+跨界协议）+ BCR-003（元信息同步台账+根 CLAUDE.md 重设计）经 4 轮修改/3 轮 review 定稿（合并 spec v4 `fec6135`），baseline 合 main（PR #7，merge `66c1e1a`），下游 ai/xiaobao/workboard 已回流，coordination 两 BCR 均「已回流下游」终态，生态侧改动 3/4/5 已落（STATUS 台账 + PROJECTS 订正 + 根索引重设计）。**P11 · 角色集精简（BCR-004 删 UI + BCR-006 删 Tester）已闭环**——6 角色→4（PM/Architect/Developer/DevOps），UI 并入 PM、Tester 并入 Developer 自测 + Owner 验收；设计 v3 经 3 轮 review + Owner 拍 8 点，baseline 合 main（PR #8，merge `6f433ca`），下游已回流，coordination BCR-004/006「已回流下游」终态。
+- **当前阶段**：P0→P11 完成。BCR-001/002/003/004/005/006 均全闭环；真源仓接 BCR 防滑（不切角色）已生效（`1d55eea`）。
+- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；P8 方案定稿（PR #4，merge `fe99ac3`）+ **P8 实现落地真源**（PR #5，merge `663f59b`，commit `fc22e75`）；**BCR-001 全闭环**（coordination 终态「已回流下游」，ai/xiaobao sync 至 `c8c66ce`）；**BCR-002 全闭环**（PR #6 merge `0a76dca` / commit `b5a29a3`，方案存档 `8af4e62`；coordination 终态「已回流下游」，ai `7fe90a4` / xiaobao `91b442a` 已回流）；**P9 workboard 接入**（git 化 + sync 对齐 `2016cee`，远端 main 新建）；**P10 全闭环（PR #7，merge `66c1e1a`）**：防滑 `1d55eea` + BCR-003/005 设计与 baseline 落地（`b8c7c15`）；下游回流 ai `6b1c8b8` / xiaobao `2e41947` / workboard `4b8e563`；coordination 终态 `f62e76e`；根索引重设计已落；**P11 角色集精简（PR #8，merge `6f433ca`）**：删 UI/Tester（6→4），下游回流 ai `504f7c3` / xiaobao `9bab45d` / workboard `d8e6b74`，coordination 终态 `85fc21f`。
+- **下一步**：下一阶段待 Owner 提出。真源 / coordination / 三下游均已推远端、状态一致（P11 回流 ai `504f7c3` / xiaobao `9bab45d` / workboard `d8e6b74` 均已 push）。
+- **本轮搁置（明确不做）**：暂无。
 
 ## 演进定位
 
