@@ -91,3 +91,13 @@
 | R5 | 迭代关闭检查 | 以 Developer 自测结论 + **Owner 验收**（未验收/打回不得关闭）为前置；不再切 Tester Review | mechanisms 迭代关闭 / multi-agent §7 |
 | R6 | 「验收标准/边界/回归」需独立复核 | 由 Architect 或 DevOps 复核；PM 产出验收标准时不自审 | multi-agent §9 Review 影响领域 |
 | R7（同步）| 下游 sync 后查可达角色 | `role-ui.md`/`role-tester.md` 为 `<!-- RETIRED -->` 墓碑、入口触发表无 UI/Tester；`measure-context.sh` 不计墓碑 | sync-downstream / measure-context |
+
+## 交接带宽加固用例（P12，多 Agent 框架调研落地）
+
+| # | 触发输入 | 期望行为 | 规则来源 |
+|---|----------|----------|----------|
+| P12-1 | 设计文档接口契约 / 数据模型只写散文、缺结构化字段（方法/路径/入参/出参/错误码 或 字段/类型/约束） | Review 挡回要求补结构化字段（spike/无变更须显式标 `N/A` 并注明，非留空） | design.md §2/§3 / multi-agent §10 |
+| P12-2（负向）| 设计 Review 的待澄清问题，答案只写进 Review 记录、未回填文档正文 | 不算闭环；须把答案回填数据模型/接口契约/核心流程正文，Review 记录只留指针 | multi-agent §10.1 答案回填底线 |
+| P12-3 | 工作流角色**进入标准迭代某阶段**启动 | 强制首读本角色 `docs/progress/roles/{role}-corrections.md`（≤30 条）；漏读视为漏读。**文件不存在视为空 corrections、跳过不阻塞**（不卡在「必须读但无文件」） | runtime §工作流默认只读 第 7 项 |
+| P12-4（负向）| 启动召回 knowledge 时整库读取 `docs/knowledge/` | 拒绝全库 dump；只读 `INDEX.md` 为当前迭代/任务显式关联的条目（无关联则不读） | context-policy §LTM 召回策略 |
+| P12-5（负向）| 非迭代 / bugfix 快任务下要求强制首读 corrections | 不强制（按需读即可）；强制首读仅标准迭代各阶段 | runtime 第 7 项（决策项 2） |

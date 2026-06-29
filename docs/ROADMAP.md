@@ -7,11 +7,12 @@
 
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
-- **更新于**：2026-06-25
-- **正在做**：无待办。**P10 · BCR 系列（生态参与者系统化）已闭环**——BCR-005（生态参与者拓扑+跨界协议）+ BCR-003（元信息同步台账+根 CLAUDE.md 重设计）经 4 轮修改/3 轮 review 定稿（合并 spec v4 `fec6135`），baseline 合 main（PR #7，merge `66c1e1a`），下游 ai/xiaobao/workboard 已回流，coordination 两 BCR 均「已回流下游」终态，生态侧改动 3/4/5 已落（STATUS 台账 + PROJECTS 订正 + 根索引重设计）。**P11 · 角色集精简（BCR-004 删 UI + BCR-006 删 Tester）已闭环**——6 角色→4（PM/Architect/Developer/DevOps），UI 并入 PM、Tester 并入 Developer 自测 + Owner 验收；设计 v3 经 3 轮 review + Owner 拍 8 点，baseline 合 main（PR #8，merge `6f433ca`），下游已回流，coordination BCR-004/006「已回流下游」终态。
-- **当前阶段**：P0→P11 完成。BCR-001/002/003/004/005/006 均全闭环；真源仓接 BCR 防滑（不切角色）已生效（`1d55eea`）。
+- **更新于**：2026-06-29
+- **正在做**：无待办。**P12 · 交接带宽加固（多 Agent 框架调研落地）已落地真源（2026-06-29）**——调研 MetaGPT/AutoGen/ChatDev/CrewAI/LangGraph 五框架，结论：本工作流命门 = 「分会话隔离之间文件交接带宽的质量」（人在环 + 跨会话隔离，不引入广播/manager Agent/自治闭环）。三条改进全钉这根命门并已落地：① 接口契约结构化（`design.md`）② Review 反向澄清问题 + 答案回填正文（`multi-agent-workflow.md` §9.1/§10.1）③ LTM 召回 corrections 标准迭代阶段强制首读 + knowledge 关联门控（`runtime.md` 第 7 项 + `context-policy.md`）。Owner 拍板：决策 1 = 仅并行实现时纳入 Developer Review；决策 2 = corrections 仅标准迭代阶段强制。两轮 Review 4+1 问题全闭合。**P10/P11 历史见下方各节。**
+- **历史 · P10/P11**（本条同时含 P10 与 P11，勿误判 P11 归入 P10）：**P10 · BCR 系列（生态参与者系统化）已闭环**——BCR-005（生态参与者拓扑+跨界协议）+ BCR-003（元信息同步台账+根 CLAUDE.md 重设计）经 4 轮修改/3 轮 review 定稿（合并 spec v4 `fec6135`），baseline 合 main（PR #7，merge `66c1e1a`），下游 ai/xiaobao/workboard 已回流，coordination 两 BCR 均「已回流下游」终态，生态侧改动 3/4/5 已落（STATUS 台账 + PROJECTS 订正 + 根索引重设计）。**P11 · 角色集精简（BCR-004 删 UI + BCR-006 删 Tester）已闭环**——6 角色→4（PM/Architect/Developer/DevOps），UI 并入 PM、Tester 并入 Developer 自测 + Owner 验收；设计 v3 经 3 轮 review + Owner 拍 8 点，baseline 合 main（PR #8，merge `6f433ca`），下游已回流，coordination BCR-004/006「已回流下游」终态。
+- **当前阶段**：P0→P12 完成。BCR-001/002/003/004/005/006 均全闭环；真源仓接 BCR 防滑（不切角色）已生效（`1d55eea`）。**P12 交接带宽加固已落地真源（未 commit，待 Owner 决定提交/回流）。**
 - **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；P8 方案定稿（PR #4，merge `fe99ac3`）+ **P8 实现落地真源**（PR #5，merge `663f59b`，commit `fc22e75`）；**BCR-001 全闭环**（coordination 终态「已回流下游」，ai/xiaobao sync 至 `c8c66ce`）；**BCR-002 全闭环**（PR #6 merge `0a76dca` / commit `b5a29a3`，方案存档 `8af4e62`；coordination 终态「已回流下游」，ai `7fe90a4` / xiaobao `91b442a` 已回流）；**P9 workboard 接入**（git 化 + sync 对齐 `2016cee`，远端 main 新建）；**P10 全闭环（PR #7，merge `66c1e1a`）**：防滑 `1d55eea` + BCR-003/005 设计与 baseline 落地（`b8c7c15`）；下游回流 ai `6b1c8b8` / xiaobao `2e41947` / workboard `4b8e563`；coordination 终态 `f62e76e`；根索引重设计已落；**P11 角色集精简（PR #8，merge `6f433ca`）**：删 UI/Tester（6→4），下游回流 ai `504f7c3` / xiaobao `9bab45d` / workboard `d8e6b74`，coordination 终态 `85fc21f`。
-- **下一步**：下一阶段待 Owner 提出。真源 / coordination / 三下游均已推远端、状态一致（P11 回流 ai `504f7c3` / xiaobao `9bab45d` / workboard `d8e6b74` 均已 push）。
+- **下一步**：P12 已落地真源、复测达标、未 commit。待 Owner 决定：① 是否提交本次改动（8 个文件 = 6 个产品文件 `design.md` / `multi-agent-workflow.md` / `runtime.md` / `context-policy.md` / `role-architect.md` / `role-developer.md` + `regression-cases.md` + `ROADMAP.md`）；② 是否 `sync-downstream.sh` 回流 ai/xiaobao/workboard。下一阶段待 Owner 提出。（P11 回流 ai `504f7c3` / xiaobao `9bab45d` / workboard `d8e6b74` 均已 push。）
 - **本轮搁置（明确不做）**：暂无。
 
 ## 演进定位
@@ -366,6 +367,57 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 5. commit `2016cee` + push（远端 main 新建）。
 
 **闭环**：coordination `PROJECTS.md` 已登记 workboard「已接入」（`6cbcd9e`）→ 今后 BCR 回流清单下游集合 = ai/xiaobao/workboard。P9 完成。
+
+### P12 · 交接带宽加固（多 Agent 框架调研落地 · 已落地真源 · 2026-06-29）
+
+**性质**：不新增角色、不改运行模型，是对既有「分会话隔离 + 文件交接」体系的三处定点加固。方案经两轮 Review（4+1 问题全闭合）+ Owner 拍板两个决策项后落地。
+
+**已做（2026-06-29，三条改进 + 角色手册指针 + 回归用例 + 复测）**：
+- 改进 1：`docs/templates/design.md` §2 数据模型（字段|类型|约束|说明）、§3 接口契约（方法|路径|入参|出参|错误码）半结构化，spike 可整节标 `N/A`。
+- 改进 2：`multi-agent-workflow.md` §9.1 加「下游实现方**仅并行实现时**入设计 Review 方」（决策 1）；新增 §10.1「待澄清问题与缺陷分流」+ 答案回填正文底线 + 与「Review 不得改正文」红线的边界澄清。
+- 改进 3：`runtime.md §工作流默认只读` 拆为第 6（日志摘要）+ 第 7 项（**标准迭代各阶段** corrections 强制全读，决策 2）；`context-policy.md` 加「LTM 召回策略」节（knowledge 关联门控 + 召回三条件底线 + 蒸馏 vs 轨迹澄清），入口触发指向 runtime、分工不重复。
+- 角色手册指针（最小改动）：`role-architect.md` 步骤 6/7 加结构化模板 + 并行邀 Developer + 澄清答案回填；`role-developer.md` 子 Agent 段加「并行实现时作设计 Review 方提前提问」。
+- 回归用例：`regression-cases.md` 加 P12-1~P12-5（含 4 必需 + 决策 2 的非迭代不强制负向）。
+- 复测：`runtime.md` 3068→3298；**固定规则链路 7393 < 13000**、标准迭代启动链路 10876 < 15000、真实启动 13378 < 15000；双入口逐字一致。**口径诚实记录**：corrections 文件（`docs/progress/roles/{role}-corrections.md`）不在 `measure-context.sh` 统计范围内（脚本只计固定 baseline 文件），其额外启动成本由「≤30 条」上限控制、**未纳入上述脚本合计**；脚本数仅证明固定链路本身达标。
+
+**调研来源（2026-06-29）**：横向调研五个开源多 Agent 框架的协作拓扑——MetaGPT（SOP 流水线 + 结构化中间产物 + 可执行反馈）、AutoGen（GroupChatManager 轮流发言 + 广播）、ChatDev（chat chain 双人对话 + communicative dehallucination）、CrewAI（sequential/hierarchical + STM/LTM 记忆）、LangGraph（supervisor/swarm + Command 显式路由 + trace 可见）。
+
+**核心结论（贯穿三条改进）**：本工作流与上述框架的根本差异是 **人在环 + 跨会话上下文隔离**（AutoGen 广播是其反面，CrewAI/LangGraph「持久制品 + 显式路由」与其同源）。其**命门不是缺角色或缺自治，而是「隔离会话之间那条文件交接带宽的质量」**——隔离会话只能读到文件，读不到上一个会话脑子里的东西。故所有可借鉴点都收敛到加固这条带宽，且**一律不引入**广播式群聊、manager/supervisor 自动校验 Agent、自治闭环（校验位 = Owner 验收，引入即重建已删的虚假管理层，与 BCR-004/006 精简方向相悖）。
+
+**改进 1 · 接口契约结构化（来源 MetaGPT，唯一有论文实证）**
+- 拟改 `docs/templates/design.md`：「2. 数据模型」「3. API/接口契约」由自由文本骨架改为半结构化——数据模型按「字段 | 类型 | 约束 | 说明」列表；接口按「方法 | 路径 | 入参类型 | 出参类型 | 错误码」列表。
+- 理由：`role-developer-detail.md` 的前后端子 Agent 并行、零实时依赖、**只靠同一份契约**工作；契约含糊 = 信息真丢、下游无从补救。结构化 = 机器可校验，降低并行子 Agent 接口不一致率。在本体系里此项权重高于在 MetaGPT 里（隔离是刚性的）。
+- 边界：只改模板结构，不强制每个迭代填满；spike/纯预研可标 `N/A` 并注明。
+
+**改进 2 · Review 反向澄清问题 + 答案回填正文（来源 ChatDev dehallucination，反向用）**
+- 拟改 `docs/baseline/multi-agent-workflow.md`：
+  - §10 Review 记录：Review 方可基于文档提**待澄清问题**；产出方逐条作答。**缺陷与澄清问题分开处置**——缺陷走原严重度流程（产出方进「修改中」改正文）；澄清问题作答后**答案必须回填文档对应正文**（契约/数据模型/流程），Review 记录只留指针。
+  - §9.1 选择维度：**按 Owner 决策项 1 写入**——「下游实现方（Developer）进设计文档 Review 方」取「默认纳入」或「仅在涉及子 Agent 并行实现时纳入」二者之一（review 时定）。目的是让消费者在自己实现会话开始**之前**就把真问题问掉、答案在定稿前回填正文。**本项在决策项 1 拍板前是待定，不作既定规则。**
+- 关键底线（写进规则）：**答案不回填正文 = 带宽白给**（隔离的实现会话及其子 Agent 只读正文，读不到 Review 线程）。
+- 取舍：原拟的「产出方预填下游问题清单」**否决**——脑补、易漏、易凑废话；改用「真下游读真文档提真问题」，相关性更高且长在现有 Review 机制上。
+
+**改进 3 · LTM 召回：corrections 强制 + knowledge 关联门控（来源 CrewAI STM/LTM）**
+- **入口触发改 `docs/baseline/runtime.md`（关键，否则规则不可达）**：入口首读权威是 `runtime.md §工作流默认只读` 第 6 项，现写 `{role}-corrections.md`「仅复盘 / Review 失败时读」。要让 corrections 强制首读，**必须改这一行**——不能只改 context-policy。改为：角色会话启动时本角色 `docs/progress/roles/{role}-corrections.md` 强制全读（有界 ≤30 条、角色专属、是「自己犯过的错」，信噪比最高、token 最省）。
+- **策略改 `docs/baseline/context-policy.md`**：本文件按其自述「只定义归档和分层策略」，承载 ① knowledge **只读 INDEX 为本迭代/任务显式关联的条目**（相关性门控，等价 CrewAI 的 RAG 选择性召回，**非全库 dump**）；② 召回三条件底线（见下）。入口触发仍由 runtime.md 承载，两文件分工写明、互相指引。
+- 召回三条件底线（写进规则）：召回内容必须 ① **蒸馏结论非过程轨迹**、② **有界**、③ **与当前任务相关**；达不到的不准灌入会话。
+- 设计澄清（回应 Owner 对会话纯净度的顾虑）：用「**蒸馏 vs 轨迹**」这条线区分「沉淀 vs 污染」——隔离要挡的是别的会话的过程残渣（轨迹），LTM 要召回的是蒸馏结论；二者不矛盾。corrections 是蒸馏物且有界故强制；knowledge 靠关联门控保纯净，故不全读。
+
+**上下文成本预判（按落点区分，不一概而论）**：
+- 改进 1 / 改进 2：`design.md` 是模板（按需读）、`multi-agent-workflow.md` 是完整规范（P1 后 `standard-iteration-quick.md` 才是必读，本文件按需读）——**基本不进固定规则链路**，对每次启动固定成本影响小。
+- 改进 3：**会触及固定层**——① 改 `runtime.md`（固定入口文件，每次进工作流必读）增加规则字数；② corrections 强制首读 = 给「角色启动默认只读」加一项**有界**读取成本（受 ≤30 条上限约束）。两者都进角色启动固定成本，**不能算「不进固定链路」**。
+- 验收口径：实现后用 `measure-context.sh` 复测——`runtime.md` 字数变化、固定规则链路与角色启动链路是否回归；corrections 上界成本以「≤30 条」为口径，必要时补充度量口径说明。
+
+**Owner 决策（2026-06-29 已拍板）**：
+1. 改进 2：下游实现方进设计文档 Review 方 = **仅在涉及子 Agent 并行实现时纳入**（不默认全纳入，守「不越多越好」底线）。已落地为 §9.1 条件触发规则。
+2. 改进 3：corrections 强制首读 = **仅标准迭代各阶段启动**（非迭代 / 收尾等仍按需读，控制固定启动成本）。已落地为 runtime 第 7 项。
+
+**完成条件（开工后据此验收）**：
+1. `design.md` 数据模型/接口契约半结构化，spike 可标 `N/A`。
+2. `multi-agent-workflow.md` §9/§10 含反向澄清问题机制 + 缺陷/澄清分流 + 答案回填正文底线；§9.1「下游实现方入 Review 方」按决策项 1 写成默认或条件触发规则（不留既定/待定并存）；`review-plan.md` / `standard-iteration-quick.md` 等引用无断链（实现时 `rg` 核对）。
+3. `runtime.md §工作流默认只读` **第 6 项保留日志摘要、新增第 7 项**承载 corrections 标准迭代阶段强制首读（含「文件不存在视为空」缺省）；`context-policy.md` 含 knowledge 关联门控 + 召回三条件底线，且与 runtime.md 分工互指无矛盾（不再残留「corrections 仅复盘/Review 失败时读」绝对口径）。
+4. `measure-context.sh` 复测：`runtime.md` 字数变化记录在案；固定规则链路与角色启动链路按新口径不出现未说明的回归；双入口一致。
+5. `regression-cases.md` 补用例：① 设计文档接口契约缺结构化字段应被 Review 挡；② 澄清问题答案未回填正文不算闭环；③ 角色启动漏读本角色 corrections 视为漏读；④ knowledge 召回不得全库 dump（只读 INDEX 关联条目）。
+6. 影响面：核对是否需同步 `role-developer`/`role-architect`/`role-pm` 手册指针（实现时 `rg` 确认，最小改动）。
 
 ## 执行原则
 
