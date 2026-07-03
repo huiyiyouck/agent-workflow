@@ -8,11 +8,11 @@
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
 - **更新于**：2026-07-03
-- **正在做**：**组织架构定位升级方案 v3 已定稿待实施（2026-07-03）**——「一人公司 AI 组织操作架构：指挥官—参谋长制（薄公司）」，方案见 `docs/superpowers/specs/2026-07-03-org-positioning-upgrade-design.md`（commit `b108ea6`，经 Owner 两轮 review 通过）。核心：coordination 专职会话撤销并入参谋长（字段级白名单直写）、参谋长获回流执行权、根 CLAUDE.md 身份重写；落地按 spec §4 九步执行（新身份先于新权限生效），**Owner 决定交由他人实施，本仓待承接**。实施首步 = 登记 BCR-007。历史：**P13 · Trae IDE 兼容确认已全闭环（2026-07-02）**——确认既有标准入口 `AGENTS.md` 直接作为 Trae 的项目规则入口（与「CLAUDE.md=Claude Code / AGENTS.md=Codex」双入口设计对称，Trae 复用 Codex 同一份 `AGENTS.md`）。真源 + 三下游各自本就持有 `AGENTS.md`，故**文件层面零改动、零回流**。Owner 2026-07-02 在下游 workboard 的 Trae 实测角色路由三句**全通过**：`你是 PM` 完整切角色 + 走 git 启动流程 + 读 `runtime.md` + 加载 project-context/INDEX/role-pm 清单；`进入团队工作流` 同启动流程覆盖；普通问候保持 General 不误触发。留痕（`README.md` + 本游标 + §P13 + 回归用例 P13-1~P13-3）均真源专属文件、不入下游同步，**已 commit（2026-07-03）。P12（交接带宽加固）历史见 §P12 节。**
+- **正在做**：**P14 · 组织架构定位升级（指挥官—参谋长制）已全闭环（2026-07-03）**——BCR-007 落地，生态参与者从「四类参与者」升级为「三类角色 + 一个场所」：指挥官（Owner）、参谋长（生态根会话）、项目组（xiaobao/ai/workboard）+ 工作流组（agent-workflow），公告板（coordination）为场所不是人。核心变更：coordination 专职会话撤销并入参谋长（字段级白名单直写）、参谋长获回流执行权、根 CLAUDE.md 身份重写为参谋长、元信息同步从三方接力简化为两方接力。落地按 spec §4 九步执行（新身份先于新权限生效），九步全部完成。BCR-007 状态：已回流下游（终态）。历史：**P13 · Trae IDE 兼容确认已全闭环（2026-07-02）**——确认既有标准入口 `AGENTS.md` 直接作为 Trae 的项目规则入口（与「CLAUDE.md=Claude Code / AGENTS.md=Codex」双入口设计对称，Trae 复用 Codex 同一份 `AGENTS.md`）。真源 + 三下游各自本就持有 `AGENTS.md`，故**文件层面零改动、零回流**。Owner 2026-07-02 在下游 workboard 的 Trae 实测角色路由三句**全通过**：`你是 PM` 完整切角色 + 走 git 启动流程 + 读 `runtime.md` + 加载 project-context/INDEX/role-pm 清单；`进入团队工作流` 同启动流程覆盖；普通问候保持 General 不误触发。留痕（`README.md` + 本游标 + §P13 + 回归用例 P13-1~P13-3）均真源专属文件、不入下游同步，**已 commit（2026-07-03）。P12（交接带宽加固）历史见 §P12 节。**
 - **历史 · P10/P11**（本条同时含 P10 与 P11，勿误判 P11 归入 P10）：**P10 · BCR 系列（生态参与者系统化）已闭环**——BCR-005（生态参与者拓扑+跨界协议）+ BCR-003（元信息同步台账+根 CLAUDE.md 重设计）经 4 轮修改/3 轮 review 定稿（合并 spec v4 `fec6135`），baseline 合 main（PR #7，merge `66c1e1a`），下游 ai/xiaobao/workboard 已回流，coordination 两 BCR 均「已回流下游」终态，生态侧改动 3/4/5 已落（STATUS 台账 + PROJECTS 订正 + 根索引重设计）。**P11 · 角色集精简（BCR-004 删 UI + BCR-006 删 Tester）已闭环**——6 角色→4（PM/Architect/Developer/DevOps），UI 并入 PM、Tester 并入 Developer 自测 + Owner 验收；设计 v3 经 3 轮 review + Owner 拍 8 点，baseline 合 main（PR #8，merge `6f433ca`），下游已回流，coordination BCR-004/006「已回流下游」终态。
-- **当前阶段**：P0→P13 完成。BCR-001/002/003/004/005/006 均全闭环；真源仓接 BCR 防滑（不切角色）已生效（`1d55eea`）。**P12 交接带宽加固全闭环（PR #9 merge `6ebc119`，三下游回流 ai `5be495a` / xiaobao `262e9b3` / workboard `5eb0f21` 已 push）。P13 · Trae 兼容确认全闭环（2026-07-02，Owner 在 Trae 实测三句全通过；文件层面零改动、零回流，留痕已 commit）。**
-- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；P8 方案定稿（PR #4，merge `fe99ac3`）+ **P8 实现落地真源**（PR #5，merge `663f59b`，commit `fc22e75`）；**BCR-001 全闭环**（coordination 终态「已回流下游」，ai/xiaobao sync 至 `c8c66ce`）；**BCR-002 全闭环**（PR #6 merge `0a76dca` / commit `b5a29a3`，方案存档 `8af4e62`；coordination 终态「已回流下游」，ai `7fe90a4` / xiaobao `91b442a` 已回流）；**P9 workboard 接入**（git 化 + sync 对齐 `2016cee`，远端 main 新建）；**P10 全闭环（PR #7，merge `66c1e1a`）**：防滑 `1d55eea` + BCR-003/005 设计与 baseline 落地（`b8c7c15`）；下游回流 ai `6b1c8b8` / xiaobao `2e41947` / workboard `4b8e563`；coordination 终态 `f62e76e`；根索引重设计已落；**P11 角色集精简（PR #8，merge `6f433ca`）**：删 UI/Tester（6→4），下游回流 ai `504f7c3` / xiaobao `9bab45d` / workboard `d8e6b74`，coordination 终态 `85fc21f`。
-- **下一步**：按定位升级 spec §4 九步实施（实施方待 Owner 指定；第 2 步 baseline 变更走 PR，第 9 步立 P14 + 补回归用例）。**实施完成后由本真源会话复审验收**（对照 spec 逐步核对，Owner 已约定，2026-07-03）；本会话在此之前不动手实施。P13 已闭环。真源 main 含 P12（`6ebc119`）；三下游已对齐 `agent-workflow@6ebc119`。
+- **当前阶段**：P0→P14 完成。BCR-001/002/003/004/005/006/007 均全闭环；真源仓接 BCR 防滑（不切角色）已生效（`1d55eea`）。**P12 交接带宽加固全闭环（PR #9 merge `6ebc119`，三下游回流 ai `5be495a` / xiaobao `262e9b3` / workboard `5eb0f21` 已 push）。P13 · Trae 兼容确认全闭环（2026-07-02，Owner 在 Trae 实测三句全通过；文件层面零改动、零回流，留痕已 commit）。P14 · 组织架构定位升级全闭环（BCR-007，2026-07-03；baseline 合 main merge `4ec68ce`，三下游回流 ai `2acc305` / xiaobao `107d879` / workboard `9cd17cf`）。**
+- **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；P8 方案定稿（PR #4，merge `fe99ac3`）+ **P8 实现落地真源**（PR #5，merge `663f59b`，commit `fc22e75`）；**BCR-001 全闭环**（coordination 终态「已回流下游」，ai/xiaobao sync 至 `c8c66ce`）；**BCR-002 全闭环**（PR #6 merge `0a76dca` / commit `b5a29a3`，方案存档 `8af4e62`；coordination 终态「已回流下游」，ai `7fe90a4` / xiaobao `91b442a` 已回流）；**P9 workboard 接入**（git 化 + sync 对齐 `2016cee`，远端 main 新建）；**P10 全闭环（PR #7，merge `66c1e1a`）**：防滑 `1d55eea` + BCR-003/005 设计与 baseline 落地（`b8c7c15`）；下游回流 ai `6b1c8b8` / xiaobao `2e41947` / workboard `4b8e563`；coordination 终态 `f62e76e`；根索引重设计已落；**P11 角色集精简（PR #8，merge `6f433ca`）**：删 UI/Tester（6→4），下游回流 ai `504f7c3` / xiaobao `9bab45d` / workboard `d8e6b74`，coordination 终态 `85fc21f`；**P14 组织架构定位升级（BCR-007）**：baseline 合 main（merge `4ec68ce`），三下游回流（ai `2acc305` / xiaobao `107d879` / workboard `9cd17cf`），根 CLAUDE.md 重写为参谋长，元信息同步两方接力落地。
+- **下一步**：P14 已闭环。指挥官（Owner）定方向；下一个 BCR 或功能项由 Owner 发起。真源 main 含 P14（`4ec68ce` + 当前游标更新）；三下游已对齐 `agent-workflow@4ec68ce`（BCR-007 回流）。
 - **本轮搁置（明确不做）**：暂无。
 
 ## 演进定位
@@ -439,6 +439,43 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 3. 普通问候 → ✅ 保持 General，不误触发、不硬拉选角色。
 
 **备案（实测已通过，本预案未触发）**：若当初实测不通过（Trae agent 不跟随「去读另一文件」这类指令），才需在入口层加更强的「首步必读 `runtime.md`」引导，届时改双入口（维持 `CLAUDE.md`/`AGENTS.md` 逐字一致）并 sync 回流三下游。现无需执行。
+
+### P14 · 组织架构定位升级（指挥官—参谋长制·薄公司）（已闭环 · 2026-07-03）
+
+**性质**：组织级定位升级，不新增工作流角色、不改单项目迭代流程。把「一人公司 AI 开发团队工作流」的内部架构定位从「四类参与者 + 协调真源」升级为「一人公司 AI 组织操作架构：指挥官—参谋长制（薄公司）」——三类角色 + 一个场所。对外品牌仍为「一人公司 AI 开发团队工作流」。
+
+**核心变更**：
+1. **生态参与者拓扑重定义**：四类参与者（框架真源/协调真源台账/开发型下游/生态索引根）→ 三类角色 + 一个场所（指挥官/参谋长/项目组 + 工作流组 + 公告板）。结构跟着物理走，一个头衔 = 一个目录 + 一个会话。
+2. **coordination 专职会话撤销**：原「协调真源台账 = coordination 专职会话」改为「公告板（场所，不是人）+ 参谋长字段级白名单直写」。coordination 从「有人值守的协调真源」降为「无人值守的公告板」。
+3. **参谋长（生态根会话）升格**：获第二个跨界例外——工作流回流执行权（`sync-downstream.sh`）。原「三方接力」（子项目登记 → coordination 会话更新 → 生态索引根维护）→「两方接力」（子项目登记 → 参谋长一站式：改 PROJECTS + 订正根索引 + 勾两列）。
+4. **根 CLAUDE.md 身份重写**：从「生态索引根 + 启动枢纽」重写为「参谋长入口」，明确四项职责（立项受理+建壳 / 维护公告板 / 协调工作流回流 / 陪调研+导航索引）。
+5. **「谁能写什么」矩阵升级**：参谋长对公告板（coordination）从「只读+回执」→「字段级白名单直写」。白名单四条：① PROJECTS 同步 ② 台账两列勾选 ③ BCR 回流状态推进 ④ 立项登记。黑名单明确：不登记台账行（台账行由变更项目自己登）、不承接普通 REQ 等。
+6. **框架真源扩权**：agent-workflow 可登记自身元信息变更行（自举型 BCR 的连带修订）。
+
+**落地步骤（spec §4 九步，排序原则：新身份先于新权限生效）**：
+1. 登记 BCR-007（coordination 仓，状态：评估中 → 已采纳）
+2. 升级 baseline（`cross-project-collaboration.md` §生态参与者与跨界协议 + `README.md` 定位段），走 PR 合 main
+3. 回填 BCR-007 真源落地 commit，状态置「回流中」
+4. 重写根 `CLAUDE.md` 为参谋长身份（生态根会话执行，新身份先生效）
+5. 首轮回流：sync 三下游 + commit/push（参谋长执行，回流权启用）
+6. 回填 BCR-007 回流清单，状态置「已回流下游」（参谋长执行）
+7. 登记 agent-workflow 定位变更台账行（真源会话执行，框架真源扩权自登）
+8. 同步 PROJECTS + 订正索引 + 勾两列（参谋长执行，两方接力闭环验证）
+9. ROADMAP 立 P14 + 游标收尾；补回归用例
+
+**已做（2026-07-03，九步全完成）**：
+- BCR-007 已登记并终态「已回流下游」（coordination `6aa5482`）
+- baseline 落地：`cross-project-collaboration.md` 生态参与者节重写 + `README.md` 加内部架构定位段；PR 合 main（merge `4ec68ce`，feat `2de5947`）
+- 根 CLAUDE.md 重写为参谋长身份（根仓 `a2e5b20`）
+- 三下游回流：ai `2acc305` / xiaobao `107d879` / workboard `9cd17cf`
+- 元信息同步两方接力闭环验证：agent-workflow 自登台账行（coordination `f3691a9`）→ 参谋长一站式同步+勾选（coordination `0ea972a` + 根索引 `a2e5b20`）
+- 回归用例补 P14-1~P14-5
+
+**关键设计决策**：
+- **新身份先于新权限生效**：第 4 步（重写根 CLAUDE.md = 参谋长身份就位）在第 5 步（回流权首次使用）之前，避免「先有权再有身份」的逻辑倒置。
+- **公告板是场所不是人**：coordination 仓降格为纯台账/公告板，不设专职会话；所有对它的写入都由参谋长（人）在白名单内执行，留痕可审计。
+- **两方接力 vs 三方接力**：把原「子项目 → coordination 会话 → 索引根」的三方接力简化为「子项目 → 参谋长」两方接力——参谋长一站式完成 PROJECTS 同步 + 根索引订正 + 台账勾选，减少一个中转节点、降低遗漏率。
+- **字段级白名单而非全仓写权**：参谋长对 coordination 的写入严格限制在四个白名单字段/区域内，黑名单明确禁止的事项（如登记台账行、承接普通 REQ、改 contracts/），防止权限蠕变。
 
 ## 执行原则
 
