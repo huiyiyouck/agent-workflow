@@ -7,12 +7,12 @@
 
 > **每次新会话开始先读本节**，即可知道「在做什么、做到哪、下一步干什么」，无需用户重述。每次推进后更新本节（改日期 + 各字段）。
 
-- **更新于**：2026-06-29
-- **正在做**：无待办。**P12 · 交接带宽加固（多 Agent 框架调研落地）已全闭环（2026-06-29，PR #9 merge `6ebc119`，三下游已回流）**——调研 MetaGPT/AutoGen/ChatDev/CrewAI/LangGraph 五框架，结论：本工作流命门 = 「分会话隔离之间文件交接带宽的质量」（人在环 + 跨会话隔离，不引入广播/manager Agent/自治闭环）。三条改进全钉这根命门并已落地：① 接口契约结构化（`design.md`）② Review 反向澄清问题 + 答案回填正文（`multi-agent-workflow.md` §9.1/§10.1）③ LTM 召回 corrections 标准迭代阶段强制首读 + knowledge 关联门控（`runtime.md` 第 7 项 + `context-policy.md`）。Owner 拍板：决策 1 = 仅并行实现时纳入 Developer Review；决策 2 = corrections 仅标准迭代阶段强制。两轮 Review 4+1 问题全闭合。**P10/P11 历史见下方各节。**
+- **更新于**：2026-07-03
+- **正在做**：无待办。**P13 · Trae IDE 兼容确认已全闭环（2026-07-02）**——确认既有标准入口 `AGENTS.md` 直接作为 Trae 的项目规则入口（与「CLAUDE.md=Claude Code / AGENTS.md=Codex」双入口设计对称，Trae 复用 Codex 同一份 `AGENTS.md`）。真源 + 三下游各自本就持有 `AGENTS.md`，故**文件层面零改动、零回流**。Owner 2026-07-02 在下游 workboard 的 Trae 实测角色路由三句**全通过**：`你是 PM` 完整切角色 + 走 git 启动流程 + 读 `runtime.md` + 加载 project-context/INDEX/role-pm 清单；`进入团队工作流` 同启动流程覆盖；普通问候保持 General 不误触发。留痕（`README.md` + 本游标 + §P13 + 回归用例 P13-1~P13-3）均真源专属文件、不入下游同步，**已 commit（2026-07-03）。P12（交接带宽加固）历史见 §P12 节。**
 - **历史 · P10/P11**（本条同时含 P10 与 P11，勿误判 P11 归入 P10）：**P10 · BCR 系列（生态参与者系统化）已闭环**——BCR-005（生态参与者拓扑+跨界协议）+ BCR-003（元信息同步台账+根 CLAUDE.md 重设计）经 4 轮修改/3 轮 review 定稿（合并 spec v4 `fec6135`），baseline 合 main（PR #7，merge `66c1e1a`），下游 ai/xiaobao/workboard 已回流，coordination 两 BCR 均「已回流下游」终态，生态侧改动 3/4/5 已落（STATUS 台账 + PROJECTS 订正 + 根索引重设计）。**P11 · 角色集精简（BCR-004 删 UI + BCR-006 删 Tester）已闭环**——6 角色→4（PM/Architect/Developer/DevOps），UI 并入 PM、Tester 并入 Developer 自测 + Owner 验收；设计 v3 经 3 轮 review + Owner 拍 8 点，baseline 合 main（PR #8，merge `6f433ca`），下游已回流，coordination BCR-004/006「已回流下游」终态。
-- **当前阶段**：P0→P12 完成。BCR-001/002/003/004/005/006 均全闭环；真源仓接 BCR 防滑（不切角色）已生效（`1d55eea`）。**P12 交接带宽加固全闭环（PR #9 merge `6ebc119`，三下游回流 ai `5be495a` / xiaobao `262e9b3` / workboard `5eb0f21` 已 push）。**
+- **当前阶段**：P0→P13 完成。BCR-001/002/003/004/005/006 均全闭环；真源仓接 BCR 防滑（不切角色）已生效（`1d55eea`）。**P12 交接带宽加固全闭环（PR #9 merge `6ebc119`，三下游回流 ai `5be495a` / xiaobao `262e9b3` / workboard `5eb0f21` 已 push）。P13 · Trae 兼容确认全闭环（2026-07-02，Owner 在 Trae 实测三句全通过；文件层面零改动、零回流，留痕已 commit）。**
 - **已完成**：P1（`2701013`）+ P2（`04369cc`）+ P3（`79116bd`）+ P4（PR #1，merge `c112a9d`）+ P5（PR #2，merge `ddf5683`）+ **P7 全部完成**（PR #3 `6bfba79` / ai `6675531` / xiaobao `1dae522`）；ADR 路径修正（`c50bec0`）；P8 方案定稿（PR #4，merge `fe99ac3`）+ **P8 实现落地真源**（PR #5，merge `663f59b`，commit `fc22e75`）；**BCR-001 全闭环**（coordination 终态「已回流下游」，ai/xiaobao sync 至 `c8c66ce`）；**BCR-002 全闭环**（PR #6 merge `0a76dca` / commit `b5a29a3`，方案存档 `8af4e62`；coordination 终态「已回流下游」，ai `7fe90a4` / xiaobao `91b442a` 已回流）；**P9 workboard 接入**（git 化 + sync 对齐 `2016cee`，远端 main 新建）；**P10 全闭环（PR #7，merge `66c1e1a`）**：防滑 `1d55eea` + BCR-003/005 设计与 baseline 落地（`b8c7c15`）；下游回流 ai `6b1c8b8` / xiaobao `2e41947` / workboard `4b8e563`；coordination 终态 `f62e76e`；根索引重设计已落；**P11 角色集精简（PR #8，merge `6f433ca`）**：删 UI/Tester（6→4），下游回流 ai `504f7c3` / xiaobao `9bab45d` / workboard `d8e6b74`，coordination 终态 `85fc21f`。
-- **下一步**：下一阶段待 Owner 提出。真源 main 含 P12（`6ebc119`）；三下游已对齐 `agent-workflow@6ebc119`（ai `5be495a` / xiaobao `262e9b3` / workboard `5eb0f21` 均已 push）。注：`d6b0a8d`「立项编排归属」的 spec 文档（`docs/superpowers/specs/`）为真源专属、不入下游同步范围，仅其对 `cross-project-collaboration.md` 的改动随本次 sync 回流。
+- **下一步**：下一阶段待 Owner 提出。P13 已闭环（2026-07-02 Trae 实测三句全通过），留痕改动为真源专属文件、**不触发下游回流**，已 commit。真源 main 含 P12（`6ebc119`）；三下游已对齐 `agent-workflow@6ebc119`。
 - **本轮搁置（明确不做）**：暂无。
 
 ## 演进定位
@@ -419,6 +419,26 @@ P1 拆分后形成两层，职责严格分开——**跨模式安全规则不依
 4. `measure-context.sh` 复测：`runtime.md` 字数变化记录在案；固定规则链路与角色启动链路按新口径不出现未说明的回归；双入口一致。
 5. `regression-cases.md` 补用例：① 设计文档接口契约缺结构化字段应被 Review 挡；② 澄清问题答案未回填正文不算闭环；③ 角色启动漏读本角色 corrections 视为漏读；④ knowledge 召回不得全库 dump（只读 INDEX 关联条目）。
 6. 影响面：核对是否需同步 `role-developer`/`role-architect`/`role-pm` 手册指针（实现时 `rg` 确认，最小改动）。
+
+### P13 · Trae IDE 兼容确认（已闭环 · 2026-07-02）
+
+**性质**：不新增角色、不改运行模型、**不新增入口文件**。确认既有标准入口 `AGENTS.md` 直接作为 Trae IDE 的项目规则入口——与「CLAUDE.md（Claude Code）+ AGENTS.md（Codex）」双入口设计对称，Trae 复用 Codex 同一份 `AGENTS.md`。
+
+**关键事实**：
+- Trae 读取根目录 `AGENTS.md` 作为项目规则（Owner 2026-07-02 在 Trae 实测确认能读取该文件）。
+- `AGENTS.md` 是 agents.md 开放标准文件名，真源 + 三下游（ai/xiaobao/workboard）**各自本就持有一份**（下游为剥离 `SOURCE-REPO-ONLY` 后的 4176 字节版）。故 Trae 兼容在**文件层面零改动、零回流**——无需新增 Trae 专属入口，无需改 `install-downstream.sh`（`AGENTS.md` 已在铺设清单）、无需改 `sync-downstream.sh`。
+
+**已做（2026-07-02，仅留痕，均真源专属文件、不入下游同步）**：
+- `README.md`：顶部枚举 + 「工作流入口」节注明 Trae 亦通过 `AGENTS.md` 接入（复用 Codex 入口）。
+- 本游标 + 本节。
+- `regression-cases.md`：加 P13-1~P13-3（Trae 行为规格，实测通过后置终态）。
+
+**行为验证（已通过 · 2026-07-02 Owner 在下游 workboard 的 Trae 实测三句）**：文件被读到 ≠ 工作流跑通，故实测角色路由：
+1. `你是 PM` → ✅ 读 `AGENTS.md` 切 PM，走 git 启动流程（rev-parse/status/pull），读 `docs/baseline/runtime.md`，按默认只读清单加载 `project-context.md` / `INDEX.md` / `role-pm.md` / pm 日志，正确读出项目状态（v0.1 已关闭、等 Owner 定 v0.2）。
+2. `进入团队工作流` → ✅ 同「工作流启动」流程覆盖（判断 git 仓库 + 读 runtime.md）。
+3. 普通问候 → ✅ 保持 General，不误触发、不硬拉选角色。
+
+**备案（实测已通过，本预案未触发）**：若当初实测不通过（Trae agent 不跟随「去读另一文件」这类指令），才需在入口层加更强的「首步必读 `runtime.md`」引导，届时改双入口（维持 `CLAUDE.md`/`AGENTS.md` 逐字一致）并 sync 回流三下游。现无需执行。
 
 ## 执行原则
 

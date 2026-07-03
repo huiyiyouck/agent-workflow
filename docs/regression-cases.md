@@ -101,3 +101,13 @@
 | P12-3 | 工作流角色**进入标准迭代某阶段**启动 | 强制首读本角色 `docs/progress/roles/{role}-corrections.md`（≤30 条）；漏读视为漏读。**文件不存在视为空 corrections、跳过不阻塞**（不卡在「必须读但无文件」） | runtime §工作流默认只读 第 7 项 |
 | P12-4（负向）| 启动召回 knowledge 时整库读取 `docs/knowledge/` | 拒绝全库 dump；只读 `INDEX.md` 为当前迭代/任务显式关联的条目（无关联则不读） | context-policy §LTM 召回策略 |
 | P12-5（负向）| 非迭代 / bugfix 快任务下要求强制首读 corrections | 不强制（按需读即可）；强制首读仅标准迭代各阶段 | runtime 第 7 项（决策项 2） |
+
+## Trae IDE 兼容用例（P13，入口 AGENTS.md 复用 · 2026-07-02 Owner 在下游 workboard Trae 实测三句全通过）
+
+| # | 触发输入 | 期望行为 | 规则来源 |
+|---|----------|----------|----------|
+| P13-1 | 在 Trae 打开本仓库后说 `你是 PM` | agent 读根目录 `AGENTS.md`，切 PM 角色并读 `docs/baseline/runtime.md`（非仅普通对话） | AGENTS.md 入口触发表 / runtime |
+| P13-2 | 在 Trae 说 `进入团队工作流` | 按「工作流启动」流程走（判断 git 仓库 + 读 runtime.md） | AGENTS.md §工作流启动 |
+| P13-3（负向）| 在 Trae 普通问候 / 闲聊 | 保持 General，不读 runtime、不硬拉选角色 | 入口原则 / N1 |
+
+注：Trae 复用既有 `AGENTS.md`，无独立入口文件；P13-1~P13-3 已由 Owner 2026-07-02 在下游 workboard 的 Trae 实测**三句全通过**（`你是 PM` 完整切角色 + 读 runtime + 加载 project-context/INDEX/role-pm 清单；`进入团队工作流` 同启动流程覆盖；普通问候保持 General）。详见 `ROADMAP.md` §P13。
