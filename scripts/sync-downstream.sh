@@ -29,7 +29,7 @@ done
 
 # 0. 安全：目标不能是真源仓库自身或其子目录（否则会截断/污染真源文件）。
 SRC_REAL="$(realpath "$SRC")"
-DEST_REAL="$(realpath -m "$DEST")"
+DEST_REAL="$(realpath "$DEST" 2>/dev/null || echo "$DEST")"
 case "$DEST_REAL" in
   "$SRC_REAL"|"$SRC_REAL"/*)
     echo "错误：目标目录不能是真源仓库自身或其子目录（会破坏真源文件）。" >&2; exit 1 ;;
