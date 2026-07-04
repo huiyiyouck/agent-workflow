@@ -105,6 +105,15 @@ grep -q "SOURCE-REPO-ONLY" "$DEST/CLAUDE.md" "$DEST/AGENTS.md" && { echo "自检
 diff -q "$DEST/CLAUDE.md" "$DEST/AGENTS.md" >/dev/null || { echo "自检失败：双入口不一致。" >&2; fail=1; }
 [ -f "$DEST/docs/baseline/project-context.md" ] || { echo "自检失败：project-context.md 缺失。" >&2; fail=1; }
 [ -f "$DEST/docs/baseline/cross-project-collaboration.md" ] || { echo "自检失败：跨项目联动文件缺失。" >&2; fail=1; }
+# 7b. 回流护栏（BCR-008）：sync 只应覆盖框架白名单文件；若本次动了白名单外文件（README / 项目专属 / 源码）则拦下，防「回流误带」。
+if git -C "$DEST" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  offending=$(git -C "$DEST" status --short | cut -c4- | grep -Ev '^(CLAUDE\.md$|AGENTS\.md$|docs/baseline/|docs/templates/|docs/knowledge/|\.workflow-version$)' || true)
+  if [ -n "$offending" ]; then
+    echo "自检失败：sync 动了框架白名单外的文件（不应发生，疑似误带，请核查）：" >&2
+    echo "$offending" | sed 's/^/     /' >&2
+    fail=1
+  fi
+fi
 [ "$fail" -eq 0 ] || { echo "同步自检未通过。" >&2; exit 1; }
 
 echo "✅ $MODE 完成 → $DEST （版本 $ver）"
