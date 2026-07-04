@@ -47,7 +47,9 @@ coordination 仓不承载业务项目的 PRD、设计、自测报告、角色日
 2. 否则读本项目 `project-context.md` 「外部依赖与集成」中记录的 `coordination_root`；
 3. 仍找不到 → **询问用户**，由用户确认后可回写到 `project-context.md`。
 
-**禁止**用 sibling path（如 `../niuma-cheng-coordination`）或目录猜测定位（换机器即错）。确定位置后，在本项目记录中写明本次依据的 coordination 仓与 commit。
+`coordination_root` 可以是**绝对路径**、**仓库 URL**，或**相对项目根的相对路径**（如 `../niuma-cheng-coordination`）。**统一目录树生态**（子项目为生态根下的兄弟目录、靠脚本统一 clone）**优先用相对路径**——整棵树搬家（换机器 / 上生产）时相对结构不变，绝对路径反而失效。相对路径**以项目根（`git rev-parse --show-toplevel`）为基准**解析，不是相对当前工作目录（BCR-010）。
+
+**仍禁止无配置的目录猜测**：相对路径必须是**显式配置的确定值**，不允许「不配 `coordination_root` 就扫上级找 coordination-like 目录」的运行时猜测。确定位置后，在本项目记录中写明本次依据的 coordination 仓与 commit。
 
 若 `coordination_root` 记录的是仓库 URL 而非本地路径，**不能直接 `git status` / 写入**：先询问用户使用哪个本地 checkout，或由用户确认 clone 位置后再继续。
 
