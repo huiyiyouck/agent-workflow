@@ -5,10 +5,10 @@
 ## 当前项目状态
 
 - 当前迭代：无
-- 当前模式：Workflow Audit / BCR 评估落地
-- 当前阶段：BCR-011/012 review 应修已处理，真源改动待回填公告板
-- 阻塞项：无
-- 下一步入口：询问用户是否需要以某个角色或工作类型继续；如不需要，保持 General（通用助手）
+- 当前模式：Workflow Audit / BCR 评估
+- 当前阶段：BCR-013（会话「角色+迭代」标识）初评完成，待 Owner 拍板采纳方向
+- 阻塞项：无（评估输入不完整：BCR-013 明细未写全，token 格式待 workboard 补明细后收敛）
+- 下一步入口：Owner 就 BCR-013 采纳方向拍板；采纳则定跨项目 token 契约后另起落地游标
 
 ## 版本列表
 
@@ -26,7 +26,8 @@
 
 | 日期 | 模式 | 记录 | 状态 | 下一步 |
 |------|------|------|------|--------|
-| 2026-07-08 | Workflow Audit / BCR 评估落地 | [BCR-011/012 合并落地方案](ad-hoc/2026-07-08-bcr-011-012-iteration-gate-spec.md) | 真源改动落地中 | 回填 BCR 落地 commit，随后执行下游回流 |
+| 2026-07-08 | Workflow Audit / BCR 评估落地 | [BCR-011/012 合并落地方案](ad-hoc/2026-07-08-bcr-011-012-iteration-gate-spec.md) | 已回流下游（终态） | 无 |
+| 2026-07-12 | Workflow Audit / BCR 评估 | [BCR-013 评估方案：会话「角色+迭代」标识](ad-hoc/2026-07-12-bcr-013-session-role-iteration-marker.md) | 初评完成，待 Owner 拍板 | Owner 定采纳方向；采纳则定 token 契约后另起落地游标 |
 
 ## 最近收尾摘要
 
