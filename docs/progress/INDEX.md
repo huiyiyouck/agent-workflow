@@ -6,9 +6,9 @@
 
 - 当前迭代：无
 - 当前模式：Workflow Audit / BCR 评估
-- 当前阶段：BCR-013 角色维已定解析侧闭合（detectRole 兜底 Unknown→General，零框架）；迭代维 Owner 拍 C+框架 baseline，但参谋长补充：付框架税前建议先探 INDEX-git-history 解析侧选项（可能迭代维也免框架）
+- 当前阶段：BCR-013 迭代维解析侧探底已出（开发角色会话命中 62.8%，且框架 C 标不了历史积压→解析侧绕不开）；参谋长改荐**整条 BCR-013 零框架**（两维都解析侧），待 Owner 确认翻转 C 采纳
 - 阻塞项：无
-- 下一步入口：Owner 定迭代维——先只读探 INDEX-git-history 解析侧（会话时间戳×INDEX git 历史重建 session↔迭代，参谋长可代跑，荐）还是直接框架 C(须 hook 才确定)。角色维侧归 workboard：detectRole 兜底改 General + 扫 assistant
+- 下一步入口：Owner 确认迭代维改"解析侧零框架"（翻转上轮 C 采纳）→ BCR-013 = 评估后不进框架、转 workboard 解析侧治理（角色维兜底 General、迭代维 INDEX-git-history）；如坚持要"从今往后确定标记"再上框架 C(hook)
 
 ## 版本列表
 
