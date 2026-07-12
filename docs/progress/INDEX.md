@@ -6,9 +6,9 @@
 
 - 当前迭代：无
 - 当前模式：Workflow Audit / BCR 评估
-- 当前阶段：BCR-013 迭代维解析侧探底已出（开发角色会话命中 62.8%，且框架 C 标不了历史积压→解析侧绕不开）；参谋长改荐**整条 BCR-013 零框架**（两维都解析侧），待 Owner 确认翻转 C 采纳
+- 当前阶段：BCR-013 **评估关闭·不进框架**（Owner 2026-07-12 确认）——两维均转 workboard 解析侧，框架侧零改动；框架真源回到 Owner 定方向的空闲态
 - 阻塞项：无
-- 下一步入口：Owner 确认迭代维改"解析侧零框架"（翻转上轮 C 采纳）→ BCR-013 = 评估后不进框架、转 workboard 解析侧治理（角色维兜底 General、迭代维 INDEX-git-history）；如坚持要"从今往后确定标记"再上框架 C(hook)
+- 下一步入口：BCR-013 框架侧无动作（终态）。球在 workboard：Developer 迭代做两项解析侧治理（detectRole 兜底=General + INDEX-git-history 迭代识别）。下一个 BCR/功能项由 Owner 发起
 
 ## 版本列表
 
@@ -27,7 +27,7 @@
 | 日期 | 模式 | 记录 | 状态 | 下一步 |
 |------|------|------|------|--------|
 | 2026-07-08 | Workflow Audit / BCR 评估落地 | [BCR-011/012 合并落地方案](ad-hoc/2026-07-08-bcr-011-012-iteration-gate-spec.md) | 已回流下游（终态） | 无 |
-| 2026-07-12 | Workflow Audit / BCR 评估 | [BCR-013 评估方案：会话「角色+迭代」标识](ad-hoc/2026-07-12-bcr-013-session-role-iteration-marker.md) | 初评经 Owner review 修订，待拍板档位 | Owner 定档（第0档探底 / 进框架 D主C验B增）；进框架则先定 token 契约后另起落地游标 |
+| 2026-07-12 | Workflow Audit / BCR 评估 | [BCR-013 评估方案：会话「角色+迭代」标识](ad-hoc/2026-07-12-bcr-013-session-role-iteration-marker.md) | 评估关闭·不进框架（终态） | 无（框架侧）；两维解析侧治理归 workboard |
 
 ## 最近收尾摘要
 
