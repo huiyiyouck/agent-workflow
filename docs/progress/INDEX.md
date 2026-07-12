@@ -6,9 +6,9 @@
 
 - 当前迭代：无
 - 当前模式：Workflow Audit / BCR 评估
-- 当前阶段：BCR-013 Owner 采信基线拍板分裂（部分采纳）：角色维交解析侧（不进框架）、迭代维进框架；参谋长荐迭代维用**方案 C（启动写映射行）**
-- 阻塞项：无（闸：token 契约须与 workboard 共定登记 contracts/ 后才动框架）
-- 下一步入口：Owner 批 C 方向 + 授权与 workboard 共定映射行契约 → 定稿登记 coordination contracts/ → 改框架（runtime/入口加"启动写映射行"）+ 回流下游。角色维侧另由 workboard 解析侧收尾（改 detectRole 扫 assistant，非本框架落地）
+- 当前阶段：BCR-013 角色维已定解析侧闭合（detectRole 兜底 Unknown→General，零框架）；迭代维 Owner 拍 C+框架 baseline，但参谋长补充：付框架税前建议先探 INDEX-git-history 解析侧选项（可能迭代维也免框架）
+- 阻塞项：无
+- 下一步入口：Owner 定迭代维——先只读探 INDEX-git-history 解析侧（会话时间戳×INDEX git 历史重建 session↔迭代，参谋长可代跑，荐）还是直接框架 C(须 hook 才确定)。角色维侧归 workboard：detectRole 兜底改 General + 扫 assistant
 
 ## 版本列表
 
