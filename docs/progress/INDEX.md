@@ -6,9 +6,9 @@
 
 - 当前迭代：无
 - 当前模式：Workflow Audit / BCR 评估
-- 当前阶段：BCR-013（会话「角色+迭代」标识）初评完成，待 Owner 拍板采纳方向
-- 阻塞项：无（评估输入不完整：BCR-013 明细未写全，token 格式待 workboard 补明细后收敛）
-- 下一步入口：Owner 就 BCR-013 采纳方向拍板；采纳则定跨项目 token 契约后另起落地游标
+- 当前阶段：BCR-013（会话「角色+迭代」标识）初评经 Owner review 修订完成，待 Owner 拍板档位
+- 阻塞项：无
+- 下一步入口：Owner 定档——先走第 0 档（workboard 纯解析侧探底、零框架改动）还是直接进框架改动（D 主力/C 待验证/B 增量）；进框架则先定 token 契约后另起落地游标
 
 ## 版本列表
 
@@ -27,7 +27,7 @@
 | 日期 | 模式 | 记录 | 状态 | 下一步 |
 |------|------|------|------|--------|
 | 2026-07-08 | Workflow Audit / BCR 评估落地 | [BCR-011/012 合并落地方案](ad-hoc/2026-07-08-bcr-011-012-iteration-gate-spec.md) | 已回流下游（终态） | 无 |
-| 2026-07-12 | Workflow Audit / BCR 评估 | [BCR-013 评估方案：会话「角色+迭代」标识](ad-hoc/2026-07-12-bcr-013-session-role-iteration-marker.md) | 初评完成，待 Owner 拍板 | Owner 定采纳方向；采纳则定 token 契约后另起落地游标 |
+| 2026-07-12 | Workflow Audit / BCR 评估 | [BCR-013 评估方案：会话「角色+迭代」标识](ad-hoc/2026-07-12-bcr-013-session-role-iteration-marker.md) | 初评经 Owner review 修订，待拍板档位 | Owner 定档（第0档探底 / 进框架 D主C验B增）；进框架则先定 token 契约后另起落地游标 |
 
 ## 最近收尾摘要
 
