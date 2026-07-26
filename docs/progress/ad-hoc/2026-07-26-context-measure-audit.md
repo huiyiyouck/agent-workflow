@@ -2,7 +2,7 @@
 
 > 产出：参谋长会话，2026-07-26；针对 ROADMAP「正在做」⚠️ 存量问题（固定链路 14433 > 13000）与「下一步」待办②的瘦身审计
 > 数据源：`scripts/measure-context.sh` 双 locale 复测 + git 历史各阶段节点（P8/P10/P11/P12/P14/U1/HEAD）链路文件逐一实测
-> 状态：**待 Owner 拍板**（订正方案见 §五；涉及度量脚本与 ROADMAP 记录订正，不涉 baseline 规则正文）
+> 状态：**Owner 已拍板（2026-07-26）——方案 A 通过并已落地**：脚本锁定 UTF-8 口径 + 退化自检 WARN；ROADMAP 三处订正（⚠️ 误报关闭 / 待办② 摘除 / U1「增量 0」订正）；回归用例 M1 入 regression-cases。瘦身审计以**误报关闭**，不启动 baseline 压缩。
 
 ---
 
@@ -65,7 +65,7 @@ P8 行与 P12 行分别与 ROADMAP §P8 度量记录（6992/12473）、§P12 复
 2. ROADMAP 订正三处：⚠️ 存量问题条目改写为本审计结论（误报关闭）；「下一步」待办② 摘除；U1 段「measure 增量 0」订正为「固定链 +160 字符（7553/13000 内）」。
 3. `docs/regression-cases.md` 新增用例：在 `LC_ALL=C` 环境运行 `measure-context.sh`，输出仍须为字符口径（或明确 WARN），防止口径再度静默漂移。
 
-改动半径：`scripts/measure-context.sh` + `docs/ROADMAP.md` + `docs/regression-cases.md`，**不触碰 `docs/baseline/` 任何文件**——与 BCR-015 U3 将改写的停等条文（runtime/迭代速查的 S1-S4 区域）零交集，可在 U3 之前或并行落地。脚本改动经 `sync-downstream.sh` 正常回流。
+改动半径：`scripts/measure-context.sh` + `docs/ROADMAP.md` + `docs/regression-cases.md`，**不触碰 `docs/baseline/` 任何文件**——与 BCR-015 U3 将改写的停等条文（runtime/迭代速查的 S1-S4 区域）零交集，可在 U3 之前或并行落地。三个文件均为真源专属（不在 sync 分发集，见回归用例 I2 排除清单），**零回流**（初稿误写「经 sync 回流」，据分发集核实订正）。
 
 **方案 B（不荐）：改按字节口径并重校准阈值**——需重写全部历史基线记录，且「token/字」估算锚定字符，字节口径与 token 相关性更差；仅作陪衬列出。
 

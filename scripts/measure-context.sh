@@ -5,6 +5,11 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+# 口径锁定（2026-07-26 审计）：wc -m 依赖 locale，C 环境会退化为字节计数（中文一字计 3 字节）。
+# 历史基线与两条硬指标均为字符口径，故强制 UTF-8；锁定失败时 WARN 声明数值不可与基线对比。
+if locale -a 2>/dev/null | grep -qxiE 'C\.(UTF-8|utf8)'; then export LC_ALL=C.UTF-8; else export LC_ALL=en_US.UTF-8; fi
+[ "$(printf '一' | wc -m | tr -d ' ')" = "1" ] || echo "WARN：本环境字符计数退化为字节口径，以下数值不可与基线（字符口径）对比" >&2
+
 count() { wc -m < "$1" | tr -d ' '; }
 
 echo "# 单文件体量（字符数，约 1.5-1.7 token/字）"
