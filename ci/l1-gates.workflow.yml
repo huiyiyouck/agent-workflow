@@ -1,0 +1,29 @@
+# BCR-015 L1 门禁（下游仓 workflow 模板，经 sync-downstream.sh --enable-l1-gates 分发为 .github/workflows/l1-gates.yml）
+# 降级条款判据以本 workflow 在当前 commit 的绿灯结论为准：绿 → 阶段自动推进；非绿（红/未跑/进行中/查不到/不存在）→ 维持 Owner 确认（fail-closed）。
+name: l1-gates
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: G1/G2/G4/G5 · 状态一致性 / 验收证据链 / Review 完整性 / 打回闸
+        run: sh scripts/gates/l1-gates.sh .
+      - uses: actions/setup-node@v4
+        if: ${{ hashFiles('package.json') != '' }}
+        with:
+          node-version: 20
+      - name: G3 · 验收脚本执行（项目自身测试命令）
+        if: ${{ hashFiles('package.json') != '' }}
+        run: |
+          if grep -q '"test"' package.json; then
+            npm ci --no-audit --no-fund 2>/dev/null || npm install --no-audit --no-fund
+            npm test
+          else
+            echo "::error::G3 失败：package.json 无 test 脚本——L1 门禁要求项目具备可执行测试（验收可执行化前提）。该怎么改：补最小测试基建后重跑；未就绪的仓不应启用 l1-gates（降级条款下维持 Owner 确认）"
+            exit 1
+          fi

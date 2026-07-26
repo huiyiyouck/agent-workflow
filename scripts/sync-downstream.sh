@@ -18,14 +18,16 @@ set -euo pipefail
 SRC="$(cd "$(dirname "$0")/.." && pwd)"
 DEST=""
 DRY=0
+GATES=0
 for a in "$@"; do
   case "$a" in
     --dry-run) DRY=1 ;;
+    --enable-l1-gates) GATES=1 ;;   # BCR-015 U2：显式首装 L1 门禁（workflow + 脚本）
     -*) echo "未知参数：$a" >&2; exit 2 ;;
     *) DEST="$a" ;;
   esac
 done
-[ -n "$DEST" ] || { echo "用法：scripts/sync-downstream.sh <目标项目目录> [--dry-run]" >&2; exit 2; }
+[ -n "$DEST" ] || { echo "用法：scripts/sync-downstream.sh <目标项目目录> [--dry-run] [--enable-l1-gates]" >&2; exit 2; }
 
 # 0. 安全：目标不能是真源仓库自身或其子目录（否则会截断/污染真源文件）。
 SRC_REAL="$(realpath "$SRC")"
@@ -67,6 +69,9 @@ if [ "$DRY" = 1 ]; then
   ( cd "$SRC" && find docs/baseline -type f ! -name 'project-context.md' | sort | sed 's/^/     /' )
   ( cd "$SRC" && find docs/templates -type f | sort | sed 's/^/     /' )
   echo "将保留（不碰）：docs/progress/、project-context.md、docs/knowledge/ 已有条目"
+  if [ "$GATES" = 1 ] || [ -f "$DEST/.github/workflows/l1-gates.yml" ]; then
+    echo "将分发 L1 门禁资产：.github/workflows/l1-gates.yml + scripts/gates/l1-gates.sh"
+  fi
   echo "(dry-run 结束，未写入)"; exit 0
 fi
 
@@ -90,6 +95,17 @@ done
 # templates：整目录覆盖（不删下游可能多出的模板，与 baseline orphan 策略一致）
 mkdir -p "$DEST/docs/templates"; cp -R "$SRC/docs/templates/." "$DEST/docs/templates/"
 
+# 4b. L1 门禁资产（BCR-015 U2）：约定名 workflow `l1-gates.yml` + 门禁脚本。
+#     仅两种情况分发：① 目标已启用（已存在 .github/workflows/l1-gates.yml）→ 随框架更新；
+#     ② 本次显式传 --enable-l1-gates → 首装启用。
+#     未启用的仓不塞门禁——降级条款（fail-closed）：无 l1-gates 绿灯结论 = 维持 Owner 确认旧行为。
+if [ "$GATES" = 1 ] || [ -f "$DEST/.github/workflows/l1-gates.yml" ]; then
+  mkdir -p "$DEST/scripts/gates" "$DEST/.github/workflows"
+  cp "$SRC/ci/gates/l1-gates.sh" "$DEST/scripts/gates/l1-gates.sh"
+  chmod +x "$DEST/scripts/gates/l1-gates.sh"
+  cp "$SRC/ci/l1-gates.workflow.yml" "$DEST/.github/workflows/l1-gates.yml"
+fi
+
 # 5. 项目专属：仅首次铺，已存在不碰。
 [ -f "$DEST/docs/baseline/project-context.md" ] || \
   cp "$SRC/docs/baseline/project-context.template.md" "$DEST/docs/baseline/project-context.md"
@@ -107,7 +123,7 @@ diff -q "$DEST/CLAUDE.md" "$DEST/AGENTS.md" >/dev/null || { echo "自检失败�
 [ -f "$DEST/docs/baseline/cross-project-collaboration.md" ] || { echo "自检失败：跨项目联动文件缺失。" >&2; fail=1; }
 # 7b. 回流护栏（BCR-008）：sync 只应覆盖框架白名单文件；若本次动了白名单外文件（README / 项目专属 / 源码）则拦下，防「回流误带」。
 if git -C "$DEST" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  offending=$(git -C "$DEST" status --short | cut -c4- | grep -Ev '^(CLAUDE\.md$|AGENTS\.md$|docs/baseline/|docs/templates/|docs/knowledge/|\.workflow-version$)' || true)
+  offending=$(git -C "$DEST" status --short | cut -c4- | grep -Ev '^(CLAUDE\.md$|AGENTS\.md$|docs/baseline/|docs/templates/|docs/knowledge/|\.workflow-version$|scripts/gates/|\.github/workflows/l1-gates\.yml$)' || true)
   if [ -n "$offending" ]; then
     echo "自检失败：sync 动了框架白名单外的文件（不应发生，疑似误带，请核查）：" >&2
     echo "$offending" | sed 's/^/     /' >&2
