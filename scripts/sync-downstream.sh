@@ -123,7 +123,7 @@ diff -q "$DEST/CLAUDE.md" "$DEST/AGENTS.md" >/dev/null || { echo "自检失败�
 [ -f "$DEST/docs/baseline/cross-project-collaboration.md" ] || { echo "自检失败：跨项目联动文件缺失。" >&2; fail=1; }
 # 7b. 回流护栏（BCR-008）：sync 只应覆盖框架白名单文件；若本次动了白名单外文件（README / 项目专属 / 源码）则拦下，防「回流误带」。
 if git -C "$DEST" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  offending=$(git -C "$DEST" status --short | cut -c4- | grep -Ev '^(CLAUDE\.md$|AGENTS\.md$|docs/baseline/|docs/templates/|docs/knowledge/|\.workflow-version$|scripts/gates/|\.github/workflows/l1-gates\.yml$)' || true)
+  offending=$(git -C "$DEST" status --short --untracked-files=all | cut -c4- | grep -Ev '^(CLAUDE\.md$|AGENTS\.md$|docs/baseline/|docs/templates/|docs/knowledge/|\.workflow-version$|scripts/gates/|\.github/workflows/l1-gates\.yml$)' || true)
   if [ -n "$offending" ]; then
     echo "自检失败：sync 动了框架白名单外的文件（不应发生，疑似误带，请核查）：" >&2
     echo "$offending" | sed 's/^/     /' >&2
