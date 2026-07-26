@@ -1,0 +1,19 @@
+# 真源仓轻量校验（BCR-015 U2）：双入口一致 + 体量度量 + 门禁 fixture 回归。
+# 注意：这不是 l1-gates（真源仓无业务迭代，不适用 L1 门禁）；降级条款不会把本 workflow 误认为门禁——判据是约定名 l1-gates 的绿灯结论。
+name: framework-checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 双入口逐字一致（CLAUDE.md = AGENTS.md）
+        run: diff -q CLAUDE.md AGENTS.md
+      - name: 体量度量（WARN 不阻断，口径见脚本）
+        run: ./scripts/measure-context.sh
+      - name: L1 门禁 fixture 回归（1 正 5 负）
+        run: sh ci/gates/run-fixtures.sh
