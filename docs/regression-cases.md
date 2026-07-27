@@ -164,3 +164,5 @@
 | U3-5 | 部署检查通过 + 门禁绿 | 自动进入关闭检查；机器项 CI 核对；Owner 只签验收结论；关闭通过后收尾自动执行 | mechanisms 总表 / §2 / §3 |
 | U3-6（负向） | Owner 验收 =「打回」 | 禁止关闭与任何阶段前进，直至出现新验收结论（G5 打回闸） | mechanisms §3 输出 |
 | U3-7（负向） | Bootstrap 写入 / 无法判断是否进迭代 / 流程审计结果 / 跨项目元信息提示 | 均不受 U3 影响：仍须用户确认 / 先问 / 报 Owner（A 组与灰区保留项防误伤） | runtime [P0] / mechanisms 第 10 项 / multi-agent §7 后段 |
+
+> 注（U3.1，R3 落地复核修复，2026-07-27）：门禁 fixtures 扩至 1 正 10 负（新增 bad-g2-red / bad-g2-missing-row / bad-g5-colon / bad-g5-append / bad-g4-r3，前四者为 R3 评审逃逸样本转正）；G2 关闭态严格核对、G4 轮次纪律、G5 加固、G3 非 Node 仓显式失败、`L1_REPLAY=1` 回放旁路均已落；真回放定性见 `docs/progress/ad-hoc/2026-07-27-bcr-015-u31-replay-report.md`。
