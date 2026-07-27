@@ -18,15 +18,16 @@ jobs:
         with:
           node-version: 20
       - name: G3 · 验收脚本执行（项目自身测试命令）
-        if: ${{ hashFiles('package.json') != '' }}
         run: |
           # 约定：优先 `test:ci`（CI 内自足的用例集，排除依赖兄弟仓/外部环境的集成用例）；无则跑 `test`。
-          npm ci --no-audit --no-fund 2>/dev/null || npm install --no-audit --no-fund
-          if grep -q '"test:ci"' package.json; then
-            npm run test:ci
-          elif grep -q '"test"' package.json; then
-            npm test
+          # 无任何测试入口时显式失败（fail-closed，R3-M4）：无测试的仓不该绿——未就绪就不应启用 l1-gates。
+          if [ -f package.json ]; then
+            npm ci --no-audit --no-fund 2>/dev/null || npm install --no-audit --no-fund
+            if grep -q '"test:ci"' package.json; then npm run test:ci
+            elif grep -q '"test"' package.json; then npm test
+            else
+              echo "::error::G3 失败：package.json 无 test / test:ci 脚本——L1 门禁要求可执行测试。该怎么改：补最小测试基建后重跑；未就绪的仓不应启用 l1-gates（降级条款下维持 Owner 确认）"; exit 1
+            fi
           else
-            echo "::error::G3 失败：package.json 无 test / test:ci 脚本——L1 门禁要求项目具备可执行测试（验收可执行化前提）。该怎么改：补最小测试基建后重跑；未就绪的仓不应启用 l1-gates（降级条款下维持 Owner 确认）"
-            exit 1
+            echo "::error::G3 失败：仓内无 package.json（非 Node 仓）——本模板 v1 仅内置 Node 测试入口。该怎么改：该仓进入试点前先为模板扩对应语言分支（如 pytest），或暂不启用 l1-gates（降级条款下维持 Owner 确认）"; exit 1
           fi
