@@ -24,11 +24,19 @@ for rec in "$ITER_DIR"/v*.md; do
   fi
   ver="${base%.md}"
 
-  # ---- 关闭态判定（G2 严格核对与 Change Note 终态检查的触发条件） ----
+  # ---- 关闭态判定（G2 严格核对与 Change Note 终态检查的触发条件）----
+  # escA 加固：并取「关闭结论主张可关闭」与「最终状态=已完成/已关闭」——删掉关闭结论行直接写终态，同样是关闭主张。
   closing=0
   concl_line=$(grep -E '^- 关闭结论' "$rec" | head -1 || true)
   concl_stripped=$(printf '%s' "$concl_line" | sed 's/不可关闭//g')
   case "$concl_stripped" in *可关闭*|*有条件关闭*) closing=1 ;; esac
+  final_line=$(grep -E '^- 最终状态' "$rec" | head -1 || true)
+  fv=$(printf '%s' "$final_line" | after_colon)
+  fvt=$(printf '%s' "$fv" | sed 's/^[ 　—-]*//; s/[ 　—-]*$//')
+  if [ "$fvt" != "进行中 / 已完成 / 已关闭 / 阻塞" ]; then   # 模板占位枚举跳过
+    case "$fv" in *已完成*|*已关闭*) closing=1 ;; esac
+  fi
+  era=0; grep -q '^## 阶段执行记录' "$rec" && era=1
 
   # ---- G1 状态一致性：阶段门禁 / 部署检查状态词封闭枚举 ----
   g1=$(awk '
@@ -120,7 +128,14 @@ for rec in "$ITER_DIR"/v*.md; do
   fi
 
   # ---- G2b 验收证据链：执行结果不得留空；关闭态下取值封闭枚举 + 与 PRD 逐行对应（R3-B1） ----
+  # escB 加固：L1 时代记录主张关闭时，自测报告 / 验收证据链整体缺失是最重违规形态，直接 fail。
   rpt="$ITER_DIR/$ver-test-report.md"
+  if [ "$closing" = 1 ] && [ "$era" = 1 ]; then
+    if [ ! -f "$rpt" ] || ! grep -q '^## 验收证据链' "$rpt"; then
+      fail G2 "$base" "迭代主张关闭（关闭结论或最终状态），但自测报告或其「验收证据链」小节整体缺失——整份证据链缺失比缺行更重，不得静默流到关闭" \
+        "从 docs/templates/test-report.md 创建 $ver-test-report.md 并逐条填验收证据链；未验证则不得主张关闭"
+    fi
+  fi
   if [ -f "$rpt" ] && grep -q '^## 验收证据链' "$rpt"; then
     g2b=$(awk -v closing="$closing" '
       /^## 验收证据链/ { m=1; next }
