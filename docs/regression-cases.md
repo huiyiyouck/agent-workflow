@@ -152,3 +152,15 @@
 | # | 触发输入 | 期望行为 | 规则来源 |
 |---|----------|----------|----------|
 | M1 | 在 `LC_ALL=C` / `LC_CTYPE=C` 环境运行 `scripts/measure-context.sh` | 输出仍为**字符口径**（与 UTF-8 环境运行数值一致，如固定链 7553 级别而非 14433 级别）；若本机无任何可用 UTF-8 locale，则须输出 WARN 声明已退化为字节口径、数值不可与基线对比 | 脚本口径锁定（审计留痕 `docs/progress/ad-hoc/2026-07-26-context-measure-audit.md`） |
+
+## L1 免确认用例（U3，BCR-015）
+
+| # | 场景 | 期望行为 | 规则来源 |
+|---|------|----------|----------|
+| U3-1 | 本轮 Review 全通过 + `l1-gates` 当前 commit 绿灯 | **自动进入下一阶段**，写「阶段执行记录」，不等 Owner 现场确认 | multi-agent §7 / standard-iteration-quick |
+| U3-2（负向） | 门禁红 / 未跑 / 进行中 / 查不到 / 无该 workflow | 一律不自动推进；退回 Owner 确认 + 登记降级留痕（fail-closed，勿类推两处 fail-open 条文） | runtime [P0] |
+| U3-3（负向） | 迭代内优先级取舍 / 是否接受风险延期 | 仍升 Owner 裁决，不随免确认下放；延期实质放宽验收 → 升重大变更 | multi-agent §7.1 / mechanisms 阻塞项条 |
+| U3-4（负向） | 部署与关闭检查全绿后欲直接生产发布 | 生产发布须 Owner **明示放行**（A4）；关闭检查机器化不构成发布授权 | runtime [P0] |
+| U3-5 | 部署检查通过 + 门禁绿 | 自动进入关闭检查；机器项 CI 核对；Owner 只签验收结论；关闭通过后收尾自动执行 | mechanisms 总表 / §2 / §3 |
+| U3-6（负向） | Owner 验收 =「打回」 | 禁止关闭与任何阶段前进，直至出现新验收结论（G5 打回闸） | mechanisms §3 输出 |
+| U3-7（负向） | Bootstrap 写入 / 无法判断是否进迭代 / 流程审计结果 / 跨项目元信息提示 | 均不受 U3 影响：仍须用户确认 / 先问 / 报 Owner（A 组与灰区保留项防误伤） | runtime [P0] / mechanisms 第 10 项 / multi-agent §7 后段 |
