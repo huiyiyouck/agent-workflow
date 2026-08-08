@@ -10,10 +10,29 @@ set -u
 ROOT="${1:-.}"
 ITER_DIR="$ROOT/docs/progress/iterations"
 FAIL=0
-[ -d "$ITER_DIR" ] || exit 0
 
 fail() { printf '❌ [%s] %s\n   为什么错：%s\n   该怎么改：%s\n' "$1" "$2" "$3" "$4" >&2; FAIL=1; }
-after_colon() { awk '{i=index($0,"："); print (i? substr($0,i+3) : "")}'; }
+# B1 修复（BCR-014/016 评估 R1，2026-08-08）：原 awk 版 `substr($0,i+3)` 按「+3 字节」跳全角冒号，
+# GNU awk 在 UTF-8 locale 下 index/substr 是字符语义 → 取值被多剪 2 字符，G5/关闭态判定静默 fail-open（仅 BSD awk 正确）。
+# 改用 shell 参数展开：按字节删除到首个全角冒号（含）为止的前缀，BSD/GNU 行为一致，不再依赖 awk 语义。
+after_colon() {
+  while IFS= read -r _l || [ -n "$_l" ]; do
+    case "$_l" in
+      *：*) printf '%s\n' "${_l#*：}" ;;
+      *)    printf '\n' ;;
+    esac
+  done
+}
+
+# 防复发自测（run-fixtures.sh 首步调用）：同一断言在 BSD/GNU 双工具语义下必须同结果。
+if [ "$ROOT" = "--selftest" ]; then
+  st=0
+  [ "$(printf '%s' '- 最终状态：已完成' | after_colon)" = "已完成" ] || { echo "❌ selftest: after_colon 全角冒号取值被截断（B1 复发）" >&2; st=1; }
+  [ "$(printf '%s' '- Owner 验收（真源记录）：打回（UI 不符）' | after_colon)" = "打回（UI 不符）" ] || { echo "❌ selftest: after_colon 多字节值截断（B1 复发）" >&2; st=1; }
+  [ -z "$(printf '%s' '无冒号行' | after_colon)" ] || { echo "❌ selftest: 无冒号行应取空值" >&2; st=1; }
+  exit $st
+fi
+[ -d "$ITER_DIR" ] || exit 0
 
 for rec in "$ITER_DIR"/v*.md; do
   [ -f "$rec" ] || continue
