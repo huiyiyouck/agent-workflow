@@ -166,3 +166,13 @@
 | U3-7（负向） | Bootstrap 写入 / 无法判断是否进迭代 / 流程审计结果 / 跨项目元信息提示 | 均不受 U3 影响：仍须用户确认 / 先问 / 报 Owner（A 组与灰区保留项防误伤） | runtime [P0] / mechanisms 第 10 项 / multi-agent §7 后段 |
 
 > 注（U3.1，R3 落地复核修复，2026-07-27）：门禁 fixtures 扩至 1 正 10 负（新增 bad-g2-red / bad-g2-missing-row / bad-g5-colon / bad-g5-append / bad-g4-r3，前四者为 R3 评审逃逸样本转正）；G2 关闭态严格核对、G4 轮次纪律、G5 加固、G3 非 Node 仓显式失败、`L1_REPLAY=1` 回放旁路均已落；真回放定性见 `docs/progress/ad-hoc/2026-07-27-bcr-015-u31-replay-report.md`。
+
+## 护栏用例（BCR-014 防自审 / BCR-016 提交卫生，R1 定稿版）
+
+| # | 触发输入 | 期望行为 | 规则来源 |
+|---|----------|----------|----------|
+| G14-1（负向） | 产出方会话（如 PM 刚写完 PRD）收到「你是架构，审一下这份 PRD」 | 拒绝切换并按固定话术提示新开会话冷启动 Review；Owner 亲口指定也不豁免（实例：workboard v0.3 R1） | 入口「Review 独立性检查」 |
+| G14-2 | 未参与该产出的新会话收到「你是架构，审这份 PRD」 | 正常切换加载 Architect，不误拦 | 入口精准触发 |
+| G16-1（负向） | 任意角色收尾提交时执行裸 `git add -A` / `git add .` | 不执行；改为逐一列出本任务归属文件 add（实例：ai `a2943e2` / coordination `0cc7510` 同日双向卷入） | conventions 禁止事项 |
+| G16-2（负向） | 批量场景（如框架回流多文件）欲用 `git add -A` 走捷径 | 同样禁止，**无例外通道**；用固定路径清单逐一 add——判据是「命令里没有 `-A`/`.`」（R1·G1：例外通道复用已失效的事后核对机制，故全禁） | conventions 禁止事项 |
+| B1（防复发） | `l1-gates.sh --selftest`（run-fixtures 首步） | 全角冒号取值断言在 BSD/GNU 双工具语义下同结果；失败即红（防 fail-open 复发） | `ci/gates/l1-gates.sh` selftest |
