@@ -12,7 +12,7 @@
   3. 确认无冲突或未推送的他人修改
 
 结束：
-  1. git add <明确文件列表>（只 add 本任务归属的文件；多角色共享工作区禁止裸 git add -A / git add .）
+  1. git add 修改的文件（只 add 本任务归属的文件）
   2. git commit -m "[角色] 动作摘要"
   3. 按入口 Git 安全规则同步：工作区干净且无未推送 commit 才 git pull --rebase；否则 git fetch 并提示本地未推送或未提交变更
   4. git push
@@ -45,7 +45,6 @@
 
 ## 禁止事项
 - 禁止 force push
-- 禁止裸 `git add -A` / `git add .`（多角色共享工作区防卷入他人未提交改动）；确需批量暂存时，`git diff --cached --stat` 的每个文件名须逐一匹配本次改动清单，任何一个对不上即 reset 重新 add——判据是「清单逐一匹配」，不是「有没有报错」（BCR-016）
 - 禁止跳过 Git hooks（`--no-verify`）
 - 禁止直接修改他人角色日志
 - 禁止在 Review 阶段修改产出文档正文（只能追加 Review 章节）
